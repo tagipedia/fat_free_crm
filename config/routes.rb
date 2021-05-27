@@ -5,19 +5,19 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-Rails.application.routes.draw do
+FatFreeCrm.application.routes.draw do
   resources :lists
 
   root to: 'home#index'
 
   # Deprecated: Compatibility with legacy Authlogic routes
-  get '/login',  to: redirect('/users/sign_in')
-  get '/signup', to: redirect('/users/sign_up')
+  get '/login',  to: redirect('/fat_free_crm/users/sign_in')
+  get '/signup', to: redirect('/fat_free_crm/users/sign_up')
 
-  devise_for :users, controllers: { registrations: 'registrations',
-                                    sessions: 'sessions',
-                                    passwords: 'passwords',
-                                    confirmations: 'confirmations' }
+  devise_for :users, class_name: 'FatFreeCrm::User', controllers: { registrations: 'fat_free_crm/registrations',
+                                    sessions: 'fat_free_crm/sessions',
+                                    passwords: 'fat_free_crm/passwords',
+                                    confirmations: 'fat_free_crm/confirmations' }
 
   devise_scope :user do
     resources :users, only: %i[index show] do

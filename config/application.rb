@@ -26,7 +26,7 @@ Bundler.require(*Rails.groups)
 # Override Rails Engines so that plugins have higher priority than the Application
 require 'fat_free_crm/gem_ext/rails/engine'
 
-module FatFreeCRM
+module FatFreeCrm
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
@@ -37,13 +37,13 @@ module FatFreeCRM
 
     # Models are organized in sub-directories
     config.autoload_paths += Dir[Rails.root.join("app/models/**")] +
-                             Dir[Rails.root.join("app/controllers/entities")]
+                             Dir[Rails.root.join("app/controllers/fat_free_crm/entities/**")]
 
     # Prevent Field class from being reloaded more than once as this clears registered customfields
     config.autoload_once_paths += [File.expand_path('app/models/fields/field.rb', __dir__)]
 
     # Activate observers that should always be running.
-    config.active_record.observers = :lead_observer, :opportunity_observer, :task_observer, :entity_observer unless ARGV.join.include?('assets:precompile')
+    config.active_record.observers = 'FatFreeCrm::LeadObserver', 'FatFreeCrm::OpportunityObserver', 'FatFreeCrm::TaskObserver', 'FatFreeCrm::EntityObserver' unless ARGV.join.include?('assets:precompile')
 
     # Load development rake tasks (RSpec, Gem packaging, etc.)
     rake_tasks do
@@ -75,6 +75,6 @@ module FatFreeCRM
   end
 end
 
-# Require fat_free_crm after FatFreeCRM::Application class is defined,
-# so that FatFreeCRM::Engine is skipped.
+# Require fat_free_crm after FatFreeCrm::Application class is defined,
+# so that FatFreeCrm::Engine is skipped.
 require 'fat_free_crm'

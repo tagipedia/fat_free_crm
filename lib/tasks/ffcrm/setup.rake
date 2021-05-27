@@ -19,6 +19,7 @@ namespace :ffcrm do
 
       # Don't continue unless user typed y(es)
       if proceed.match?(/y(?:es)*/i)
+        Rake::Task["railties:install:migrations"].invoke
         Rake::Task["db:migrate"].invoke
         Rake::Task["ffcrm:setup:admin"].invoke
       else
@@ -80,8 +81,8 @@ namespace :ffcrm do
           exit
         end
       end
-      User.reset_column_information # Reload the class since we've added new fields in migrations.
-      user = User.find_by_username(username) || User.new
+      FatFreeCrm::User.reset_column_information # Reload the class since we've added new fields in migrations.
+      user = FatFreeCrm::User.find_by_username(username) || FatFreeCrm::User.new
       user.skip_confirmation!
       user.confirm
       user.update(username: username, password: password, email: email)

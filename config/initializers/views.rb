@@ -6,7 +6,7 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 
-# Register the views that FatFreeCRM provides
+# Register the views that FatFreeCrm provides
 #------------------------------------------------------------------------------
 
 [{ name: 'contacts_index_brief', title: 'Brief format', icon: 'fa-bars',
@@ -44,4 +44,4 @@
  { name: 'campaigns_index_long', title: 'Long format', icon: 'fa-list',
    controllers: ['campaigns'], actions: ['index'], template: 'campaigns/index_long' },
  { name: 'campaigns_show_normal', title: 'Normal format', icon: 'fa-list',
-   controllers: ['campaigns'], actions: ['show'], template: nil }].each { |view| FatFreeCRM::ViewFactory.new(view) }
+   controllers: ['campaigns'], actions: ['show'], template: nil }].each { |view| FatFreeCrm::ViewFactory.new(view) }

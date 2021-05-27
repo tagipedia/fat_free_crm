@@ -7,4 +7,4 @@
 #------------------------------------------------------------------------------
 # Set relative url root for assets
 
-ActionController::Base.relative_url_root = Setting.base_url if Setting.base_url.present?
+ActionController::Base.relative_url_root = FatFreeCrm::Setting.base_url if FatFreeCrm::Setting.base_url.present?

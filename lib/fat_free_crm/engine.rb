@@ -5,25 +5,25 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-module FatFreeCRM
+module FatFreeCrm
   class Engine < ::Rails::Engine
+    isolate_namespace FatFreeCrm
     config.autoload_paths += Dir[root.join("app/models/**")] +
-                             Dir[root.join("app/controllers/entities")]
+                             Dir[root.join("app/controllers/fat_free_crm/entities")]
 
-    config.active_record.observers = %i[lead_observer opportunity_observer
-                                        task_observer entity_observer]
+    config.active_record.observers = 'FatFreeCrm::LeadObserver', 'FatFreeCrm::OpportunityObserver', 'FatFreeCrm::TaskObserver', 'FatFreeCrm::EntityObserver'
 
     initializer "model_core.factories", after: "factory_bot.set_factory_paths" do
       FactoryBot.definition_file_paths << File.expand_path('../../spec/factories', __dir__) if defined?(FactoryBot)
     end
 
-    initializer :append_migrations do |app|
-      unless app.root.to_s == root.to_s
-        config.paths["db/migrate"].expanded.each do |expanded_path|
-          app.config.paths["db/migrate"] << expanded_path
-        end
-      end
-    end
+    # initializer :append_migrations do |app|
+    #   unless app.root.to_s == root.to_s
+    #     config.paths["db/migrate"].expanded.each do |expanded_path|
+    #       app.config.paths["db/migrate"] << expanded_path
+    #     end
+    #   end
+    # end
 
     config.to_prepare do
       Dir.glob(Rails.root + "app/decorators/**/*_decorator*.rb").each do |c|

@@ -13,8 +13,10 @@ class AddAccountCounterCaches < ActiveRecord::Migration[5.1]
   end
 
   def data
-    Account.all.each do |account|
-      Account.update_counters(
+    FatFreeCrm::Account.table_name = 'accounts'
+
+    FatFreeCrm::Account.all.each do |account|
+      FatFreeCrm::Account.update_counters(
         account.id,
         contacts_count: account.contacts.count,
         opportunities_count: account.opportunities.count

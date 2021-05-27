@@ -4,19 +4,22 @@ class AddFieldGroupsKlassName < ActiveRecord::Migration[4.2]
   def up
     add_column :field_groups, :klass_name, :string, limit: 32
 
+    FatFreeCrm::Field.table_name = 'fields'
+    FatFreeCrm::FieldGroup.table_name = 'field_groups'
+
     # Add a default field group for each model
-    %w[Account Campaign Contact Lead Opportunity].each do |entity|
+    %w[FatFreeCrm::Account FatFreeCrm::Campaign FatFreeCrm::Contact FatFreeCrm::Lead FatFreeCrm::Opportunity].each do |entity|
       klass = entity.classify.constantize
-      field_group = FieldGroup.new
+      field_group = FatFreeCrm::FieldGroup.new
       field_group.label = 'Custom Fields'
       field_group.klass_name = klass.name
       field_group.save!
-      Field.where(field_group_id: nil, klass_name: klass.name).update_all(field_group_id: field_group.id)
+      FatFreeCrm::Field.where(field_group_id: nil, klass_name: klass.name).update_all(field_group_id: field_group.id)
     end
-    FieldGroup.where(klass_name: nil).update_all('klass_name = (SELECT MAX(klass_name) FROM fields WHERE field_group_id = field_groups.id)')
+    FatFreeCrm::FieldGroup.where(klass_name: nil).update_all('klass_name = (SELECT MAX(klass_name) FROM fields WHERE field_group_id = field_groups.id)')
 
     remove_column :fields, :klass_name
-    Field.reset_column_information
+    FatFreeCrm::Field.reset_column_information
   end
 
   def down

@@ -6,12 +6,13 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 # Load field names for custom fields, for Ransack search
-if Setting.database_and_table_exists?
+if FatFreeCrm::Setting.database_and_table_exists?
   Rails.application.config.after_initialize do
     I18n.backend.load_translations
 
     translations = { ransack: { attributes: {} } }
-    CustomField.find_each do |custom_field|
+    FatFreeCrm::Field.table_name  = 'fat_free_crm_fields'
+    FatFreeCrm::CustomField.find_each do |custom_field|
       if custom_field.field_group.present?
         model_key = custom_field.klass.model_name.singular
         translations[:ransack][:attributes][model_key] ||= {}
@@ -19,6 +20,6 @@ if Setting.database_and_table_exists?
       end
     end
 
-    I18n.backend.store_translations(Setting.locale.to_sym, translations)
+    I18n.backend.store_translations(FatFreeCrm::Setting.locale.to_sym, translations)
   end
 end

@@ -17,7 +17,7 @@ Gem::Specification.new do |gem|
   gem.homepage = 'http://fatfreecrm.com'
   gem.email = ['mike@fatfreecrm.com', 'steveyken@gmail.com', 'daniel.oconnor@gmail.com']
   gem.files = files
-  gem.version = FatFreeCRM::VERSION::STRING
+  gem.version = FatFreeCrm::VERSION::STRING
   gem.required_ruby_version = '>= 2.4.0'
   gem.license = 'MIT'
 
@@ -55,7 +55,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'coffee-script-source', '~> 1.8', '>= 1.8.0' # pegged until https://github.com/jashkenas/coffeescript/issues/3829 is resolved
   gem.add_dependency 'country_select'
 
-  # FatFreeCRM has released it's own versions of the following gems:
+  # FatFreeCrm has released it's own versions of the following gems:
   #-----------------------------------------------------------------
   gem.add_dependency 'ransack', '>= 1.6.2'
   gem.add_dependency 'email_reply_parser_ffcrm'

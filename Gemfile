@@ -103,3 +103,5 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'activejob'
 gem 'ransack_ui'
 gem 'bootstrap', '5.0.0'
+
+gem 'mimemagic', '0.3.5'

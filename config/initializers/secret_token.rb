@@ -21,7 +21,7 @@
 #
 # We should setup a secret token if FFCRM is running in application mode but NOT in engine mode.
 # This functionality has been extracted to lib so it can be tested.
-if FatFreeCRM.application?
+if FatFreeCrm.application?
   require 'fat_free_crm/secret_token_generator'
-  FatFreeCRM::SecretTokenGenerator.setup!
+  FatFreeCrm::SecretTokenGenerator.setup!
 end
