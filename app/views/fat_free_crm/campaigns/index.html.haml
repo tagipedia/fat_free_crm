@@ -1,0 +1,18 @@
+= styles_for :campaign
+
+= render 'fat_free_crm/entities/title_bar'
+
+.remote#create_campaign{ hidden }
+
+= render 'search'
+
+.remote#options{ hidden }
+
+.list#campaigns
+  - if @campaigns.any?
+    = render @campaigns
+  - else
+    = render "fat_free_crm/shared/empty"
+
+#paginate= render "fat_free_crm/shared/paginate_with_per_page"
+#export= render "fat_free_crm/shared/export"

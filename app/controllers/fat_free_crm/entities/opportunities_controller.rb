@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::OpportunitiesController < FatFreeCrm::EntitiesController
+module FatFreeCrm
+class OpportunitiesController < FatFreeCrm::EntitiesController
   before_action :load_settings
   before_action :get_data_for_sidebar, only: :index
   before_action :set_params, only: %i[index redraw filter]
@@ -227,4 +228,5 @@ class FatFreeCrm::OpportunitiesController < FatFreeCrm::EntitiesController
     current_user.pref[:opportunities_sort_by]  = Opportunity.sort_by_map[params[:sort_by]] if params[:sort_by]
     session[:opportunities_filter] = params[:stage] if params[:stage]
   end
+end
 end

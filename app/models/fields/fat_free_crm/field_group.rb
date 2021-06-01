@@ -19,7 +19,8 @@
 #  tag_id     :integer
 #  klass_name :string(32)
 #
-class FatFreeCrm::FieldGroup < ActiveRecord::Base
+module FatFreeCrm
+class FieldGroup < ActiveRecord::Base
   has_many :fields, -> { order :position }
   belongs_to :tag, optional: true
   before_destroy :not_default_field_group, :move_fields_to_default_field_group
@@ -43,7 +44,7 @@ class FatFreeCrm::FieldGroup < ActiveRecord::Base
   end
 
   def label_i18n
-    I18n.t(name, default: label)
+    ::I18n.t(name, default: label)
   end
 
   private
@@ -61,4 +62,5 @@ class FatFreeCrm::FieldGroup < ActiveRecord::Base
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_field_group, self)
+end
 end

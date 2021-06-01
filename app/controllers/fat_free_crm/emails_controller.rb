@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::EmailsController < FatFreeCrm::ApplicationController
+module FatFreeCrm
+class EmailsController < FatFreeCrm::ApplicationController
   # DELETE /emails/1
   # DELETE /emails/1.json
   # DELETE /emails/1.xml                                                   AJAX
@@ -15,4 +16,5 @@ class FatFreeCrm::EmailsController < FatFreeCrm::ApplicationController
     @email.destroy
     respond_with(@email)
   end
+end
 end

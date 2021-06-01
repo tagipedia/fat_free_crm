@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::UsersController < FatFreeCrm::ApplicationController
+module FatFreeCrm
+class UsersController < FatFreeCrm::ApplicationController
   before_action :set_current_tab, only: %i[show opportunities_overview] # Don't hightlight any tabs.
 
   check_authorization
@@ -141,4 +142,5 @@ class FatFreeCrm::UsersController < FatFreeCrm::ApplicationController
       .permit(:image)
       .merge(entity: @user, user_id: @user.id)
   end
+end
 end

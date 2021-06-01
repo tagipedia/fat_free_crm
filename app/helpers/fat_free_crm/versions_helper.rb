@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-module FatFreeCrm::VersionsHelper
+module FatFreeCrm
+module VersionsHelper
   # Parse the changes for each version
   #----------------------------------------------------------------------------
   def parse_version(attr_name, change)
@@ -31,4 +32,5 @@ module FatFreeCrm::VersionsHelper
 
     [label, first, second]
   end
+end
 end

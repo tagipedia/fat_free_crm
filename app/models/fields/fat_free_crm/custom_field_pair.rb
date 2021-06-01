@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::CustomFieldPair < FatFreeCrm::CustomField
+module FatFreeCrm
+class CustomFieldPair < CustomField
   has_one :pair, class_name: 'CustomFieldPair', foreign_key: 'pair_id', dependent: :destroy # points to 'end'
 
   # Helper to create a pair. Used in fields_controller
@@ -41,4 +42,5 @@ class FatFreeCrm::CustomFieldPair < FatFreeCrm::CustomField
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_custom_field_pair, self)
+end
 end

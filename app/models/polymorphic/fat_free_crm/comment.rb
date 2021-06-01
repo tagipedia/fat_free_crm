@@ -20,7 +20,8 @@
 #  updated_at       :datetime
 #  state            :string(16)      default("Expanded"), not null
 #
-class FatFreeCrm::Comment < ActiveRecord::Base
+module FatFreeCrm
+class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :commentable, polymorphic: true
 
@@ -71,4 +72,5 @@ class FatFreeCrm::Comment < ActiveRecord::Base
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_comment, self)
+end
 end

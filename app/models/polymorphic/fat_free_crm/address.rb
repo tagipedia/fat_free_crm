@@ -24,7 +24,8 @@
 #  updated_at       :datetime
 #  deleted_at       :datetime
 #
-class FatFreeCrm::Address < ActiveRecord::Base
+module FatFreeCrm
+class Address < ActiveRecord::Base
   belongs_to :addressable, polymorphic: true
 
   has_paper_trail versions: { class_name: 'FatFreeCrm::Version' }, meta: { related: :addressable }
@@ -57,4 +58,5 @@ class FatFreeCrm::Address < ActiveRecord::Base
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_address, self)
+end
 end

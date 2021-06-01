@@ -5,9 +5,12 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::RegistrationsController < Devise::RegistrationsController
+module FatFreeCrm
+class RegistrationsController < Devise::RegistrationsController
   respond_to :html
   append_view_path 'app/views/devise'
+  layout "fat_free_crm/application"
+  helper FatFreeCrm::Engine.helpers
 
   def edit
     redirect_to profile_path
@@ -16,4 +19,5 @@ class FatFreeCrm::RegistrationsController < Devise::RegistrationsController
   def after_inactive_sign_up_path_for(*)
     new_user_session_path
   end
+end
 end

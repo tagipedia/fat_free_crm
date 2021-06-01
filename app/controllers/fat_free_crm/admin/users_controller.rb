@@ -5,10 +5,11 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::Admin::UsersController < FatFreeCrm::Admin::ApplicationController
+module FatFreeCrm
+class Admin::UsersController < FatFreeCrm::Admin::ApplicationController
   before_action :setup_current_tab, only: %i[index show]
 
-  load_resource except: [:create]
+  load_resource except: [:create], class: FatFreeCrm::User
 
   # GET /admin/users
   # GET /admin/users.xml                                                   HTML
@@ -149,4 +150,5 @@ class FatFreeCrm::Admin::UsersController < FatFreeCrm::Admin::ApplicationControl
   def setup_current_tab
     set_current_tab('admin/users')
   end
+end
 end

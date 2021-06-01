@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::SubscriptionMailer < ActionMailer::Base
+module FatFreeCrm
+class SubscriptionMailer < ActionMailer::Base
   def comment_notification(user, comment)
     @entity = comment.commentable
     @entity_type = @entity.class.to_s
@@ -33,4 +34,5 @@ class FatFreeCrm::SubscriptionMailer < ActionMailer::Base
     address = "#{user.full_name} <#{address}>" if user && !address.match(/<.+>\z/)
     address
   end
+end
 end

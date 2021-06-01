@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-module FatFreeCrm::Admin::UsersHelper
+module FatFreeCrm
+module Admin::UsersHelper
   def link_to_suspend(user)
     link_to(t(:suspend) + "!", suspend_admin_user_path(user), method: :put, remote: true)
   end
@@ -68,4 +69,5 @@ module FatFreeCrm::Admin::UsersHelper
       t(:user_active)
     end
   end
+end
 end

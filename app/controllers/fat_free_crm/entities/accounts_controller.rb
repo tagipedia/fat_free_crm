@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::AccountsController < FatFreeCrm::EntitiesController
+module FatFreeCrm
+class AccountsController < FatFreeCrm::EntitiesController
   before_action :get_data_for_sidebar, only: :index
 
   # GET /accounts
@@ -160,4 +161,5 @@ class FatFreeCrm::AccountsController < FatFreeCrm::EntitiesController
     @account_category_total[:all] = Account.my(current_user).count
     @account_category_total[:other] = @account_category_total[:all] - categorized
   end
+end
 end

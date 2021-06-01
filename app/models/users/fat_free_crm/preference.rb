@@ -16,7 +16,8 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
-class FatFreeCrm::Preference < ActiveRecord::Base
+module FatFreeCrm
+class Preference < ActiveRecord::Base
   belongs_to :user, optional: true
 
   #-------------------------------------------------------------------
@@ -49,4 +50,5 @@ class FatFreeCrm::Preference < ActiveRecord::Base
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_preference, self)
+end
 end

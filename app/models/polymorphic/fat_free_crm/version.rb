@@ -6,7 +6,8 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 require 'paper_trail'
-class FatFreeCrm::Version < PaperTrail::Version
+module FatFreeCrm
+class Version < PaperTrail::Version
   ASSETS = %w[all tasks campaigns leads accounts contacts opportunities comments emails]
   EVENTS = %w[all_events create view update destroy]
   DURATION = %w[one_hour one_day two_days one_week two_weeks one_month]
@@ -80,4 +81,5 @@ class FatFreeCrm::Version < PaperTrail::Version
       end
     end
   end
+end
 end

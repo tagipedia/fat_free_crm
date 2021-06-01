@@ -19,7 +19,8 @@
 #  created_at         :datetime
 #  updated_at         :datetime
 #
-class FatFreeCrm::Avatar < ActiveRecord::Base
+module FatFreeCrm
+class Avatar < ActiveRecord::Base
   STYLES = { large: "75x75#", medium: "50x50#", small: "25x25#", thumb: "16x16#" }.freeze
 
   belongs_to :user
@@ -55,4 +56,5 @@ class FatFreeCrm::Avatar < ActiveRecord::Base
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_avatar, self)
+end
 end

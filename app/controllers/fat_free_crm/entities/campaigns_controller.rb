@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::CampaignsController < FatFreeCrm::EntitiesController
+module FatFreeCrm
+class CampaignsController < FatFreeCrm::EntitiesController
   before_action :get_data_for_sidebar, only: :index
 
   # GET /campaigns
@@ -204,4 +205,5 @@ class FatFreeCrm::CampaignsController < FatFreeCrm::EntitiesController
     end
     @campaign_status_total[:other] += @campaign_status_total[:all]
   end
+end
 end

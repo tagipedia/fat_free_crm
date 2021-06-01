@@ -45,7 +45,8 @@
 #  confirmed_at            :datetime
 #  confirmation_sent_at    :datetime
 #
-class FatFreeCrm::User < ActiveRecord::Base
+module FatFreeCrm
+class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
          :encryptable, :recoverable, :rememberable, :trackable
   before_create :suspend_if_needs_approval
@@ -79,9 +80,9 @@ class FatFreeCrm::User < ActiveRecord::Base
   scope :my, ->(current_user) { accessible_by(current_user.ability) }
 
   scope :have_assigned_opportunities, lambda {
-    joins("INNER JOIN opportunities ON users.id = opportunities.assigned_to")
-      .where("opportunities.stage <> 'lost' AND opportunities.stage <> 'won'")
-      .select('DISTINCT(users.id), users.*')
+    joins("INNER JOIN fat_free_crm_opportunities ON fat_free_crm_users.id = fat_free_crm_opportunities.assigned_to")
+      .where("fat_free_crm_opportunities.stage <> 'lost' AND fat_free_crm_opportunities.stage <> 'won'")
+      .select('DISTINCT(fat_free_crm_users.id), fat_free_crm_users.*')
   }
 
   validates :email,
@@ -125,9 +126,9 @@ class FatFreeCrm::User < ActiveRecord::Base
     if !confirmed?
       super
     elsif awaits_approval?
-      I18n.t(:msg_account_not_approved)
+      ::I18n.t(:msg_account_not_approved)
     elsif suspended?
-      I18n.t(:msg_invalig_login)
+      ::I18n.t(:msg_invalig_login)
     else
       super
     end
@@ -142,7 +143,7 @@ class FatFreeCrm::User < ActiveRecord::Base
   # Override global I18n.locale if the user has individual local preference.
   #----------------------------------------------------------------------------
   def set_individual_locale
-    I18n.locale = preference[:locale] if preference[:locale]
+    ::I18n.locale = preference[:locale] if preference[:locale]
   end
 
   # Generate the value of single access token if it hasn't been set already.
@@ -192,7 +193,7 @@ class FatFreeCrm::User < ActiveRecord::Base
   #----------------------------------------------------------------------------
   class << self
     def can_signup?
-      %i[allowed needs_approval].include? Setting.user_signup
+      %i[allowed needs_approval].include? FatFreeCrm::Setting.user_signup
     end
 
     # Overrides Devise sign-in to use either username or email (case-insensitive)
@@ -206,4 +207,5 @@ class FatFreeCrm::User < ActiveRecord::Base
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_user, self)
+end
 end

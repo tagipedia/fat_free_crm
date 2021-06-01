@@ -24,7 +24,8 @@
 #
 # Any configured settings in `config/settings.yml` will override those in
 # `config/settings.default.yml`, and settings in the database table have the highest priority.
-class FatFreeCrm::Setting < ActiveRecord::Base
+module FatFreeCrm
+class Setting < ActiveRecord::Base
   validates :name, presence: true, allow_blank: false
   serialize :value
 
@@ -83,7 +84,7 @@ class FatFreeCrm::Setting < ActiveRecord::Base
     # string it gets copied without translation.
     #-------------------------------------------------------------------
     def unroll(setting)
-      send(setting).map { |key| [key.is_a?(Symbol) ? I18n.t(key) : key, key.to_sym] }
+      send(setting).map { |key| [key.is_a?(Symbol) ? ::I18n.t(key) : key, key.to_sym] }
     end
 
     # Retrieves the value object corresponding to the each key objects repeatedly.
@@ -118,4 +119,5 @@ class FatFreeCrm::Setting < ActiveRecord::Base
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_setting, self)
+end
 end

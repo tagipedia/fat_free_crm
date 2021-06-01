@@ -27,8 +27,12 @@ module FatFreeCrm
   end
 end
 
+require 'devise'
+
 # Load Fat Free CRM as a Rails Engine, unless running as a Rails Application
 require 'fat_free_crm/engine' unless defined?(FatFreeCrm::Application)
+
+require 'fat_free_crm/railtie'
 
 require 'fat_free_crm/load_settings' # register load hook for Setting
 

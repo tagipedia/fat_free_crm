@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::Admin::FieldGroupsController < FatFreeCrm::Admin::ApplicationController
+module FatFreeCrm
+class Admin::FieldGroupsController < FatFreeCrm::Admin::ApplicationController
   helper 'admin/fields'
 
   # GET /admin/field_groups/new
@@ -87,4 +88,5 @@ class FatFreeCrm::Admin::FieldGroupsController < FatFreeCrm::Admin::ApplicationC
       :klass_name
     )
   end
+end
 end

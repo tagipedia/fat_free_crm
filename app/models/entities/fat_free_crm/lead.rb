@@ -37,7 +37,8 @@
 #  background_info :string(255)
 #  skype           :string(128)
 #
-class FatFreeCrm::Lead < ActiveRecord::Base
+module FatFreeCrm
+class Lead < ActiveRecord::Base
   belongs_to :user, optional: true # TODO: Is this really optional?
   belongs_to :campaign, optional: true # TODO: Is this really optional?
   belongs_to :assignee, class_name: "User", foreign_key: :assigned_to, optional: true # TODO: Is this really optional?
@@ -183,4 +184,5 @@ class FatFreeCrm::Lead < ActiveRecord::Base
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_lead, self)
+end
 end

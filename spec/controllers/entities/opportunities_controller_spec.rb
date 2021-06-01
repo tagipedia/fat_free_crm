@@ -859,7 +859,7 @@ describe OpportunitiesController do
       get :redraw, params: { per_page: 42, view: "brief", sort_by: "name" }, xhr: true
       expect(current_user.preference[:opportunities_per_page]).to eq(42)
       expect(current_user.preference[:opportunities_index_view]).to eq("brief")
-      expect(current_user.preference[:opportunities_sort_by]).to eq("opportunities.name ASC")
+      expect(current_user.preference[:opportunities_sort_by]).to eq("fat_free_crm_opportunities.name ASC")
     end
 
     it "should reset current page to 1" do

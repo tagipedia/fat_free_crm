@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::ContactsController < FatFreeCrm::EntitiesController
+module FatFreeCrm
+class ContactsController < FatFreeCrm::EntitiesController
   before_action :get_accounts, only: %i[new create edit update]
 
   # GET /contacts
@@ -164,4 +165,5 @@ class FatFreeCrm::ContactsController < FatFreeCrm::EntitiesController
       redirect_to contacts_path
     end
   end
+end
 end

@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::OpportunityObserver < ActiveRecord::Observer
+module FatFreeCrm
+class OpportunityObserver < ActiveRecord::Observer
   observe FatFreeCrm::Opportunity
 
   @@opportunities = {}
@@ -44,4 +45,5 @@ class FatFreeCrm::OpportunityObserver < ActiveRecord::Observer
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_opportunity_observer, self)
+end
 end

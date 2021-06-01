@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::CustomFieldDatePair < FatFreeCrm::CustomFieldPair
+module FatFreeCrm
+class CustomFieldDatePair < CustomFieldPair
   # For rendering paired values
   # Handle case where both pairs are blank
   #------------------------------------------------------------------------------
@@ -15,18 +16,18 @@ class FatFreeCrm::CustomFieldDatePair < FatFreeCrm::CustomFieldPair
     from = render(object.send(name))
     to = render(object.send(paired_with.name))
     if from.present? && to.present?
-      I18n.t('pair.from_to', from: from, to: to)
+      ::I18n.t('pair.from_to', from: from, to: to)
     elsif from.present? && !to.present?
-      I18n.t('pair.from_only', from: from)
+      ::I18n.t('pair.from_only', from: from)
     elsif !from.present? && to.present?
-      I18n.t('pair.to_only', to: to)
+      ::I18n.t('pair.to_only', to: to)
     else
       ""
     end
   end
 
   def render(value)
-    value&.strftime(I18n.t("date.formats.mmddyy"))
+    value&.strftime(::I18n.t("date.formats.mmddyy"))
   end
 
   def custom_validator(obj)
@@ -43,4 +44,5 @@ class FatFreeCrm::CustomFieldDatePair < FatFreeCrm::CustomFieldPair
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_date_pair, self)
+end
 end

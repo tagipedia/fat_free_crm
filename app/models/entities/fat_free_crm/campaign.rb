@@ -30,7 +30,8 @@
 #  updated_at          :datetime
 #  background_info     :string(255)
 #
-class FatFreeCrm::Campaign < ActiveRecord::Base
+module FatFreeCrm
+class Campaign < ActiveRecord::Base
   belongs_to :user, optional: true # TODO: Is this really optional?
   belongs_to :assignee, class_name: "User", foreign_key: :assigned_to, optional: true # TODO: Is this really optional?
   has_many :tasks, as: :asset, dependent: :destroy # , :order => 'created_at DESC'
@@ -112,4 +113,5 @@ class FatFreeCrm::Campaign < ActiveRecord::Base
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_campaign, self)
+end
 end

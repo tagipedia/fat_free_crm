@@ -5,9 +5,10 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::Admin::FieldsController < FatFreeCrm::Admin::ApplicationController
+module FatFreeCrm
+class Admin::FieldsController < FatFreeCrm::Admin::ApplicationController
   before_action :setup_current_tab, only: [:index]
-  load_resource except: %i[create subform]
+  load_resource except: %i[create subform], class: FatFreeCrm::Field
 
   # GET /fields
   # GET /fields.xml                                                      HTML
@@ -120,4 +121,5 @@ class FatFreeCrm::Admin::FieldsController < FatFreeCrm::Admin::ApplicationContro
   def setup_current_tab
     set_current_tab('admin/fields')
   end
+end
 end

@@ -5,11 +5,12 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::Admin::ApplicationController < FatFreeCrm::ApplicationController
+module FatFreeCrm
+class Admin::ApplicationController < FatFreeCrm::ApplicationController
   before_action :require_admin_user
 
-  layout "admin/application"
-  helper "admin/field_groups"
+  layout "fat_free_crm/admin/application"
+  helper "fat_free_crm/admin/field_groups"
 
   # Autocomplete handler for all admin controllers.
   #----------------------------------------------------------------------------
@@ -29,4 +30,5 @@ class FatFreeCrm::Admin::ApplicationController < FatFreeCrm::ApplicationControll
       redirect_to root_path
     end
   end
+end
 end

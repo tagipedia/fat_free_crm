@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::EntitiesController < FatFreeCrm::ApplicationController
+module FatFreeCrm
+class EntitiesController < FatFreeCrm::ApplicationController
   before_action :set_current_tab, only: %i[index show]
   before_action :set_view, only: %i[index show redraw]
 
@@ -115,7 +116,7 @@ class FatFreeCrm::EntitiesController < FatFreeCrm::ApplicationController
 
   def set_options
     unless params[:cancel].true?
-      klass = controller_name.classify.constantize
+      klass = "FatFreeCrm::#{controller_name.classify}".constantize
       @per_page = current_user.pref[:"#{controller_name}_per_page"] || klass.per_page
       @sort_by  = current_user.pref[:"#{controller_name}_sort_by"]  || klass.sort_by
     end
@@ -245,4 +246,5 @@ class FatFreeCrm::EntitiesController < FatFreeCrm::ApplicationController
       Account.new(user: user)
     end
   end
+end
 end

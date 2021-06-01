@@ -6,7 +6,8 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
-class FatFreeCrm::Ability
+module FatFreeCrm
+class Ability
   include CanCan::Ability
 
   def initialize(user)
@@ -56,4 +57,5 @@ class FatFreeCrm::Ability
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_ability, self)
+end
 end

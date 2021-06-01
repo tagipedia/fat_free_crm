@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::UserMailer < ActionMailer::Base
+module FatFreeCrm
+class UserMailer < ActionMailer::Base
   def assigned_entity_notification(entity, assigner)
     @entity_url = url_for(entity)
     @entity_name = entity.name
@@ -21,4 +22,5 @@ class FatFreeCrm::UserMailer < ActionMailer::Base
   def from_address
     Setting.dig(:smtp, :from).presence || "Fat Free CRM <noreply@fatfreecrm.com>"
   end
+end
 end

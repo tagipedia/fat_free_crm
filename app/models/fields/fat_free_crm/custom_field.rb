@@ -48,7 +48,8 @@
 #   For example, you can change an 'email' field to a 'string', but not to a 'datetime',
 #   since changing the type of the database column would cause data to be lost.
 #
-class FatFreeCrm::CustomField < FatFreeCrm::Field
+module FatFreeCrm
+class CustomField < Field
   delegate :table_name, to: :klass
 
   after_validation :update_column, on: :update
@@ -148,4 +149,5 @@ class FatFreeCrm::CustomField < FatFreeCrm::Field
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_custom_field, self)
+end
 end

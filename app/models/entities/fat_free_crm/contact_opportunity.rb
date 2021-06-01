@@ -17,7 +17,8 @@
 #  created_at     :datetime
 #  updated_at     :datetime
 #
-class FatFreeCrm::ContactOpportunity < ActiveRecord::Base
+module FatFreeCrm
+class ContactOpportunity < ActiveRecord::Base
   belongs_to :contact
   belongs_to :opportunity
   validates_presence_of :contact_id, :opportunity_id
@@ -25,4 +26,5 @@ class FatFreeCrm::ContactOpportunity < ActiveRecord::Base
   # has_paper_trail :class_name => 'Version'
 
   ActiveSupport.run_load_hooks(:fat_free_crm_contact_opportunity, self)
+end
 end

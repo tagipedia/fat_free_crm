@@ -1,0 +1,20 @@
+= styles_for :opportunity
+
+= render 'fat_free_crm/entities/title_bar'
+
+.remote#create_opportunity{ hidden }
+
+= render 'search'
+
+.remote#options{ hidden }
+
+.list#opportunities
+  - if @opportunities.any?
+    = render @opportunities
+  - else
+    = render "fat_free_crm/shared/empty"
+
+#paginate= render "fat_free_crm/shared/paginate_with_per_page"
+#export= render "fat_free_crm/shared/export"
+
+= hook(:opportunity_index_after, self)

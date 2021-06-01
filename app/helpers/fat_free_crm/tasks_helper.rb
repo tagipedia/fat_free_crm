@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-module FatFreeCrm::TasksHelper
+module FatFreeCrm
+module TasksHelper
   # Sidebar checkbox control for filtering tasks by due date -- used for
   # pending and assigned views only.
   #----------------------------------------------------------------------------
@@ -139,4 +140,5 @@ module FatFreeCrm::TasksHelper
     text += refresh_sidebar(:index)
     text
   end
+end
 end

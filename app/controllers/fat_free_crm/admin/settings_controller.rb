@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::Admin::SettingsController < FatFreeCrm::Admin::ApplicationController
+module FatFreeCrm
+class Admin::SettingsController < FatFreeCrm::Admin::ApplicationController
   before_action :setup_current_tab, only: [:index]
 
   # GET /admin/settings
@@ -17,4 +18,5 @@ class FatFreeCrm::Admin::SettingsController < FatFreeCrm::Admin::ApplicationCont
   def setup_current_tab
     set_current_tab('admin/settings')
   end
+end
 end

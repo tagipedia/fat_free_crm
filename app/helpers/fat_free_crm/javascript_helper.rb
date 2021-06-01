@@ -6,7 +6,8 @@
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
 # Copied from prototype-rails which is no longer maintained
-module FatFreeCrm::JavascriptHelper
+module FatFreeCrm
+module JavascriptHelper
   #   link_to_function("Show me more", nil, :id => "more_link") do |page|
   #     page[:details].visual_effect  :toggle_blind
   #     page[:more_link].replace_html "Show me less"
@@ -33,4 +34,5 @@ module FatFreeCrm::JavascriptHelper
 
     content_tag(:a, name, html_options.merge(href: href, onclick: onclick))
   end
+end
 end

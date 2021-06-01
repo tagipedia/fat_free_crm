@@ -5,14 +5,15 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::Admin::PluginsController < FatFreeCrm::Admin::ApplicationController
+module FatFreeCrm
+class Admin::PluginsController < FatFreeCrm::Admin::ApplicationController
   before_action :setup_current_tab, only: [:index]
 
   # GET /admin/plugins
   # GET /admin/plugins.xml
   #----------------------------------------------------------------------------
   def index
-    @plugins = FatFreeCrm::Plugin.list
+    @plugins = Plugin.list
 
     respond_with(@plugins)
   end
@@ -22,4 +23,5 @@ class FatFreeCrm::Admin::PluginsController < FatFreeCrm::Admin::ApplicationContr
   def setup_current_tab
     set_current_tab('admin/plugins')
   end
+end
 end

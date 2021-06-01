@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::ApplicationController < ActionController::Base
+module FatFreeCrm
+class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :configure_devise_parameters, if: :devise_controller?
@@ -31,6 +32,8 @@ class FatFreeCrm::ApplicationController < ActionController::Base
 
   include ERB::Util # to give us h and j methods
 
+  layout "fat_free_crm/application"
+  helper FatFreeCrm::Engine.helpers
   # Common auto_complete handler for all core controllers.
   #----------------------------------------------------------------------------
   def auto_complete
@@ -58,6 +61,10 @@ class FatFreeCrm::ApplicationController < ActionController::Base
         }
       end
     end
+  end
+
+  def current_ability
+    @current_ability ||= FatFreeCrm::Ability.new(current_user)
   end
 
   # To deal with pre rails 6 users, reset the session and ask them to relogin
@@ -102,7 +109,7 @@ class FatFreeCrm::ApplicationController < ActionController::Base
 
   #----------------------------------------------------------------------------
   def klass
-    @klass ||= controller_name.classify.constantize
+    @klass ||= "FatFreeCrm::#{controller_name.classify}".constantize
   end
 
   #----------------------------------------------------------------------------
@@ -114,9 +121,9 @@ class FatFreeCrm::ApplicationController < ActionController::Base
   def set_context
     Time.zone = ActiveSupport::TimeZone[session[:timezone_offset]] if session[:timezone_offset]
     if current_user.present? && (locale = current_user.preference[:locale]).present?
-      I18n.locale = locale
+      ::I18n.locale = locale
     elsif Setting.locale.present?
-      I18n.locale = Setting.locale
+      ::I18n.locale = Setting.locale
     end
   end
 
@@ -268,4 +275,5 @@ class FatFreeCrm::ApplicationController < ActionController::Base
       raise "Unknown resource"
     end
   end
+end
 end

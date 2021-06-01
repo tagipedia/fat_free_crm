@@ -26,7 +26,8 @@
 #  created_at     :datetime
 #  updated_at     :datetime
 #
-class FatFreeCrm::CoreField < FatFreeCrm::Field
+module FatFreeCrm
+class CoreField < Field
   # Some CoreField attributes should be read-only
   attr_readonly :name, :as, :collection
   before_destroy :error_on_destroy
@@ -36,4 +37,5 @@ class FatFreeCrm::CoreField < FatFreeCrm::Field
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_core_field, self)
+end
 end

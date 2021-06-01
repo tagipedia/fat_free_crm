@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::TasksController < FatFreeCrm::ApplicationController
+module FatFreeCrm
+class TasksController < FatFreeCrm::ApplicationController
   before_action :set_current_tab, only: %i[index show]
   before_action :update_sidebar, only: :index
 
@@ -224,4 +225,5 @@ class FatFreeCrm::TasksController < FatFreeCrm::ApplicationController
     views = Task::ALLOWED_VIEWS
     views.include?(view) ? view : views.first
   end
+end
 end

@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::List < ActiveRecord::Base
+module FatFreeCrm
+class List < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :url
   belongs_to :user
@@ -16,4 +17,5 @@ class FatFreeCrm::List < ActiveRecord::Base
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_list, self)
+end
 end

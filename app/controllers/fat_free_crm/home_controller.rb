@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::HomeController < FatFreeCrm::ApplicationController
+module FatFreeCrm
+class HomeController < FatFreeCrm::ApplicationController
   skip_before_action :authenticate_user!, only: %i[timezone]
   before_action :set_current_tab, only: :index
 
@@ -165,4 +166,5 @@ class FatFreeCrm::HomeController < FatFreeCrm::ApplicationController
       %w[zero one two].index(words.first).send(words.last) if %w[one two].include?(words.first) && %w[hour day days week weeks month].include?(words.last)
     end
   end
+end
 end

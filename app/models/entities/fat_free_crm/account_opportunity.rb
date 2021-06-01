@@ -16,7 +16,8 @@
 #  created_at     :datetime
 #  updated_at     :datetime
 #
-class FatFreeCrm::AccountOpportunity < ActiveRecord::Base
+module FatFreeCrm
+class AccountOpportunity < ActiveRecord::Base
   belongs_to :account, counter_cache: :opportunities_count
   belongs_to :opportunity
   validates_presence_of :account_id, :opportunity_id
@@ -24,4 +25,5 @@ class FatFreeCrm::AccountOpportunity < ActiveRecord::Base
   has_paper_trail versions: { class_name: 'FatFreeCrm::Version' }
 
   ActiveSupport.run_load_hooks(:fat_free_crm_account_opportunity, self)
+end
 end

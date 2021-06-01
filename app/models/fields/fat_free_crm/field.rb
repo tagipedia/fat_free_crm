@@ -27,7 +27,8 @@
 #  created_at     :datetime
 #  updated_at     :datetime
 #
-class FatFreeCrm::Field < ActiveRecord::Base
+module FatFreeCrm
+class Field < ActiveRecord::Base
   acts_as_list
 
   serialize :collection, Array
@@ -94,9 +95,9 @@ class FatFreeCrm::Field < ActiveRecord::Base
     when 'checkbox'
       value.to_s == '0' ? "no" : "yes"
     when 'date'
-      value&.strftime(I18n.t("date.formats.mmddyy"))
+      value&.strftime(::I18n.t("date.formats.mmddyy"))
     when 'datetime'
-      value&.in_time_zone&.strftime(I18n.t("time.formats.mmddyyyy_hhmm"))
+      value&.in_time_zone&.strftime(::I18n.t("time.formats.mmddyyyy_hhmm"))
     when 'check_boxes'
       value.select(&:present?).in_groups_of(2, false).map { |g| g.join(', ') }.join("<br />".html_safe) if Array === value
     else
@@ -127,4 +128,5 @@ class FatFreeCrm::Field < ActiveRecord::Base
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_field, self)
+end
 end

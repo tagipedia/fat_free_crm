@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-module FatFreeCrm::Admin::FieldsHelper
+module FatFreeCrm
+module Admin::FieldsHelper
   # Returns the list of :null and :safe database column transitions.
   # Only these options should be shown on the custom field edit form.
   def field_edit_as_options(field = nil)
@@ -17,4 +18,5 @@ module FatFreeCrm::Admin::FieldsHelper
   def field_group_options
     FieldGroup.all.map { |fg| [fg.name, fg.id] }
   end
+end
 end

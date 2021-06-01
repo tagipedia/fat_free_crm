@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-module FatFreeCrm::TagsHelper
+module FatFreeCrm
+module TagsHelper
   # Generate tag links for use on asset index pages.
   #----------------------------------------------------------------------------
   def tags_for_index(model)
@@ -28,4 +29,5 @@ module FatFreeCrm::TagsHelper
       end
     end
   end
+end
 end

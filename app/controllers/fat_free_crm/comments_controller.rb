@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::CommentsController < FatFreeCrm::ApplicationController
+module FatFreeCrm
+class CommentsController < FatFreeCrm::ApplicationController
   # GET /comments
   # GET /comments.json
   # GET /comments.xml
@@ -99,4 +100,5 @@ class FatFreeCrm::CommentsController < FatFreeCrm::ApplicationController
   def extract_commentable_name(params)
     params.keys.detect { |x| x =~ /_id$/ }.try(:sub, /_id$/, '')
   end
+end
 end

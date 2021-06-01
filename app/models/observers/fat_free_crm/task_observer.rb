@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::TaskObserver < ActiveRecord::Observer
+module FatFreeCrm
+class TaskObserver < ActiveRecord::Observer
   observe FatFreeCrm::Task
 
   @@tasks = {}
@@ -30,4 +31,5 @@ class FatFreeCrm::TaskObserver < ActiveRecord::Observer
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_task_observer, self)
+end
 end

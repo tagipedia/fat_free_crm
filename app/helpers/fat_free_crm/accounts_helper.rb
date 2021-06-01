@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-module FatFreeCrm::AccountsHelper
+module FatFreeCrm
+module AccountsHelper
   # Sidebar checkbox control for filtering accounts by category.
   #----------------------------------------------------------------------------
   def account_category_checkbox(category, count)
@@ -116,4 +117,5 @@ module FatFreeCrm::AccountsHelper
     return truncate(account.assignee.full_name, length: 16) if account.assigned_to
     nil
   end
+end
 end

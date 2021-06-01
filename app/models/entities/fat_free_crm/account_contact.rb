@@ -16,7 +16,8 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
-class FatFreeCrm::AccountContact < ActiveRecord::Base
+module FatFreeCrm
+class AccountContact < ActiveRecord::Base
   belongs_to :account, counter_cache: :contacts_count
   belongs_to :contact
 
@@ -26,4 +27,5 @@ class FatFreeCrm::AccountContact < ActiveRecord::Base
   validates_presence_of :account_id
 
   ActiveSupport.run_load_hooks(:fat_free_crm_account_contact, self)
+end
 end

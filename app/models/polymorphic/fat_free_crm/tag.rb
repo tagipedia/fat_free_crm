@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::Tag < ActsAsTaggableOn::Tag
+module FatFreeCrm
+class Tag < ActsAsTaggableOn::Tag
   before_destroy :no_associated_field_groups
 
   # Don't allow a tag to be deleted if it is associated with a Field Group
@@ -20,4 +21,5 @@ class FatFreeCrm::Tag < ActsAsTaggableOn::Tag
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_tag, self)
+end
 end

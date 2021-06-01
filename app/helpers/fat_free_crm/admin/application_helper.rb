@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-module FatFreeCrm::Admin::ApplicationHelper
+module FatFreeCrm
+module Admin::ApplicationHelper
   #----------------------------------------------------------------------------
   def link_to_confirm_delete(model)
     link_to(t(:yes_button),
@@ -13,4 +14,5 @@ module FatFreeCrm::Admin::ApplicationHelper
             method:  :delete,
             remote:  true)
   end
+end
 end

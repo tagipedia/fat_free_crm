@@ -37,7 +37,8 @@
 #  background_info :string(255)
 #  skype           :string(128)
 #
-class FatFreeCrm::Contact < ActiveRecord::Base
+module FatFreeCrm
+class Contact < ActiveRecord::Base
   belongs_to :user
   belongs_to :lead, optional: true # TODO: Is this really optional?
   belongs_to :assignee, class_name: "User", foreign_key: :assigned_to, optional: true # TODO: Is this really optional?
@@ -45,7 +46,7 @@ class FatFreeCrm::Contact < ActiveRecord::Base
   has_one :account_contact, dependent: :destroy
   has_one :account, through: :account_contact
   has_many :contact_opportunities, dependent: :destroy
-  has_many :opportunities, -> { order("opportunities.id DESC").distinct }, through: :contact_opportunities
+  has_many :opportunities, -> { order("fat_free_crm_opportunities.id DESC").distinct }, through: :contact_opportunities
   has_many :tasks, as: :asset, dependent: :destroy # , :order => 'created_at DESC'
   has_one :business_address, -> { where(address_type: "Business") }, dependent: :destroy, as: :addressable, class_name: "Address"
   has_many :addresses, dependent: :destroy, as: :addressable, class_name: "Address" # advanced search uses this
@@ -226,4 +227,5 @@ class FatFreeCrm::Contact < ActiveRecord::Base
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_contact, self)
+end
 end

@@ -16,7 +16,8 @@
 #  created_at :datetime
 #  updated_at :datetime
 #
-class FatFreeCrm::Permission < ActiveRecord::Base
+module FatFreeCrm
+class Permission < ActiveRecord::Base
   belongs_to :user, optional: true
   belongs_to :group, optional: true
   belongs_to :asset, polymorphic: true, optional: true
@@ -27,4 +28,5 @@ class FatFreeCrm::Permission < ActiveRecord::Base
   validates_uniqueness_of :user_id, scope: %i[group_id asset_id asset_type]
 
   ActiveSupport.run_load_hooks(:fat_free_crm_permission, self)
+end
 end

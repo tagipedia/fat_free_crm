@@ -5,10 +5,11 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-class FatFreeCrm::Admin::TagsController < FatFreeCrm::Admin::ApplicationController
+module FatFreeCrm
+class Admin::TagsController < FatFreeCrm::Admin::ApplicationController
   before_action :setup_current_tab, only: %i[index show]
 
-  load_resource
+  load_resource class: FatFreeCrm::Tag
 
   # GET /admin/tags
   # GET /admin/tags.xml                                                   HTML
@@ -72,4 +73,5 @@ class FatFreeCrm::Admin::TagsController < FatFreeCrm::Admin::ApplicationControll
   def setup_current_tab
     set_current_tab('admin/tags')
   end
+end
 end

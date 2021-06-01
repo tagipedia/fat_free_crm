@@ -28,7 +28,8 @@
 #  updated_at      :datetime
 #  state           :string(16)      default("Expanded"), not null
 #
-class FatFreeCrm::Email < ActiveRecord::Base
+module FatFreeCrm
+class Email < ActiveRecord::Base
   belongs_to :mediator, polymorphic: true, optional: true # TODO: Is this really optional?
   belongs_to :user, optional: true # TODO: Is this really optional?
 
@@ -52,4 +53,5 @@ class FatFreeCrm::Email < ActiveRecord::Base
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_email, self)
+end
 end

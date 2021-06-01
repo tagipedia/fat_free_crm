@@ -5,7 +5,8 @@
 # Fat Free CRM is freely distributable under the terms of MIT license.
 # See MIT-LICENSE file or http://www.opensource.org/licenses/mit-license.php
 #------------------------------------------------------------------------------
-module FatFreeCrm::HomeHelper
+module FatFreeCrm
+module HomeHelper
   def sort_by_assets
     Version::ASSETS.map do |asset|
       %[{ name: "#{t(asset.singularize)}", on_select: function() { #{redraw(:asset, [asset, t(asset.singularize).downcase], url_for(action: :redraw))} } }]
@@ -59,10 +60,11 @@ module FatFreeCrm::HomeHelper
   def show_hidden_entities_message(count, entity, limit = 10)
     if count > limit
       hidden_count = count - 10
-      entity_string = I18n.t("#{hidden_count == 1 ? entity : entity.pluralize}_small")
+      entity_string = ::I18n.t("#{hidden_count == 1 ? entity : entity.pluralize}_small")
       content_tag(:p) do
         t(:not_showing_hidden_entities, entity: entity_string, count: hidden_count)
       end
     end
   end
+end
 end
