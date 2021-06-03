@@ -56,7 +56,7 @@
     .caption #{t :background_info}
     = auto_link(simple_format @lead.background_info)
 
-  = render "fields/sidebar_show", asset: @lead
+  = render "fat_free_crm/fields/sidebar_show", asset: @lead
 
   - if @lead.tags.present?
     %dt

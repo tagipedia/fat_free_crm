@@ -24,7 +24,7 @@
             = select :field, :as, field_edit_as_options(@field), include_blank: true, id: nil, class: 'select2'
 
       .subform
-        = render(partial: 'admin/fields/subform') unless new_field
+        = render(partial: 'fat_free_crm/admin/fields/subform') unless new_field
 
     .buttonbar
       - if new_field

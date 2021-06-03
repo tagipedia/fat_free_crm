@@ -229,7 +229,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   def spacer(width = 10)
-    image_tag "1x1.gif", width: width, height: 1, alt: nil
+    image_tag "fat_free_crm/1x1.gif", width: width, height: 1, alt: nil
   end
 
   # Reresh sidebar using the action view within the current controller.
@@ -242,7 +242,7 @@ module ApplicationHelper
   #----------------------------------------------------------------------------
   def refresh_sidebar_for(view, action = nil)
     text = ""
-    text += "$('#sidebar').html('#{j render(partial: 'layouts/sidebar', locals: { view: view, action: action })}');"
+    text += "$('#sidebar').html('#{j render(partial: 'layouts/fat_free_crm/sidebar', locals: { view: view, action: action })}');"
     text.html_safe
   end
 
@@ -258,7 +258,7 @@ module ApplicationHelper
       else
         url = "http://" + url unless url.match?(%r{^https?://})
       end
-      link_to(image_tag("#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
+      link_to(image_tag("fat_free_crm/#{site}.gif", size: "15x15"), h(url), "data-popup": true, title: t(:open_in_window, h(url)))
     end.compact.join("\n").html_safe
   end
 

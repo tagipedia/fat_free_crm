@@ -14,4 +14,4 @@
     %tt
       - version.changeset.each do |attr_name, change|
         - label, first, second = parse_version(attr_name, change)
-        = render partial: 'versions/version_item', locals: {label: label, first: first, second: second}
+        = render partial: 'fat_free_crm/versions/version_item', locals: {label: label, first: first, second: second}

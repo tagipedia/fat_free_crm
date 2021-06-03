@@ -8,7 +8,7 @@
     = stylesheet_link_tag 'fat_free_crm/print', media: 'print'
     %style= yield :styles
 
-    = javascript_include_tag :application
+    = javascript_include_tag 'fat_free_crm/application'
     = hook(:javascript_includes, self) {}
 
     %script{type: "text/javascript"}= yield :javascript

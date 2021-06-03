@@ -25,4 +25,4 @@
         = link_to t(:create_field), '#', class: 'create', 'data-for' => create_form_id
 
     .remote{ hidden.merge(id: create_form_id, class: 'create_field') }
-      = render partial: 'admin/fields/form', locals: {field_group_id: field_group.id}
+      = render partial: 'fat_free_crm/admin/fields/form', locals: {field_group_id: field_group.id}

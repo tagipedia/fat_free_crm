@@ -15,7 +15,7 @@
     - elsif called_from_landing_page?("campaigns")
       = refresh_sidebar_for(:campaigns, :show)
       - if @opportunity.id # Make sure the opportunity has been saved.
-        $('#opportunities').prepend('#{ j render(partial: "opportunities/opportunity", collection: [ @opportunity ]) }');
+        $('#opportunities').prepend('#{ j render(partial: "fat_free_crm/opportunities/opportunity", collection: [ @opportunity ]) }');
     - else
       $('#recently').replaceWith('#{ j render(partial: "fat_free_crm/shared/recently") }');
 

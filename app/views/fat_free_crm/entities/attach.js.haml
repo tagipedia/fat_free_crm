@@ -8,7 +8,7 @@
       - view = "pending"
     - else
       - view = "assigned"
-    $('#tasks').prepend('#{ j render(partial: "tasks/#{view}", collection: [ @attachment ], locals: { bucket: @attachment.computed_bucket }) }');
+    $('#tasks').prepend('#{ j render(partial: "fat_free_crm/tasks/#{view}", collection: [ @attachment ], locals: { bucket: @attachment.computed_bucket }) }');
 
 
   - else
