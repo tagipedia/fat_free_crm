@@ -10,38 +10,38 @@
 #------------------------------------------------------------------------------
 
 [{ name: 'contacts_index_brief', title: 'Brief format', icon: 'fa-bars',
-   controllers: ['contacts'], actions: ['index'], template: 'contacts/index_brief' },
+   controllers: ['contacts'], actions: ['index'], template: 'fat_free_crm/contacts/index_brief' },
  { name: 'contacts_index_long', title: 'Long format', icon: 'fa-list',
-   controllers: ['contacts'], actions: ['index'], template: 'contacts/index_long' }, # default index view
+   controllers: ['contacts'], actions: ['index'], template: 'fat_free_crm/contacts/index_long' }, # default index view
  { name: 'contacts_index_full', title: 'Full format', icon: 'fa-list-alt',
-   controllers: ['contacts'], actions: ['index'], template: 'contacts/index_full' },
+   controllers: ['contacts'], actions: ['index'], template: 'fat_free_crm/contacts/index_full' },
  { name: 'contacts_show_normal', title: 'Normal format', icon: 'fa-list',
    controllers: ['contacts'], actions: ['show'], template: nil }, # default show view
 
  { name: 'opportunities_index_brief', title: 'Brief format', icon: 'fa-bars',
-   controllers: ['opportunities'], actions: ['index'], template: 'opportunities/index_brief' },
+   controllers: ['opportunities'], actions: ['index'], template: 'fat_free_crm/opportunities/index_brief' },
  { name: 'opportunities_index_long', title: 'Long format', icon: 'fa-list',
-   controllers: ['opportunities'], actions: ['index'], template: 'opportunities/index_long' }, # default
+   controllers: ['opportunities'], actions: ['index'], template: 'fat_free_crm/opportunities/index_long' }, # default
  { name: 'opportunities_show_normal', title: 'Normal format', icon: 'fa-list',
    controllers: ['opportunities'], actions: ['show'], template: nil }, # default show view
 
  { name: 'accounts_index_brief', title: 'Brief format', icon: 'fa-bars',
-   controllers: ['accounts'], actions: ['index'], template: 'accounts/index_brief' }, # default
+   controllers: ['accounts'], actions: ['index'], template: 'fat_free_crm/accounts/index_brief' }, # default
  { name: 'accounts_index_long', title: 'Long format', icon: 'fa-list',
-   controllers: ['accounts'], actions: ['index'], template: 'accounts/index_long' }, # default
+   controllers: ['accounts'], actions: ['index'], template: 'fat_free_crm/accounts/index_long' }, # default
  { name: 'accounts_show_normal', title: 'Normal format', icon: 'fa-list',
    controllers: ['accounts'], actions: ['show'], template: nil }, # default show view
 
  { name: 'leads_index_brief', title: 'Brief format', icon: 'fa-bars',
-   controllers: ['leads'], actions: ['index'], template: 'leads/index_brief' }, # default
+   controllers: ['leads'], actions: ['index'], template: 'fat_free_crm/leads/index_brief' }, # default
  { name: 'leads_index_long', title: 'Long format', icon: 'fa-list',
-   controllers: ['leads'], actions: ['index'], template: 'leads/index_long' },
+   controllers: ['leads'], actions: ['index'], template: 'fat_free_crm/leads/index_long' },
  { name: 'leads_show_normal', title: 'Normal format', icon: 'fa-list',
    controllers: ['leads'], actions: ['show'], template: nil }, # default show view
 
  { name: 'campaigns_index_brief', title: 'Brief format', icon: 'fa-bars',
-   controllers: ['campaigns'], actions: ['index'], template: 'campaigns/index_brief' }, # default
+   controllers: ['campaigns'], actions: ['index'], template: 'fat_free_crm/campaigns/index_brief' }, # default
  { name: 'campaigns_index_long', title: 'Long format', icon: 'fa-list',
-   controllers: ['campaigns'], actions: ['index'], template: 'campaigns/index_long' },
+   controllers: ['campaigns'], actions: ['index'], template: 'fat_free_crm/campaigns/index_long' },
  { name: 'campaigns_show_normal', title: 'Normal format', icon: 'fa-list',
    controllers: ['campaigns'], actions: ['show'], template: nil }].each { |view| FatFreeCrm::ViewFactory.new(view) }
