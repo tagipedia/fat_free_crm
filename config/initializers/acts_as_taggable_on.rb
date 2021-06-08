@@ -4,7 +4,7 @@ module ActsAsTaggableOn
   end
 
   class Tagging < ::ActiveRecord::Base
-    self.table_name = ""
+    self.table_name = "fat_free_crm_taggings"
   end
 end
 
