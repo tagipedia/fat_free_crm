@@ -60,3 +60,5 @@ require "fat_free_crm/view_factory"
 require "activemodel-serializers-xml"
 require "country_select"
 require "gravatar_image_tag"
+
+require "ransack_ui/ransack_ui"
