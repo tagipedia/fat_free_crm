@@ -13,6 +13,8 @@ class ConvertRadioToRadioButtons < ActiveRecord::Migration[4.2]
     end
   end
   def up
+    FatFreeCrm::Field.table_name = 'fields'
+    FatFreeCrm::FieldGroup.table_name = 'field_groups'
     # UPDATE "fields" SET "as" = 'radio_buttons' WHERE "fields"."as" = $1  [["as", "radio"]]
     FatFreeCrm::Field.where(as: 'radio').update_all(as: 'radio_buttons')
   end
