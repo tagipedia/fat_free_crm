@@ -34,7 +34,7 @@ class Opportunity < ActiveRecord::Base
   has_one :account_opportunity, dependent: :destroy
   has_one :account, through: :account_opportunity
   has_many :contact_opportunities, dependent: :destroy
-  has_many :contacts, -> { order("contacts.id DESC").distinct }, through: :contact_opportunities
+  has_many :contacts, -> { order("fat_free_crm_contacts.id DESC").distinct }, through: :contact_opportunities
   has_many :tasks, as: :asset, dependent: :destroy # , :order => 'created_at DESC'
   has_many :emails, as: :mediator
 
