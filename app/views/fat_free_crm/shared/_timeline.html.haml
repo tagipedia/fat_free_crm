@@ -1,2 +1,2 @@
 - type = timeline.class.name.downcase
-= render "#{type.pluralize}/#{type}", type.to_sym => timeline
+= render "fat_free_crm/#{type.demodulize.pluralize}/#{type.demodulize}", type.demodulize.to_sym => timeline
