@@ -38,10 +38,7 @@ class ContactsController < FatFreeCrm::EntitiesController
 
     if params[:related]
       model, id = params[:related].split('_')
-      if model == "account"
-        related = FatFreeCrm::Account.my(current_user).find_by_id(id)
-      elsif related = model.classify.constantize.my(current_user).find_by_id(id)
-      # if related = FatFreeCrm::Account.my(current_user).find_by_id(id)
+      if related = model.classify.constantize.my(current_user).find_by_id(id)
         instance_variable_set("@#{model}", related)
       else
         respond_to_related_not_found(model) && return
