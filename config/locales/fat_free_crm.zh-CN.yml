@@ -98,19 +98,19 @@ zh-CN:
   activerecord:
     errors:
       models:
-        authentication:
+        fat_free_crm/authentication:
           attributes:
             login_field:
               is_not_valid: 非法
             password_field:
               is_not_valid: 非法
-        account:
+        fat_free_crm/account:
           attributes:
             name:
               missing_account_name: ^请指定用户名
             access:
               share_account: ^请指定可以共享账号的用户
-        campaign:
+        fat_free_crm/campaign:
           attributes:
             name:
               missing_campaign_name: ^请指定促销活动名称
@@ -119,7 +119,7 @@ zh-CN:
 
             access:
               share_campaign: ^请指定可以共享促销活动的用户
-        contact:
+        fat_free_crm/contact:
           attributes:
             first_name:
               missing_first_name: ^请指定用户的名
@@ -127,7 +127,7 @@ zh-CN:
               missing_last_name: ^请指定用户的姓
             access:
               share_contact: ^请指定可以共享联系人的用户
-        lead:
+        fat_free_crm/lead:
           attributes:
             first_name:
               missing_first_name: ^请指定用户的名
@@ -135,19 +135,19 @@ zh-CN:
               missing_last_name: ^请指定用户的姓
             access:
               share_lead: ^请指定可以共享Lead的用户
-        opportunity:
+        fat_free_crm/opportunity:
           attributes:
             name:
               missing_opportunity_name: ^请指定商机名称
             access:
               share_opportunity: ^请指定可以共享商机的用户
-        task:
+        fat_free_crm/task:
           attributes:
             name:
               missing_task_name: ^请指定任务名称
             calendar:
               invalid_date: ^请指定合法日期
-        user:
+        fat_free_crm/user:
           attributes:
             username:
               missing_username: ^请指定用户名
@@ -155,7 +155,7 @@ zh-CN:
             email:
               missing_email: ^请指定邮件地址
               email_in_use: ^此邮件地址已经有人使用
-        custom_field:
+        fat_free_crm/custom_field:
           required: ^%{field} 必须
           maxlength: ^%{field} 太长
           endbeforestart: ^%{field} 结束不能早于开始.

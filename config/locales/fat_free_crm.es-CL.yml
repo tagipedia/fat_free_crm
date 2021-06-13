@@ -98,19 +98,19 @@ es-CL:
   activerecord:
     errors:
       models:
-        authentication:
+        fat_free_crm/authentication:
           attributes:
             login_field:
               is_not_valid: no válido
             password_field:
               is_not_valid: no válido
-        account:
+        fat_free_crm/account:
           attributes:
             name:
               missing_account_name: ^Dé un nombre a la cuenta, por favor.
             access:
               share_account: ^Especifique con qué usuarios quiere compartir ésta cuenta.
-        campaign:
+        fat_free_crm/campaign:
           attributes:
             name:
               missing_campaign_name: ^Dé un nombre a la campaña, por favor.
@@ -119,7 +119,7 @@ es-CL:
                 la campaña es posterior a la fecha de inicio, por favor.
             access:
               share_campaign: ^Especifique con qué usuarios quiere compartir ésta campaña.
-        contact:
+        fat_free_crm/contact:
           attributes:
             first_name:
               missing_first_name: ^Introduzca el nombre, por favor.
@@ -127,7 +127,7 @@ es-CL:
               missing_last_name: ^Introduzca los apellidos, por favor.
             access:
               share_contact: ^Especifique con qué usuarios quiere compartir éste contacto.
-        lead:
+        fat_free_crm/lead:
           attributes:
             first_name:
               missing_first_name: ^Introduzca el nombre, por favor.
@@ -135,20 +135,20 @@ es-CL:
               missing_last_name: ^Introduzca los apellidos, por favor.
             access:
               share_lead: ^Especifique con qué usuarios quiere compartir éste iniciativa.
-        opportunity:
+        fat_free_crm/opportunity:
           attributes:
             name:
               missing_opportunity_name: ^Dé un nombre a ésta oportunidad, por favor.
             access:
               share_opportunity: ^Especifique con qué usuarios quiere compartir éste
                 oportunidad, por favor.
-        task:
+        fat_free_crm/task:
           attributes:
             name:
               missing_task_name: ^Dé un nombre a ésta tarea, por favor.
             calendar:
               invalid_date: ^Introduzca una fecha correcta, por favor.
-        user:
+        fat_free_crm/user:
           attributes:
             username:
               missing_username: ^Introduzca un nombre de usuario, por favor.
@@ -156,7 +156,7 @@ es-CL:
             email:
               missing_email: ^Introduzca su dirección de correo electrónico, por favor.
               email_in_use: ^Hay otro usuario con ésta misma dirección de correo electrónico.
-        custom_field:
+        fat_free_crm/custom_field:
           required: ^%{field} es requerido.
           minlength: ^%{field} es demasiado corto.
           maxlength: ^%{field} es demasiado largo.

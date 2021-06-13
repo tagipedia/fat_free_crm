@@ -98,19 +98,19 @@ et:
   activerecord:
     errors:
       models:
-        authentication:
+        fat_free_crm/authentication:
           attributes:
             login_field:
               is_not_valid: ei ole korrektne
             password_field:
               is_not_valid: ei ole korrektne
-        account:
+        fat_free_crm/account:
           attributes:
             name:
               missing_account_name: ^Palun täida konto nimi.
             access:
               share_account: ^Palun märgi kontoga seotud kasutajad.
-        campaign:
+        fat_free_crm/campaign:
           attributes:
             name:
               missing_campaign_name: ^Palun täida kampaania nimi.
@@ -119,7 +119,7 @@ et:
                 hilisem alguskuupäevast.
             access:
               share_campaign: ^Palun märgi kampaaniaga seotud kasutajad.
-        contact:
+        fat_free_crm/contact:
           attributes:
             first_name:
               missing_first_name: ^Palun täida eesnimi.
@@ -127,7 +127,7 @@ et:
               missing_last_name: ^Palun täida perekonnanimi.
             access:
               share_contact: ^Palun märgi kontaktiga seotud kasutajad.
-        lead:
+        fat_free_crm/lead:
           attributes:
             first_name:
               missing_first_name: ^Palun täida eesnimi.
@@ -135,19 +135,19 @@ et:
               missing_last_name: ^Palun täida perekonnanimi.
             access:
               share_lead: ^Palun märgi juhtlõngaga seotud kasutajad.
-        opportunity:
+        fat_free_crm/opportunity:
           attributes:
             name:
               missing_opportunity_name: ^Palun täida väljavaate nimi.
             access:
               share_opportunity: ^Palun märgi väljavaatega seotud kasutajad.
-        task:
+        fat_free_crm/task:
           attributes:
             name:
               missing_task_name: ^Palun täida ülesande nimi.
             calendar:
               invalid_date: ^Palun märgi korrektne kuupäev.
-        user:
+        fat_free_crm/user:
           attributes:
             username:
               missing_username: ^Palun täida kasutajanimi.
@@ -155,7 +155,7 @@ et:
             email:
               missing_email: ^Palun täida elektronposti aadress.
               email_in_use: ^Elektronposti aadress on juba kasutusel.
-        custom_field:
+        fat_free_crm/custom_field:
           required: ^%{field} on nõutud.
           maxlength: ^%{field} on liiga pikk.
           endbeforestart: ^%{field} ei saa lõppeda enne kui on alanud.

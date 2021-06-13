@@ -98,19 +98,19 @@ nl:
   activerecord:
     errors:
       models:
-        authentication:
+        fat_free_crm/authentication:
           attributes:
             login_field:
               is_not_valid: is niet geldig
             password_field:
               is_not_valid: is niet geldig
-        account:
+        fat_free_crm/account:
           attributes:
             name:
               missing_account_name: ^Geef een account naam op alstublieft.
             access:
               share_account: ^Geef op met welke gebruikers dit account gedeeld moet worden.
-        campaign:
+        fat_free_crm/campaign:
           attributes:
             name:
               missing_campaign_name: ^Geef een campange naam op alstublieft.
@@ -118,7 +118,7 @@ nl:
               dates_not_in_sequence: ^Controleer of de start datum van de campange voor de einddatum ligt.
             access:
               share_campaign: ^Geef op met welke gebruikers deze campange gedeeld moet worden.
-        contact:
+        fat_free_crm/contact:
           attributes:
             first_name:
               missing_first_name: ^Geef alstublieft een voornaam op.
@@ -126,7 +126,7 @@ nl:
               missing_last_name: ^Geef alstublieft een achternaam op.
             access:
               share_contact: ^Geef alstublieft op met welke gebruikers dit contact gedeeld moet worden.
-        lead:
+        fat_free_crm/lead:
           attributes:
             first_name:
               missing_first_name: ^Geef alstublieft een voornaam op.
@@ -134,19 +134,19 @@ nl:
               missing_last_name: ^Geef alstublieft een achternaam op.
             access:
               share_lead: ^Geef alstublieft op met welke gebruikers deze lead gedeeld moet worden.
-        opportunity:
+        fat_free_crm/opportunity:
           attributes:
             name:
               missing_opportunity_name: ^Geef alstublieft een naam aan deze kans.
             access:
               share_opportunity: ^Geef alstublieft op met welke gebruikers deze kans gedeeld moet worden.
-        task:
+        fat_free_crm/task:
           attributes:
             name:
               missing_task_name: ^Geef alstublieft een taak naam op..
             calendar:
               invalid_date: ^Geef alstublieft een juiste datum op.
-        user:
+        fat_free_crm/user:
           attributes:
             username:
               missing_username: ^Geef alstublieft een gebruikersnaam op.
@@ -154,7 +154,7 @@ nl:
             email:
               missing_email: ^Geef alstublieft een email adres op.
               email_in_use: ^Er bestaat reeds een gebruiker met dit email adres.
-        custom_field:
+        fat_free_crm/custom_field:
           required: ^%{field} is vereist.
           minlength: ^%{field} is te kort.
           maxlength: ^%{field} is te lang.

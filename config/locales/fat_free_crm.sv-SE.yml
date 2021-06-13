@@ -74,19 +74,19 @@ sv-SE:
   activerecord:
     errors:
       models:
-        authentication:
+        fat_free_crm/authentication:
           attributes:
             login_field:
               is_not_valid: is not valid
             password_field:
               is_not_valid: is not valid
-        account:
+        fat_free_crm/account:
           attributes:
             name:
               missing_account_name: ^Ange ett kontonamn.
             access:
               share_account: ^Ange användarna som du vill dela kontot med.
-        campaign:
+        fat_free_crm/campaign:
           attributes:
             name:
               missing_campaign_name: ^Ange namnet på kampanjen.
@@ -94,7 +94,7 @@ sv-SE:
               dates_not_in_sequence: ^Kampanjens slutdatum måste vara senare än startdatumet.
             access:
               share_campaign: ^Ange användarna som du vil dela kampanjen med.
-        contact:
+        fat_free_crm/contact:
           attributes:
             first_name:
               missing_first_name: ^Ange förnamn.
@@ -102,7 +102,7 @@ sv-SE:
               missing_last_name: ^Ange efternamn.
             access:
               share_contact: ^Ange användarna som du vill dela kontakten med.
-        lead:
+        fat_free_crm/lead:
           attributes:
             first_name:
               missing_first_name: ^Ange förnamn.
@@ -110,19 +110,19 @@ sv-SE:
               missing_last_name: ^Ange efternamn.
             access:
               share_lead: ^Ange användarna som du vill dela leaden med.
-        opportunity:
+        fat_free_crm/opportunity:
           attributes:
             name:
               missing_opportunity_name: ^Ange namnet på affären.
             access:
               share_opportunity: ^Ange användarna som du vill dela affären med.
-        task:
+        fat_free_crm/task:
           attributes:
             name:
               missing_task_name: ^Ange namnet på ärendet.
             calendar:
               invalid_date: ^Ange ett giltigt datum.
-        user:
+        fat_free_crm/user:
           attributes:
             username:
               missing_username: ^Ange användarnamn.

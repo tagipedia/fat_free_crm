@@ -98,19 +98,19 @@ fr:
   activerecord:
     errors:
       models:
-        authentication:
+        fat_free_crm/authentication:
           attributes:
             login_field:
               is_not_valid: n'est pas valide
             password_field:
               is_not_valid: n'est pas valide
-        account:
+        fat_free_crm/account:
           attributes:
             name:
               missing_account_name: ^Vérifiez le nom de compte.
             access:
               share_account: ^Spécifiez un utilisateur avec qui partager le compte.
-        campaign:
+        fat_free_crm/campaign:
           attributes:
             name:
               missing_campaign_name: ^Précisez un nom de campagne.
@@ -119,7 +119,7 @@ fr:
                 avant la date de début.
             access:
               share_campaign: ^Préciser un utilisateur avec qui partager la campagne.
-        contact:
+        fat_free_crm/contact:
           attributes:
             first_name:
               missing_first_name: ^Précisez le prénom
@@ -127,7 +127,7 @@ fr:
               missing_last_name: ^Précisez le nom.
             access:
               share_contact: ^Précisez avec quel utilisateur partager le contact.
-        lead:
+        fat_free_crm/lead:
           attributes:
             first_name:
               missing_first_name: ^Précisez le prénom
@@ -135,19 +135,19 @@ fr:
               missing_last_name: ^Précisez le nom.
             access:
               share_lead: ^Précisez avec quel utilisateur partager la piste.
-        opportunity:
+        fat_free_crm/opportunity:
           attributes:
             name:
               missing_opportunity_name: ^Spécifiez un nom d'opportunité.
             access:
               share_opportunity: ^Précisez avec quel utilisateur partager l'opportunité.
-        task:
+        fat_free_crm/task:
           attributes:
             name:
               missing_task_name: ^Précisez le nom de la tâche.
             calendar:
               invalid_date: ^Précisez une date valide
-        user:
+        fat_free_crm/user:
           attributes:
             username:
               missing_username: ^Précisez un nom d'utilisateur.
@@ -155,7 +155,7 @@ fr:
             email:
               missing_email: ^Précisez une adresse e-mail
               email_in_use: ^Un utilisateur existe déjà avec cette adresse.
-        custom_field:
+        fat_free_crm/custom_field:
           required: ^%{field} est requis.
           minlength: ^%{field} est trop court.
           maxlength: ^%{field} est trop long.

@@ -51,4 +51,4 @@
     %tr
       %td
         .label #{t :groups}:
-        = f.select :group_ids, Group.all.map {|g| [g.name, g.id]}, {}, multiple: true, class: 'select2'
+        = f.select :group_ids, FatFreeCrm::Group.all.map {|g| [g.name, g.id]}, {}, multiple: true, class: 'select2'

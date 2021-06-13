@@ -74,19 +74,19 @@ pl:
   activerecord:
     errors:
       models:
-        authentication:
+        fat_free_crm/authentication:
           attributes:
             login_field:
               is_not_valid: jest nieprawidłowa
             password_field:
               is_not_valid: jest nieprawidłowe
-        account:
+        fat_free_crm/account:
           attributes:
             name:
               missing_account_name: ^Proszę podać nazwę klienta.
             access:
               share_account: ^Proszę podać użytkowników mających dostęp do klienta.
-        campaign:
+        fat_free_crm/campaign:
           attributes:
             name:
               missing_campaign_name: ^Proszę podać nazwę kampanii.
@@ -95,7 +95,7 @@ pl:
                 data rozpoczęcia.
             access:
               share_campaign: ^Proszę podać użytkowników mających dostęp do kampanii.
-        contact:
+        fat_free_crm/contact:
           attributes:
             first_name:
               missing_first_name: ^Proszę podać imię.
@@ -103,7 +103,7 @@ pl:
               missing_last_name: ^Proszę podać nazwisko.
             access:
               share_contact: ^Proszę podać użytkowników mających dostęp do kontaktu.
-        lead:
+        fat_free_crm/lead:
           attributes:
             first_name:
               missing_first_name: ^Proszę podać imię.
@@ -111,19 +111,19 @@ pl:
               missing_last_name: ^Proszę podać nazwisko.
             access:
               share_lead: ^Proszę podać użytkowników mających dostęp do leada.
-        opportunity:
+        fat_free_crm/opportunity:
           attributes:
             name:
               missing_opportunity_name: ^Proszę podać nazwę szansy.
             access:
               share_opportunity: ^Proszę podać użytkowników mających dostęp do szansy.
-        task:
+        fat_free_crm/task:
           attributes:
             name:
               missing_task_name: ^Proszę podać nazwę zadania.
             calendar:
               invalid_date: ^Proszę podać prawidłową datę.
-        user:
+        fat_free_crm/user:
           attributes:
             username:
               missing_username: ^Proszę podać nazwę uźytkownika.

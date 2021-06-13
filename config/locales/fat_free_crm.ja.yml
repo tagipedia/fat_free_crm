@@ -97,19 +97,19 @@ ja:
   activerecord:
     errors:
       models:
-        authentication:
+        fat_free_crm/authentication:
           attributes:
             login_field:
               is_not_valid: は、不正
             password_field:
               is_not_valid: は、不正
-        account:
+        fat_free_crm/account:
           attributes:
             name:
               missing_account_name: ^取引先名を指定してください。
             access:
               share_account: ^取引先を共有するユーザーを指定してください。
-        campaign:
+        fat_free_crm/campaign:
           attributes:
             name:
               missing_campaign_name: ^キャンペーン名を指定してください。
@@ -117,7 +117,7 @@ ja:
               dates_not_in_sequence: ^キャンペーンの終了日が開始日の後であることを確認してください。
             access:
               share_campaign: ^キャンペーンを共有するユーザーを指定してください。
-        contact:
+        fat_free_crm/contact:
           attributes:
             first_name:
               missing_first_name: ^名を指定してください。
@@ -125,7 +125,7 @@ ja:
               missing_last_name: ^姓を指定してください。
             access:
               share_contact: ^取引先責任者を共有するユーザーを指定してください。
-        lead:
+        fat_free_crm/lead:
           attributes:
             first_name:
               missing_first_name: ^名を指定してください。
@@ -133,19 +133,19 @@ ja:
               missing_last_name: ^姓を指定してください。
             access:
               share_lead: ^リードを共有するユーザーを指定してください。
-        opportunity:
+        fat_free_crm/opportunity:
           attributes:
             name:
               missing_opportunity_name: ^商談名を指定してください。
             access:
               share_opportunity: ^商談を共有するユーザーを指定してください。
-        task:
+        fat_free_crm/task:
           attributes:
             name:
               missing_task_name: ^タスク名を指定してください。
             calendar:
               invalid_date: ^正しい日付を指定してください。
-        user:
+        fat_free_crm/user:
           attributes:
             username:
               missing_username: ^ユーザ名を指定してください。
@@ -153,7 +153,7 @@ ja:
             email:
               missing_email: ^Eメールアドレスを指定してください。
               email_in_use: ^同じEメールアドレスを持つ他のユーザがいます。
-        custom_field:
+        fat_free_crm/custom_field:
           required: ^%{field}が必要です。
           maxlength: ^%{field}が長すぎます。
           endbeforestart: ^%{field}は始まる前に終了できません。

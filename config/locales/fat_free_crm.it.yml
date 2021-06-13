@@ -80,19 +80,19 @@ it:
   activerecord:
     errors:
       models:
-        authentication:
+        fat_free_crm/authentication:
           attributes:
             login_field:
               is_not_valid: non valido
             password_field:
               is_not_valid: non valido
-        account:
+        fat_free_crm/account:
           attributes:
             name:
               missing_account_name: ^Specificare il nome del conto.
             access:
               share_account: ^Specificare gli utenti con cui condividere il conto.
-        campaign:
+        fat_free_crm/campaign:
           attributes:
             name:
               missing_campaign_name: ^Specificare il nome della campagna.
@@ -101,7 +101,7 @@ it:
                 sia successiva a quella iniziale.
             access:
               share_campaign: ^Specificare gli utenti con cui condividere la campagna.
-        contact:
+        fat_free_crm/contact:
           attributes:
             first_name:
               missing_first_name: ^Specificare il nome.
@@ -109,7 +109,7 @@ it:
               missing_last_name: ^Specificare il cognome.
             access:
               share_contact: ^Specificare gli utenti con cui contdividere il contatto.
-        lead:
+        fat_free_crm/lead:
           attributes:
             first_name:
               missing_first_name: ^Specificare il nome.
@@ -117,19 +117,19 @@ it:
               missing_last_name: ^Specificare il cognome.
             access:
               share_lead: ^Specificare gli utenti con cui condividere il potenziale.
-        opportunity:
+        fat_free_crm/opportunity:
           attributes:
             name:
               missing_opportunity_name: ^Specificare il nome dell'opportunita'.
             access:
               share_opportunity: ^Specificare gli utenti con cui condividere l'opportunita'.
-        task:
+        fat_free_crm/task:
           attributes:
             name:
               missing_task_name: ^Specificare il nome del lavoro.
             calendar:
               invalid_date: ^Specificare una data valida.
-        user:
+        fat_free_crm/user:
           attributes:
             username:
               missing_username: ^Specificare il nome utente.

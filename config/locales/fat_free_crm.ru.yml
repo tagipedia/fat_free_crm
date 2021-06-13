@@ -98,19 +98,19 @@ ru:
   activerecord:
     errors:
       models:
-        authentication:
+        fat_free_crm/authentication:
           attributes:
             login_field:
               is_not_valid: неправильно введен
             password_field:
               is_not_valid: неправильно введен
-        account:
+        fat_free_crm/account:
           attributes:
             name:
               missing_account_name: ^Пожалуйста введите название контрагента.
             access:
               share_account: ^Пожалуйста укажите пользователей которым разрешен доступ к данному контрагенту.
-        campaign:
+        fat_free_crm/campaign:
           attributes:
             name:
               missing_campaign_name: ^Пожалуйста введите название кампании.
@@ -119,7 +119,7 @@ ru:
                 ее начала.
             access:
               share_campaign: ^Пожалуйста укажите пользователей которым разрешен доступ к данной кампании.
-        contact:
+        fat_free_crm/contact:
           attributes:
             first_name:
               missing_first_name: ^Пожалуйста введите имя.
@@ -127,7 +127,7 @@ ru:
               missing_last_name: ^Пожалуйста введите фамилию.
             access:
               share_contact: ^Пожалуйста укажите пользователей которым разрешен доступ к данному контакту.
-        lead:
+        fat_free_crm/lead:
           attributes:
             first_name:
               missing_first_name: ^Пожалуйста введите имя.
@@ -135,19 +135,19 @@ ru:
               missing_last_name: ^Пожалуйста введите фамилию.
             access:
               share_lead: ^Пожалуйста укажите пользователей которым разрешен доступ к данному потенциальному клиенту.
-        opportunity:
+        fat_free_crm/opportunity:
           attributes:
             name:
               missing_opportunity_name: ^Пожалуйста введите название возможности.
             access:
               share_opportunity: ^Пожалуйста укажите пользователей которым разрешен доступ к данной возможности.
-        task:
+        fat_free_crm/task:
           attributes:
             name:
               missing_task_name: ^Пожалуйста введите название для задания.
           calendar:
             invalid_date: ^Пожалуйста укажите правильную дату.
-        user:
+        fat_free_crm/user:
           attributes:
             username:
               missing_username: ^Пожалуйста введите имя пользователя.
@@ -155,7 +155,7 @@ ru:
             email:
               missing_email: ^Пожалуйста введите e-mail адрес.
               email_in_use: ^Пользователь с данным e-mail адресом уже существует.
-        custom_field:
+        fat_free_crm/custom_field:
           required: ^%{field} требуется.
           minlength: ^%{field} слишком короткое.
           maxlength: ^%{field} слишком длинное.

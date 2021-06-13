@@ -74,19 +74,19 @@ th:
   activerecord:
     errors:
       models:
-        authentication:
+        fat_free_crm/authentication:
           attributes:
             login_field:
               is_not_valid: ชื่อผู้ใช้ไม่ถูกต้อง
             password_field:
               is_not_valid: รหัสผ่านไม่ถูกต้อง
-        account:
+        fat_free_crm/account:
           attributes:
             name:
               missing_account_name: ^โปรดระบุบัญชีผู้ใช้.
             access:
               share_account: ^โปรดระบุผู้ใช้ที่ต้องการใช้บัญชีร่วมกัน
-        campaign:
+        fat_free_crm/campaign:
           attributes:
             name:
               missing_campaign_name: ^โปรดระบุชื่อแคมเปญ
@@ -94,7 +94,7 @@ th:
               dates_not_in_sequence: ^โปรดตรวจสอบอีกครั้งว่าวันสิ้นสุดแคมเปญอยู่หลังจากวันเริ่มต้น.
             access:
               share_campaign: ^โปรดระบุผู้ใช้ที่ต้องการใช้แคมเปญร่วมกัน
-        contact:
+        fat_free_crm/contact:
           attributes:
             first_name:
               missing_first_name: ^โปรดระบุชื่อจริง
@@ -102,7 +102,7 @@ th:
               missing_last_name: ^โปรดระบุนามสกุล
             access:
               share_contact: ^โปรดระบุผู้ใช้ที่ต้องการใช้ที่อยู่ติดต่อร่วมกัน
-        lead:
+        fat_free_crm/lead:
           attributes:
             first_name:
               missing_first_name: ^โปรดระบุชื่อจริง
@@ -110,19 +110,19 @@ th:
               missing_last_name: ^โปรดระบุนามสกุล
             access:
               share_lead: ^โปรดระบุผู้ใช้ที่ต้องการใช้รายการผู้สนใจร่วมกัน
-        opportunity:
+        fat_free_crm/opportunity:
           attributes:
             name:
               missing_opportunity_name: ^โปรดระบุชื่อของโอกาสปิดการขาย
             access:
               share_opportunity: ^โปรดระบุผู้ใช้ที่ต้องการใช้โอกาสปิดการขายร่วมกัน
-        task:
+        fat_free_crm/task:
           attributes:
             name:
               missing_task_name: ^โปรดระบุชื่อภาระกิจ
             calendar:
               invalid_date: ^โปรดระบุวันที่ให้ถูกต้อง
-        user:
+        fat_free_crm/user:
           attributes:
             username:
               missing_username: ^โปรดระบุชื่อผู้ใช้

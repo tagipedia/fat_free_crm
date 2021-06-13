@@ -234,20 +234,20 @@ de:
   activerecord:
     errors:
       models:
-        account:
+        fat_free_crm/account:
           attributes:
             access:
               share_account: ^Bitte geben Sie die Benutzer an, mit denen Sie an dieser
                 Firma arbeiten.
             name:
               missing_account_name: ^Bitte geben Sie den Firmennamen an.
-        task:
+        fat_free_crm/task:
           attributes:
             calendar:
               invalid_date: ^Bitte geben Sie ein gültiges Datum an.
             name:
               missing_task_name: ^Bitte geben Sie eine Aufgabenbezeichnung an.
-        campaign:
+        fat_free_crm/campaign:
           attributes:
             access:
               share_campaign: ^Bitte geben Sie die Benutzer an, mit denen Sie an dieser
@@ -257,7 +257,7 @@ de:
                 der Kampagne nach dem Startdatum liegt.
             name:
               missing_campaign_name: ^Bitte geben Sie den Namen der Kampagne an.
-        lead:
+        fat_free_crm/lead:
           attributes:
             access:
               share_lead: ^Bitte geben Sie die Benutzer an, mit denen Sie an dieser
@@ -266,13 +266,13 @@ de:
               missing_first_name: ^Bitte geben Sie den Vornamen an.
             last_name:
               missing_last_name: ^Bitte geben Sie den Nachnamen an.
-        authentication:
+        fat_free_crm/authentication:
           attributes:
             password_field:
               is_not_valid: ist nicht gültig
             login_field:
               is_not_valid: ist nicht gültig
-        contact:
+        fat_free_crm/contact:
           attributes:
             access:
               share_contact: ^Bitte geben Sie die Benutzer an, mit denen Sie an diesem
@@ -281,7 +281,7 @@ de:
               missing_first_name: ^Bitte geben Sie den Vornamen an.
             last_name:
               missing_last_name: ^Bitte geben Sie den Nachnamen an.
-        user:
+        fat_free_crm/user:
           attributes:
             username:
               missing_username: ^Bitte geben Sie einen Benutzernamen an.
@@ -289,7 +289,7 @@ de:
             email:
               missing_email: ^Bitte geben Sie eine Mailadresse an.
               email_in_use: ^Es gibt schon einen Benutzer mit dieser Mailadresse.
-        opportunity:
+        fat_free_crm/opportunity:
           attributes:
             access:
               share_opportunity: ^Bitte geben Sie die Benutzer an, mit denen Sie an
@@ -297,7 +297,7 @@ de:
             name:
               missing_opportunity_name: ^Bitte geben Sie die Bezeichnung der Chance
                 an.
-        custom_field:
+        fat_free_crm/custom_field:
           required: ^%{field} muss vorhanden sein.
           minlength: ^%{field} ist zu kurz.
           maxlength: ^%{field} ist zu lang.

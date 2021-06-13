@@ -101,19 +101,19 @@ cs:
   activerecord:
     errors:
       models:
-        authentication:
+        fat_free_crm/authentication:
           attributes:
             login_field:
               is_not_valid: neplatné
             password_field:
               is_not_valid: neplatné
-        account:
+        fat_free_crm/account:
           attributes:
             name:
               missing_account_name: ^Zadejte jméno klienta.
             access:
               share_account: ^Určete uživatele pro sdílení klienta.
-        campaign:
+        fat_free_crm/campaign:
           attributes:
             name:
               missing_campaign_name: ^Zadejte název kampaně.
@@ -121,7 +121,7 @@ cs:
               dates_not_in_sequence: ^Ujistěte se, že počáteční datum je před konečným.
             access:
               share_campaign: ^Určete uživatele pro sdílení kampaně.
-        contact:
+        fat_free_crm/contact:
           attributes:
             first_name:
               missing_first_name: ^Zadejte jméno.
@@ -129,7 +129,7 @@ cs:
               missing_last_name: ^Zadejte příjmení.
             access:
               share_contact: ^Určete uživatele pro sdílení kontaktu.
-        lead:
+        fat_free_crm/lead:
           attributes:
             first_name:
               missing_first_name: ^Zadejte jméno.
@@ -137,19 +137,19 @@ cs:
               missing_last_name: ^Zadejte příjmení.
             access:
               share_lead: ^Určete uživatele pro sdílení s lead.
-        opportunity:
+        fat_free_crm/opportunity:
           attributes:
             name:
               missing_opportunity_name: ^Zadejte název příležitosti.
             access:
               share_opportunity: ^Zvolte uživatele pro sdílení příležitosti.
-        task:
+        fat_free_crm/task:
           attributes:
             name:
               missing_task_name: ^Zadejte název úkolu.
             calendar:
               invalid_date: ^Zadejte platné datum.
-        user:
+        fat_free_crm/user:
           attributes:
             username:
               missing_username: ^Zadejte jméno uživatele.

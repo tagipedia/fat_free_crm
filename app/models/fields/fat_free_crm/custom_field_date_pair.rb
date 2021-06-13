@@ -39,7 +39,7 @@ class CustomFieldDatePair < CustomFieldPair
 
       from = obj.send(start.name)
       to = obj.send(name)
-      obj.errors.add(name.to_sym, ::I18n.t('activerecord.errors.models.custom_field.endbeforestart', field: start.label)) if from.present? && to.present? && (from > to)
+      obj.errors.add(name.to_sym, ::I18n.t('activerecord.errors.models.fat_free_crm/custom_field.endbeforestart', field: start.label)) if from.present? && to.present? && (from > to)
     end
   end
 

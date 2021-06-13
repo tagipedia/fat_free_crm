@@ -24,7 +24,7 @@ Devise.setup do |config|
   config.mailer_sender = 'noreply@fatfreecrm.com'
 
   # Configure the class responsible to send e-mails.
-  config.mailer = 'DeviseMailer'
+  config.mailer = 'FatFreeCrm::DeviseMailer'
 
   # Configure the parent class responsible to send e-mails.
   # config.parent_mailer = 'ActionMailer::Base'
