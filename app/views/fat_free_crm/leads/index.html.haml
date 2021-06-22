@@ -2,6 +2,10 @@
 
 = render 'fat_free_crm/entities/title_bar'
 
+= form_tag import_leads_path, multipart: true, class: "upload-excel" do
+  = file_field_tag :file
+  = submit_tag "Import"
+
 .remote#create_lead{ hidden }
 
 = render 'search'

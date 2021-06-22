@@ -103,6 +103,7 @@ FatFreeCrm.application.routes.draw do
     collection do
       get :advanced_search
       post :filter
+      post :import
       get :options
       get :field_group
       match :auto_complete, via: %i[get post]

@@ -77,6 +77,12 @@ class LeadsController < FatFreeCrm::EntitiesController
     end
   end
 
+  def import
+    uploaded_file = FileUpload.new(attachment: params[:file])
+    uploaded_file.save!
+    FatFreeCrm::Lead.delay.import(uploaded_file.id)
+  end
+
   # PUT /leads/1
   #----------------------------------------------------------------------------
   def update
