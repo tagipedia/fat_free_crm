@@ -91,7 +91,7 @@ class Lead < ActiveRecord::Base
       if spreadsheet.row(i)[1].present? && spreadsheet.row(i)[2].present?
         lead = FatFreeCrm::Lead.new(first_name: spreadsheet.row(i)[1], last_name: spreadsheet.row(i)[2], email: spreadsheet.row(i)[3], company: spreadsheet.row(i)[7], title: spreadsheet.row(i)[8],
             alt_email: spreadsheet.row(i)[3], user_id: super_user.id, tag_list: ["contact_excl"], phone: spreadsheet.row(i)[4], mobile: spreadsheet.row(i)[5],
-            business_address_attributes: {address_type: "Business", street1: spreadsheet.row(i)[10], street2: spreadsheet.row(i)[11], city: spreadsheet.row(i)[14], state: spreadsheet.row(i)[15], zipcode: spreadsheet.row(i)[16],country: spreadsheet.row(i)[17]})
+            business_address_attributes: {address_type: "Business", street1: spreadsheet.row(i)[10], street2: spreadsheet.row(i)[11], city: spreadsheet.row(i)[14], state: spreadsheet.row(i)[15], zipcode: spreadsheet.row(i)[16],country: spreadsheet.row(i)[17]}, status: 'new', source: 'self')
         puts "index", index, spreadsheet.row(i)[1], spreadsheet.row(i)[2], lead.save!
       end
     end
