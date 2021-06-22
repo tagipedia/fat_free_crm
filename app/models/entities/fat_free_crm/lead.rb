@@ -37,6 +37,7 @@
 #  background_info :string(255)
 #  skype           :string(128)
 #
+require 'roo'
 module FatFreeCrm
 class Lead < ActiveRecord::Base
   belongs_to :user, optional: true # TODO: Is this really optional?
@@ -81,6 +82,29 @@ class Lead < ActiveRecord::Base
 
   after_create :increment_leads_count
   after_destroy :decrement_leads_count
+
+  def self.import(file_id)
+    file = FileUpload.find(file_id)
+    spreadsheet = FatFreeCrm::Lead.open_spreadsheet(file.attachment)
+    super_user = FatFreeCrm::User.where(admin: true).first
+    (2..spreadsheet.last_row).each_with_index do |i, index|
+      if spreadsheet.row(i)[1].present? && spreadsheet.row(i)[2].present?
+        lead = FatFreeCrm::Lead.new(first_name: spreadsheet.row(i)[1], last_name: spreadsheet.row(i)[2], email: spreadsheet.row(i)[3], company: spreadsheet.row(i)[7], title: spreadsheet.row(i)[8],
+            alt_email: spreadsheet.row(i)[3], user_id: super_user.id, tag_list: ["contact_excl"], phone: spreadsheet.row(i)[4], mobile: spreadsheet.row(i)[5],
+            business_address_attributes: {address_type: "Business", street1: spreadsheet.row(i)[10], street2: spreadsheet.row(i)[11], city: spreadsheet.row(i)[14], state: spreadsheet.row(i)[15], zipcode: spreadsheet.row(i)[16],country: spreadsheet.row(i)[17]})
+        puts "index", index, spreadsheet.row(i)[1], spreadsheet.row(i)[2], lead.save!
+      end
+    end
+  end
+
+  def self.open_spreadsheet(file)
+    case File.extname(file.identifier)
+    when ".csv" then Roo::Csv.new(file.path)
+    when ".xls" then Roo::Excel.new(file.path)
+    when ".xlsx" then Roo::Excelx.new(file.path)
+    else raise "Unknown file type: #{file.original_filename}"
+    end
+  end
 
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
