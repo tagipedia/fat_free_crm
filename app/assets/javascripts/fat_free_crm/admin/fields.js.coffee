@@ -26,7 +26,7 @@
   # Load custom field subform
   $(document).on 'change', '.fields select[name="field[as]"]', ->
     $.ajax(
-        url: '/admin/fields/subform?' + $(this).parents('form').serialize()
+        url: '/fat_free_crm/admin/fields/subform?' + $(this).parents('form').serialize()
         dataType: 'html'
         context: $(this).closest('form').find('.subform')
         success: (data) ->

@@ -1,4 +1,4 @@
-- asset = @field_group.klass_name.downcase
+- asset = @field_group.klass_name.downcase.demodulize
 - id = "#{asset}_create_field_group"
 
 crm.flick('empty', 'toggle');

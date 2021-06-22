@@ -266,14 +266,15 @@ class ApplicationController < ActionController::Base
   end
 
   def find_class(asset)
-    Rails.application.eager_load! unless Rails.application.config.cache_classes
-    classes = ActiveRecord::Base.descendants.map(&:name)
-    find = classes.find { |m| m == asset.classify }
-    if find
-      find.safe_constantize
-    else
-      raise "Unknown resource"
-    end
+    # Rails.application.eager_load! unless Rails.application.config.cache_classes
+    # classes = ActiveRecord::Base.descendants.map(&:name)
+    # find = classes.find { |m| m == "FatFreeCrm::#{asset.classify}" }
+    # if find
+    #   find.safe_constantize
+    # else
+    #   raise "Unknown resource"
+    # end
+    "FatFreeCrm::#{asset.classify}".safe_constantize
   end
 end
 end

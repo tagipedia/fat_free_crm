@@ -11,13 +11,13 @@
 .inline_tabs
   %ul
     - list_of_entities.each do |entity|
-      - asset = entity.downcase
-      %li{ "data-tab-class" => asset, class: ("selected" if entity == 'Contact') }
+      - asset = entity.demodulize.downcase
+      %li{ "data-tab-class" => asset, class: ("selected" if entity == 'FatFreeCrm::Contact') }
         = link_to t(entity), "#"
 
 - list_of_entities.each do |entity|
-  - asset = entity.downcase
-  - klass = asset.classify.constantize
+  - asset = entity.demodulize.downcase
+  - klass = "FatFreeCrm::#{asset.classify}".constantize
   .fields{ id: "#{asset}_section", style: ("display: none;" if asset != 'contact') }
 
     - create_form_id = "#{asset}_create_field_group"
