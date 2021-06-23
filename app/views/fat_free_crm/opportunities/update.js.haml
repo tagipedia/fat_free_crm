@@ -1,6 +1,6 @@
 - entity_name = controller.controller_name.singularize.underscore #account
 - @entity = instance_variable_get("@#{entity_name}")
-- id = called_from_landing_page? ? "edit_#{entity_name}" : dom_id(@entity)
+- id = called_from_landing_page? ? "edit_#{entity_name}" : dom_id(@entity, 'fat_free_crm')
 
 - if @entity.errors.empty?
   - if called_from_landing_page?
@@ -21,6 +21,6 @@
 - else
   $('##{id}').html('#{ j render(partial: "edit") }');
   crm.create_or_select_account(#{ request.referer =~ /\/accounts\// || @account.id.blank? });
-  $('##{dom_id(@entity, :edit)} input[type!=hidden]').first().focus();
+  $('##{dom_id(@entity, :edit_fat_free_crm)} input[type!=hidden]').first().focus();
 
 = hook(:entity_update, self, {entity: @entity})

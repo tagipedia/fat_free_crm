@@ -1,4 +1,4 @@
-- id = dom_id(@group)
+- id = dom_id(@group, 'fat_free_crm')
 
 - if @group.errors.empty?
   $('##{id}').replaceWith('#{ j render(partial: "group", collection: [ @group ]) }')

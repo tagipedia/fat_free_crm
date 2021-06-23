@@ -1,9 +1,9 @@
-- id = dom_id(@user)
+- id = dom_id(@user, 'fat_free_crm')
 
 - if @user.destroyed?
   $('##{id}').css('background-color', '#ffe4e1').slideUp(250).remove();
 - else
-  crm.flick('#{dom_id(@user, :confirm)}', 'remove');
+  crm.flick('#{dom_id(@user, :confirm_fat_free_crm)}', 'remove');
   $('#flash').html('#{j flash[:warning]}');
   crm.flash('warning');
   - flash[:warning] = nil

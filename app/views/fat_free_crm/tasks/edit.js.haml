@@ -1,4 +1,4 @@
-- id = dom_id(@task)
+- id = dom_id(@task, 'fat_free_crm')
 
 - if params[:cancel].true?     # <----------------- Hide [Edit Task]
 
@@ -14,7 +14,7 @@
   - if @previous
     - if @previous.is_a?(Task)
       - partial = (@previous.assigned_to && @previous.assigned_to != current_user.id) ? "assigned" : "pending"
-      $('##{dom_id(@previous)}').replaceWith('#{ j render(partial: partial, collection: [ @previous ], locals: { bucket: nil }) }');
+      $('##{dom_id(@previous, 'fat_free_crm')}').replaceWith('#{ j render(partial: partial, collection: [ @previous ], locals: { bucket: nil }) }');
     - else
       crm.flick('task_#{@previous}', 'remove');
 

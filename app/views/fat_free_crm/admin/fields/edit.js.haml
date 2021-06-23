@@ -1,3 +1,3 @@
-- id = dom_id(@field)
+- id = dom_id(@field, 'fat_free_crm')
 html = $.parseHTML('#{j render(partial: "fat_free_crm/admin/fields/form")}')
 $('##{id}').find('.edit_field').replaceWith( html )

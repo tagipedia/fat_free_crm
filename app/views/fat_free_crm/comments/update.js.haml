@@ -1,4 +1,4 @@
-- id = dom_id(@comment)
+- id = dom_id(@comment, 'fat_free_crm')
 
 - if @comment.errors.empty?
   $('##{id}').replaceWith('#{ j render(partial: "comment", collection: [ @comment ]) }');

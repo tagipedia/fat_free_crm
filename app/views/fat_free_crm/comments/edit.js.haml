@@ -1,4 +1,4 @@
-- id = dom_id(@comment)
+- id = dom_id(@comment, 'fat_free_crm')
 
 - if params[:cancel].true?     # <----------------- Hide [Edit Comment]
   $('##{id}').replaceWith('#{ j render(partial: "comment", collection: [ @comment ]) }');
@@ -8,4 +8,4 @@
   -# Disable onMouseOver for the list item.
   crm.highlight_off('#{id}');
   $('##{id}').html('#{ j render(partial: "edit", locals: { commentable: @comment.commentable }) }');
-  $('##{dom_id(@comment, :text)}').focus();
+  $('##{dom_id(@comment, :text_fat_free_crm)}').focus();

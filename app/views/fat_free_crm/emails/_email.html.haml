@@ -23,14 +23,14 @@
         = l(email.sent_at, format: :mmddhhss) << " | "
         = link_to_function(email.collapsed? ? t(:more) : t(:less), "crm.flip_note_or_email(this, '#{t(:more)}', '#{t(:less)}')", class: "toggle")
 
-      %dt{ hidden_if(email.expanded?), id: dom_id(email, :truncated) }
+      %dt{ hidden_if(email.expanded?), id: dom_id(email, :truncated_fat_free_crm) }
         %p
           = h(email.subject)
           %tt
             = " - "
             = truncated
 
-      %dt.textile{ hidden_if(email.collapsed?), id: dom_id(email, :formatted) }
+      %dt.textile{ hidden_if(email.collapsed?), id: dom_id(email, :formatted_fat_free_crm) }
         .email_content
           %p= h(email.subject)
           = auto_link(formatted)

@@ -21,9 +21,9 @@
 
     - if can?(:read, commentable)
       - if collapsable
-        %dt{ hidden_if(comment.expanded?), id: dom_id(comment, :truncated) }
+        %dt{ hidden_if(comment.expanded?), id: dom_id(comment, :truncated_fat_free_crm) }
           = truncated
-        %dt.textile{ hidden_if(comment.collapsed?), id: dom_id(comment, :formatted) }
+        %dt.textile{ hidden_if(comment.collapsed?), id: dom_id(comment, :formatted_fat_free_crm) }
           = sanitize auto_link(formatted)
       - else
         %dt.textile= sanitize auto_link(formatted)

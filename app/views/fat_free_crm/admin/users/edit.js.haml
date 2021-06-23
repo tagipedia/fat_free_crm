@@ -1,4 +1,4 @@
-- id = dom_id(@user)
+- id = dom_id(@user, 'fat_free_crm')
 
 - if params[:cancel].true?     # <----------------- Hide [Edit User]
   $('##{id}').replaceWith('#{ j render(partial: "user", collection: [ @user ]) }');
@@ -7,7 +7,7 @@
 
   - if @previous                                    # Hide open [Edit User] form if any.
     - if @previous.is_a?(User)                      # Previous user still exists?
-      $('##{dom_id(@previous)}').replaceWith('#{ j render(partial: "user", collection: [ @previous ]) }');
+      $('##{dom_id(@previous, 'fat_free_crm')}').replaceWith('#{ j render(partial: "user", collection: [ @previous ]) }');
     - else
       crm.flick('user_#{@previous}', 'remove');
 

@@ -1,9 +1,9 @@
 - class_name = @comment.commentable.class.name.underscore
-- id_prefix = "#{class_name}_#{@comment.commentable.id}"
+- id_prefix = dom_id(@comment.commentable, 'fat_free_crm')
 
 - if @comment.valid?
   $('##{id_prefix}_comment_new').after('#{ j (render partial: "comment", locals: { comment: @comment }) }');
-  $('##{dom_id(@comment)}').effect("highlight", { duration:1500 });
+  $('##{dom_id(@comment, 'fat_free_crm')}').effect("highlight", { duration:1500 });
   $('##{id_prefix}_post').hide();
   $('##{id_prefix}_ask').show();
 

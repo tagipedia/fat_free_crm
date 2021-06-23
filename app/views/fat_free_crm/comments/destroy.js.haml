@@ -1,5 +1,5 @@
 - class_name = @comment.commentable.class.name.downcase
-- id_prefix = "#{class_name}_#{@comment.commentable.id}"
+- id_prefix = dom_id(@comment.commentable, 'fat_free_crm')
 
 $('##{id_prefix}_shown_notes').val('#{ j @comment.commentable.comment_ids.join(',') }');
-$('##{dom_id(@comment)}').css('background-color', '#ffe4e1').slideUp(250);
+$('##{dom_id(@comment, 'fat_free_crm')}').css('background-color', '#ffe4e1').slideUp(250);

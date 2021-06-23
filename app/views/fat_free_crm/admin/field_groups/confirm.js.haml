@@ -1,7 +1,7 @@
-- id = dom_id(@field_group, :confirm)
+- id = dom_id(@field_group, :confirm_fat_free_crm)
 
 if ($('##{id}').size() > 0) {
 crm.flick('#{id}', 'remove');
 } else {
-$('##{dom_id(@field_group)}').prepend('#{ j (render partial: "confirm") }');
+$('##{dom_id(@field_group, 'fat_free_crm')}').prepend('#{ j (render partial: "confirm") }');
 }

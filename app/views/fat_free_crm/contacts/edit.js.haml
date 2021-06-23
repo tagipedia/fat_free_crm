@@ -1,6 +1,6 @@
 - entity_name = controller.controller_name.singularize.underscore #account
 - @entity = instance_variable_get("@#{entity_name}")
-- id = dom_id(@entity)
+- id = dom_id(@entity, 'fat_free_crm')
 
 - if params[:cancel].true? # <--------------------- Hide [Edit]
 
@@ -16,7 +16,7 @@
   - if params[:cancel].blank?                       # Called from contacts list item...
     - if @previous                                  # Hide open [Edit Contact] form if any.
       - if @previous.is_a?(Contact)
-        $('##{dom_id(@previous)}').replaceWith('#{ j render(partial: entity_name, collection: [ @previous ]) }');
+        $('##{dom_id(@previous, 'fat_free_crm')}').replaceWith('#{ j render(partial: entity_name, collection: [ @previous ]) }');
       - else
         crm.flick('#{entity_name}_#{@previous}', 'remove');
     -# Disable onMouseOver for the list item.

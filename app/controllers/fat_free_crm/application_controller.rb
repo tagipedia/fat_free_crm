@@ -274,7 +274,7 @@ class ApplicationController < ActionController::Base
     # else
     #   raise "Unknown resource"
     # end
-    "FatFreeCrm::#{asset.classify}".safe_constantize
+    "FatFreeCrm::#{asset.demodulize.classify}".safe_constantize
   end
 end
 end

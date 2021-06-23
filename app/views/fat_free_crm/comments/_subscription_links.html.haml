@@ -1,5 +1,5 @@
 - class_name = entity.class.name.downcase
-- id_prefix = "#{class_name}_#{entity.id}"
+- id_prefix = dom_id(entity, 'fat_free_crm')
 
 - subscribed = entity.subscribed_users.include?(current_user.id)
 

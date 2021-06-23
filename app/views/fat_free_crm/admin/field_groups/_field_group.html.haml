@@ -1,8 +1,8 @@
 - asset = field_group.klass_name.downcase
 
 .field_group[field_group]
-  - edit_form_id = dom_id(field_group, :edit)
-  - create_form_id = dom_id(field_group, :create_field)
+  - edit_form_id = dom_id(field_group, :edit_fat_free_crm)
+  - create_form_id = dom_id(field_group, :create_field_fat_free_crm)
 
   .subtitle_tools
     - unless field_group.name == "custom_fields"
@@ -13,12 +13,12 @@
       |
       = link_to_confirm(field_group)
 
-  .subtitle{ id: "#{dom_id(field_group)}_title" }= field_group_subtitle(field_group)
+  .subtitle{ id: "#{dom_id(field_group, 'fat_free_crm')}_title" }= field_group_subtitle(field_group)
 
   .remote{ hidden.merge(id: edit_form_id) }
 
   .list
-    %ul{ id: dom_id(field_group, :fields), 'data-sortable' => sort_admin_fields_path(field_group_id: field_group.id), 'data-sortable-connect-with' => '.fields', 'data-sortable-handle' => '.handle' }
+    %ul{ id: dom_id(field_group, :fields_fat_free_crm), 'data-sortable' => sort_admin_fields_path(field_group_id: field_group.id), 'data-sortable-connect-with' => '.fields', 'data-sortable-handle' => '.handle' }
       = render partial: "fat_free_crm/admin/fields/field", collection: field_group.fields.without_pairs
       %li.empty
         = t(:field_group_empty)
