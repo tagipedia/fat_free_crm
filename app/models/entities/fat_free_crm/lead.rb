@@ -38,6 +38,8 @@
 #  skype           :string(128)
 #
 require 'roo'
+require 'sendgrid-ruby'
+
 module FatFreeCrm
 class Lead < ActiveRecord::Base
   belongs_to :user, optional: true # TODO: Is this really optional?
@@ -83,18 +85,25 @@ class Lead < ActiveRecord::Base
   after_create :increment_leads_count
   after_destroy :decrement_leads_count
 
+  attr_accessor :skip_register_recipient
+  after_create :register_recipient, unless: :skip_register_recipient
+
   def self.import(file_id)
     file = FileUpload.find(file_id)
     spreadsheet = FatFreeCrm::Lead.open_spreadsheet(file.attachment)
     super_user = FatFreeCrm::User.where(admin: true).first
+    leads = []
     (2..spreadsheet.last_row).each_with_index do |i, index|
       if spreadsheet.row(i)[1].present? && spreadsheet.row(i)[2].present?
         lead = FatFreeCrm::Lead.new(first_name: spreadsheet.row(i)[1], last_name: spreadsheet.row(i)[2], email: spreadsheet.row(i)[3], company: spreadsheet.row(i)[7], title: spreadsheet.row(i)[8],
             alt_email: spreadsheet.row(i)[3], user_id: super_user.id, tag_list: ["contact_excl"], phone: spreadsheet.row(i)[4], mobile: spreadsheet.row(i)[5],
             business_address_attributes: {address_type: "Business", street1: spreadsheet.row(i)[10], street2: spreadsheet.row(i)[11], city: spreadsheet.row(i)[14], state: spreadsheet.row(i)[15], zipcode: spreadsheet.row(i)[16],country: spreadsheet.row(i)[17]}, status: 'new', source: 'self')
+        lead.skip_register_recipient = true
         puts "index", index, spreadsheet.row(i)[1], spreadsheet.row(i)[2], lead.save!
+        leads << lead
       end
     end
+    FatFreeCrm::Lead.register_recipients(leads)
   end
 
   def self.open_spreadsheet(file)
@@ -189,6 +198,40 @@ class Lead < ActiveRecord::Base
   end
   alias name full_name
 
+  def recipient
+    {
+      first_name: self.first_name,
+      last_name: self.last_name,
+      email: self.email,
+      alternate_emails: self.alt_email.present? ? [self.alt_email] : [],
+      phone_number: self.phone,
+      city: self.business_address.try(:city),
+      state_province_region: self.business_address.try(:state),
+      postal_code: self.business_address.try(:zipcode),
+      country: self.business_address.try(:country),
+      address_line_1: self.business_address.try(:street1),
+      address_line_2: self.business_address.try(:street2),
+      # custom_fields: {
+      #   company: self.company,
+      #   title: self.title,
+      #   tag_list: self.tag_list,
+      #   blog: self.blog,
+      #   status: self.status,
+      #   source: self.source,
+      #   mobile_number: self.mobile,
+      # },
+      custom_fields: {
+        e1_T: self.company,
+        e2_T: self.title,
+        e3_T: self.tag_list,
+        e4_T: self.blog,
+        e5_T: self.status,
+        e6_T: self.source,
+        e7_T: self.mobile,
+      }
+    }
+  end
+
   private
 
   #----------------------------------------------------------------------------
@@ -205,6 +248,16 @@ class Lead < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def users_for_shared_access
     errors.add(:access, :share_lead) if self[:access] == "Shared" && permissions.none?
+  end
+
+  def register_recipient
+    FatFreeCrm::Lead.register_recipients([self])
+  end
+
+  def self.register_recipients(leads)
+    sg = SendGrid::API.new(api_key: Rails.application.credentials[:SENDGRID_API_KEY])
+    data = JSON.parse({contacts: leads.map{|lead| lead.recipient}}.to_json)
+    response = sg.client.marketing.contacts.put(request_body: data)
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_lead, self)
