@@ -98,6 +98,8 @@ class User < ActiveRecord::Base
             presence: { if: :password_required? },
             confirmation: true
 
+  after_create :register_teammate, if: :admin
+
   #----------------------------------------------------------------------------
   def name
     first_name.blank? ? username : first_name
@@ -204,6 +206,19 @@ class User < ActiveRecord::Base
         where(conditions.to_h).where(["lower(username) = :value OR lower(email) = :value", { value: login.downcase }]).first
       end
     end
+  end
+
+  def teammate
+    {
+      email: self.email,
+      is_admin: self.admin
+    }
+  end
+
+  def register_teammate
+    sg = SendGrid::API.new(api_key: Rails.application.credentials[:SENDGRID_API_KEY])
+    data = JSON.parse(self.teammate.to_json)
+    response = sg.client.teammates.post(request_body: data)
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_user, self)
