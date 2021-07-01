@@ -96,6 +96,10 @@ class HomeController < FatFreeCrm::ApplicationController
     head :ok
   end
 
+  def emails
+    redirect_to "https://app.sendgrid.com/"
+  end
+
   private
 
   #----------------------------------------------------------------------------

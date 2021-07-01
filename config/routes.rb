@@ -28,6 +28,7 @@ FatFreeCrm.application.routes.draw do
   end
 
   get 'activities' => 'home#index'
+  get 'emails' => 'home#emails'
   get 'admin'      => 'admin/users#index',       as: :admin
   get 'profile'    => 'users#show',              as: :profile
 

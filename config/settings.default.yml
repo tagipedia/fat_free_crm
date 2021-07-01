@@ -238,6 +238,12 @@
   :url:
     :controller: users
     :action: opportunities_overview
+- :active: false
+  :text: :tab_emails
+  :icon: :fa-paper-plane
+  :url:
+    :controller: home
+    :action: emails
 
 :admin_tabs:
 - :active: true
