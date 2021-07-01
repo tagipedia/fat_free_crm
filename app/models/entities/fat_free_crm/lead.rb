@@ -200,17 +200,17 @@ class Lead < ActiveRecord::Base
 
   def recipient
     {
-      first_name: self.first_name,
-      last_name: self.last_name,
-      email: self.email,
+      first_name: self.first_name || "",
+      last_name: self.last_name || "",
+      email: self.email || "",
       alternate_emails: self.alt_email.present? ? [self.alt_email] : [],
-      phone_number: self.phone,
-      city: self.business_address.try(:city),
-      state_province_region: self.business_address.try(:state),
-      postal_code: self.business_address.try(:zipcode),
-      country: self.business_address.try(:country),
-      address_line_1: self.business_address.try(:street1),
-      address_line_2: self.business_address.try(:street2),
+      phone_number: self.phone || "",
+      city: self.business_address.try(:city) || "",
+      state_province_region: self.business_address.try(:state) || "",
+      postal_code: self.business_address.try(:zipcode) || "",
+      country: self.business_address.try(:country) || "",
+      address_line_1: self.business_address.try(:street1) || "",
+      address_line_2: self.business_address.try(:street2) || "",
       # custom_fields: {
       #   company: self.company,
       #   title: self.title,
@@ -221,13 +221,13 @@ class Lead < ActiveRecord::Base
       #   mobile_number: self.mobile,
       # },
       custom_fields: {
-        e1_T: self.company,
-        e2_T: self.title,
-        e3_T: self.tag_list,
-        e4_T: self.blog,
-        e5_T: self.status,
-        e6_T: self.source,
-        e7_T: self.mobile,
+        e1_T: self.company || "",
+        e2_T: self.title || "",
+        e3_T: (self.tag_list || []).join(','),
+        e4_T: self.blog || "",
+        e5_T: self.status || "",
+        e6_T: self.source || "",
+        e7_T: self.mobile || "",
       }
     }
   end
