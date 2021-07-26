@@ -59,4 +59,6 @@ Gem::Specification.new do |gem|
   #-----------------------------------------------------------------
   gem.add_dependency 'ransack', '>= 1.6.2'
   gem.add_dependency 'email_reply_parser_ffcrm'
+
+  gem.add_dependency 'sendgrid-ruby', '~> 6.4.0'
 end

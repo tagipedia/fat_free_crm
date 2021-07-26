@@ -490,6 +490,7 @@ module ApplicationHelper
     when "contacts" then "fa-user"
     when "opportunities" then "fa-money"
     when "team" then "fa-globe"
+    when "emails" then "fa-paper-plane"
     end
   end
 
