@@ -115,6 +115,38 @@ class Lead < ActiveRecord::Base
     end
   end
 
+  def self.update_status(json_array)
+    status = ""
+    rating = 0
+    leadStatus = ""
+    json_array.each do |json|
+      leads = FatFreeCrm::Lead.where(email: json["email"])
+      leadStatus = leads.first.status
+      rating = leads.first.rating
+      case leads.first.rating
+      when 1 then status = "delivered"
+      when 3 then status = "open"
+      when 5 then status = "click"
+      else status = ""
+      end
+      if json["event"] == "click"
+        status = "click"
+        rating = 5
+        leadStatus = "contacted"
+      elsif json["event"] == "open" && status != "click"
+        status = "open"
+        rating = 3
+        leadStatus = "contacted"
+      elsif json["event"] == "delivered" && status != "open"
+        status = "delivered"
+        rating = 1
+        leadStatus = "contacted"
+      end
+      leads.each {|lead| lead.update(rating: rating, status: leadStatus)}
+    end
+
+  end
+
   # Default values provided through class methods.
   #----------------------------------------------------------------------------
   def self.per_page
