@@ -86,7 +86,7 @@ class Lead < ActiveRecord::Base
   after_destroy :decrement_leads_count
 
   attr_accessor :skip_register_recipient
-  after_create :register_recipient, unless: :skip_register_recipient
+  after_save :register_recipient, unless: :skip_register_recipient
 
   def self.import(file_id)
     file = FileUpload.find(file_id)
@@ -137,14 +137,13 @@ class Lead < ActiveRecord::Base
         status = "open"
         rating = 3
         leadStatus = "contacted"
-      elsif json["event"] == "delivered" && status != "open"
+      elsif json["event"] == "delivered" && status != "open" && status != "click"
         status = "delivered"
         rating = 1
         leadStatus = "contacted"
       end
       leads.each {|lead| lead.update(rating: rating, status: leadStatus)}
     end
-
   end
 
   # Default values provided through class methods.
