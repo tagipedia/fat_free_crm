@@ -129,7 +129,11 @@ class Lead < ActiveRecord::Base
       when 5 then status = "click"
       else status = ""
       end
-      if json["event"] == "click"
+      if json["event"] == "bounce" || json["event"] == "spamreport"
+        status = "rejected"
+        rating = 0
+        leadStatus = "rejected"
+      elsif json["event"] == "click"
         status = "click"
         rating = 5
         leadStatus = "contacted"
