@@ -6,6 +6,9 @@
   <div class="tabs">
     <ul>
       <li>
+        <%= link_to t('all'), '#', :"data-search-form-filter-value" => "all", :"data-search-form-filter" => "rating", class: (params[:filter_by_value] == "all"  ? "" : " active") %>
+      </li>
+      <li>
         <%= link_to t('5'), '#', :"data-search-form-filter-value" => "5", :"data-search-form-filter" => "rating", class: (params[:filter_by_value] == "5"  ? "" : " active") %>
       </li>
       <li>

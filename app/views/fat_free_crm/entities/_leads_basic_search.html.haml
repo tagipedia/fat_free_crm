@@ -11,6 +11,8 @@
   .tabs
     %ul
       %li
+        = link_to t('all'), '#', :"data-search-form-filter" => "all", class: "tablinks #{(params[:filter_by] == "all"  ? "" : " active")}", :onclick => "changeTap(event, 'all')"
+      %li
         = link_to t('status'), '#', :"data-search-form-filter" => "status", class: "tablinks #{(params[:filter_by] == "status"  ? "" : " active")}", :onclick => "changeTap(event, 'status')"
       %li
         = link_to t('rating'), '#', :"data-search-form-filter" => "rating", class: "tablinks #{(params[:filter_by] == "rating" ? "" : " active")}", :onclick => "changeTap(event, 'rating')"
