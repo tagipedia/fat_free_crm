@@ -1,0 +1,23 @@
+<% model = "FatFreeCrm::#{controller.controller_name.classify}".constantize %>
+<% sort_by_menu_items = model.sort_by_fields.map { |field| options_menu_item(:sort_by, field) } %>
+<% current_sort_by = t("option_" + model.sort_by_map.invert[@sort_by]) %>
+<div style="margin: 0px 0px 6px 0px">
+
+  <div class="tabs search-form-filter-value">
+    <ul>
+      <li>
+        <%= link_to t('all'), '#', :"data-search-form-filter-value" => "all", :"data-search-form-filter" => "status", class: (params[:filter_by_value] == "all"  ? "" : " active") %>
+      </li>
+      <li>
+        <%= link_to t('new'), '#',:"data-search-form-filter-value" => "new", :"data-search-form-filter" => "status", class: (params[:filter_by_value] == "new"  ? "" : " active") %>
+      </li>
+      <li>
+        <%= link_to t('contacted'), '#',  :"data-search-form-filter-value" => "contacted", :"data-search-form-filter" => "status", class: (params[:filter_by_value] == "contacted"  ? "" : " active") %>
+      </li>
+      <li>
+        <%= link_to t('rejected'), '#',   :"data-search-form-filter-value" => "rejected", :"data-search-form-filter" => "status", class: (params[:filter_by_value] == "rejected"  ? "" : " active") %>
+      </li>
+    </ul>
+  </div>
+
+</div>

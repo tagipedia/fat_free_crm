@@ -23,21 +23,30 @@
     # -----------------------------------------------------
     $(document).on 'click', '#search .tabs a', ->
       search_form = $(this).data('search-form')
+      search_form_filter = $(this).data('search-form-filter')
+      search_form_filter_value = $(this).data('search-form-filter-value')
       # Hide all
       $('#search .search_form').hide()
       $('#search .tabs li a').removeClass('active')
       # Show selected
       $('#' + search_form).show()
+      dataToSend = {}
+      if search_form_filter || search_form_filter_value
+        $('#basic_search').show()
+        dataToSend["filter_by"] = search_form_filter
+        dataToSend["filter_by_value"] = search_form_filter_value
+        if !search_form
+          search_form = 'basic_search'
       $('a[data-search-form=' + search_form + ']').addClass('active')
       # Run search for current query
       switch search_form
         when 'basic_search'
           query_input = $('#basic_search input#query')
           if !query_input.is('.defaultTextActive')
-            value = query_input.val()
+            dataToSend["value"] = query_input.val()
           else
-            value = ""
-          crm.search(value, window.controller)
+            dataToSend["value"] = ""
+          crm.search(dataToSend, window.controller)
           $('#filters').prop('disabled', false) # Enable filters panel (if present)
 
         when 'advanced_search'
