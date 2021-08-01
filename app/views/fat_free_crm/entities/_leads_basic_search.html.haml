@@ -16,15 +16,21 @@
         = link_to t('status'), '#', :"data-search-form-filter" => "status", class: "tablinks #{(params[:filter_by] == "status"  ? "" : " active")}", :onclick => "changeTap(event, 'status')"
       %li
         = link_to t('rating'), '#', :"data-search-form-filter" => "rating", class: "tablinks #{(params[:filter_by] == "rating" ? "" : " active")}", :onclick => "changeTap(event, 'rating')"
+      %li
+        = link_to t('source'), '#', :"data-search-form-filter" => "source", class: "tablinks #{(params[:filter_by] == "source" ? "" : " active")}", :onclick => "changeTap(event, 'source')"
   #status.tabcontent{:style => "background-color: #eee; padding: 10px"}
     = render "status_lead_search"
   #rating.tabcontent{:style => "background-color: #eee; padding: 10px"}
     = render "rating_lead_search"
+  #rating.tabcontent{:style => "background-color: #eee; padding: 10px"}
+    = render "source_lead_search"
 
 .search_form_filter#status.tabcontent{:style => "background-color: #eee; padding: 10px"}
   = render "status_lead_search"
 .search_form_filter#rating.tabcontent{:style => "background-color: #eee; padding: 10px"}
   = render "rating_lead_search"
+.search_form_filter#source.tabcontent{:style => "background-color: #eee; padding: 10px"}
+  = render "source_lead_search"
 
 :javascript
   var searchTimeout;

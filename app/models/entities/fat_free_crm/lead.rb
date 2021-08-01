@@ -293,7 +293,10 @@ class Lead < ActiveRecord::Base
   end
 
   def self.status_filter_value
-    ['new', 'contacted', 'rejected']
+    FatFreeCrm::Setting.unroll(:lead_status).map { |s| s.last.to_s }
+  end
+  def self.source_filter_value
+    FatFreeCrm::Setting.unroll(:lead_source).map { |s| s.last.to_s }
   end
   def self.rating_filter_value
     ['1', '2', '3', '4', '5']

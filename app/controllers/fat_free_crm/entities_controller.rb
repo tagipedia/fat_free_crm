@@ -148,7 +148,7 @@ class EntitiesController < FatFreeCrm::ApplicationController
 
     scope = entities.merge(ransack_search.result(distinct: true))
     klass = "FatFreeCrm::#{controller_name.classify}".constantize
-    if klass.validate_filter_by(filter_by) && klass.get_filter_by_value_value(filter_by, filter_by_value)
+    if klass.try(:validate_filter_by, filter_by) && klass.try(:get_filter_by_value_value, filter_by, filter_by_value)
       scope = scope.where("#{filter_by} = ?", filter_by_value)
     end
     # Get filter from session, unless running an advanced search

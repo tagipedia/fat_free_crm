@@ -5,9 +5,9 @@
 
   <div class="tabs search-form-filter-value">
     <ul>
-      <% FatFreeCrm::Setting.unroll(:lead_status).each do |status|%>
+      <% FatFreeCrm::Setting.unroll(:lead_source).each do |source|%>
       <li>
-        <%= link_to t(status.first), '#',:"data-search-form-filter-value" => status.last, :"data-search-form-filter" => "status", class: (params[:filter_by_value] == status.last  ? "" : " active") %>
+        <%= link_to t(source.first), '#',:"data-search-form-filter-value" => source.last, :"data-search-form-filter" => "source", class: (params[:filter_by_value] == source.last  ? "" : " active") %>
       </li>
       <% end %>
     </ul>
