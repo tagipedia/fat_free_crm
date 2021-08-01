@@ -37,7 +37,6 @@
 
   $('#query').on('keydown', function(event) {
     $el = $(event.target)
-    console.log("lplplppl")
     if (searchTimeout) clearTimeout(searchTimeout);
     searchTimeout = setTimeout(function () { crm.search($el.val(), '#{controller_name}'); }, 500);
   });
