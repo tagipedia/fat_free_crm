@@ -145,13 +145,11 @@ class EntitiesController < FatFreeCrm::ApplicationController
     self.current_query = query
     advanced_search = params[:q].present?
     wants = request.format
-    statement = ""
-    if filter_by && filter_by_value
-      statement = filter_by + " = '" + filter_by_value + "'"
-    end
+
     scope = entities.merge(ransack_search.result(distinct: true))
-    if filter_by_value.present? && filter_by_value != "all"
-      scope = scope.where(statement)
+    klass = "FatFreeCrm::#{controller_name.classify}".constantize
+    if klass.validate_filter_by(filter_by) && klass.get_filter_by_value_value(filter_by, filter_by_value)
+      scope = scope.where("#{filter_by} = ?", filter_by_value)
     end
     # Get filter from session, unless running an advanced search
     unless advanced_search

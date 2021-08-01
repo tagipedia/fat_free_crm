@@ -349,7 +349,7 @@
       $list.css opacity: 0.4
       filter_by = query && query.filter_by
       filter_by_value = query && query.filter_by_value
-      if true
+      if typeof query == 'object' && query != null
         query_param = query.value
       else
         query_param = query
