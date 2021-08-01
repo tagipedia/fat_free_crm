@@ -22,8 +22,8 @@
     # Search tabs
     # -----------------------------------------------------
     $(document).on 'click', '#search .tabs a', ->
-      search_form = $(this).data('search-form')
-      search_form_filter = $(this).data('search-form-filter')
+      search_form = $(this).data('search-form') || $(this).data('parent-search-form')
+      search_form_filter = $(this).data('search-form-filter') || $(this).data('parent-search-form-filter')
       search_form_filter_value = $(this).data('search-form-filter-value')
       # Hide all
       $('#search .search_form').hide()
@@ -32,11 +32,10 @@
       $('#' + search_form).show()
       dataToSend = {}
       if search_form_filter || search_form_filter_value
-        $('#basic_search').show()
         dataToSend["filter_by"] = search_form_filter
         dataToSend["filter_by_value"] = search_form_filter_value
-        if !search_form
-          search_form = 'basic_search'
+        $('a[data-search-form-filter=' + search_form_filter + ']').addClass('active')
+        $('a[data-search-form-filter-value=' + search_form_filter_value + ']').addClass('active')
       $('a[data-search-form=' + search_form + ']').addClass('active')
       # Run search for current query
       switch search_form

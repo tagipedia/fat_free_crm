@@ -7,7 +7,7 @@
     <ul>
       <% FatFreeCrm::Setting.unroll(:lead_status).each do |status|%>
       <li>
-        <%= link_to t(status.first), '#',:"data-search-form-filter-value" => status.last, :"data-search-form-filter" => "status", class: (params[:filter_by_value] == status.last  ? "" : " active") %>
+        <%= link_to t(status.first), '#',:"data-search-form-filter-value" => status.last, :"data-parent-search-form-filter" => "status", :"data-parent-search-form" => "basic_search",class: (params[:filter_by_value] == status.last  ? "" : " active") %>
       </li>
       <% end %>
     </ul>

@@ -7,7 +7,7 @@
     <ul>
       <% FatFreeCrm::Setting.unroll(:lead_source).each do |source|%>
       <li>
-        <%= link_to t(source.first), '#',:"data-search-form-filter-value" => source.last, :"data-search-form-filter" => "source", class: (params[:filter_by_value] == source.last  ? "" : " active") %>
+        <%= link_to t(source.first), '#',:"data-search-form-filter-value" => source.last, :"data-parent-search-form-filter" => "source", :"data-parent-search-form" => "basic_search",class: (params[:filter_by_value] == source.last  ? "" : " active") %>
       </li>
       <% end %>
     </ul>

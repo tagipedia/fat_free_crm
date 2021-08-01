@@ -11,13 +11,13 @@
   .tabs
     %ul
       %li
-        = link_to t('all'), '#', :"data-search-form-filter" => "all", class: "tablinks #{(params[:filter_by] == "all"  ? "" : " active")}", :onclick => "changeTap(event, 'all')"
+        = link_to t('all'), '#', :"data-search-form-filter" => "all", :"data-parent-search-form" => "basic_search", class: "tablinks #{(params[:filter_by] == "all"  ? "" : " active")}", :onclick => "changeTap(event, 'all')"
       %li
-        = link_to t('status'), '#', :"data-search-form-filter" => "status", class: "tablinks #{(params[:filter_by] == "status"  ? "" : " active")}", :onclick => "changeTap(event, 'status')"
+        = link_to t('status'), '#', :"data-search-form-filter" => "status", :"data-parent-search-form" => "basic_search", class: "tablinks #{(params[:filter_by] == "status"  ? "" : " active")}", :onclick => "changeTap(event, 'status')"
       %li
-        = link_to t('rating'), '#', :"data-search-form-filter" => "rating", class: "tablinks #{(params[:filter_by] == "rating" ? "" : " active")}", :onclick => "changeTap(event, 'rating')"
+        = link_to t('rating'), '#', :"data-search-form-filter" => "rating", :"data-parent-search-form" => "basic_search", class: "tablinks #{(params[:filter_by] == "rating" ? "" : " active")}", :onclick => "changeTap(event, 'rating')"
       %li
-        = link_to t('source'), '#', :"data-search-form-filter" => "source", class: "tablinks #{(params[:filter_by] == "source" ? "" : " active")}", :onclick => "changeTap(event, 'source')"
+        = link_to t('source'), '#', :"data-search-form-filter" => "source", :"data-parent-search-form" => "basic_search", class: "tablinks #{(params[:filter_by] == "source" ? "" : " active")}", :onclick => "changeTap(event, 'source')"
   #status.tabcontent{:style => "background-color: #eee; padding: 10px"}
     = render "status_lead_search"
   #rating.tabcontent{:style => "background-color: #eee; padding: 10px"}
@@ -59,5 +59,4 @@
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
     document.getElementById(tapName).style.display = "block";
-    evt.currentTarget.className += " active";
   }
