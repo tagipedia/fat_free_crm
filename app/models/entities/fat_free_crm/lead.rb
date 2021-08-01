@@ -139,22 +139,23 @@ class Lead < ActiveRecord::Base
       case leads.first.rating
       when 1 then status = "delivered"
       when 3 then status = "open"
-      when 5 then status = "click"
+      when 4 then status = "click"
+      when 5 then status = "buy"
       else status = ""
       end
       if json["event"] == "bounce" || json["event"] == "spamreport"
         status = "rejected"
         rating = 0
         leadStatus = "rejected"
-      elsif json["event"] == "click"
+      elsif json["event"] == "click" && status != "buy"
         status = "click"
-        rating = 5
+        rating = 4
         leadStatus = "contacted"
-      elsif json["event"] == "open" && status != "click"
+      elsif json["event"] == "open" && status != "click" && status != "buy"
         status = "open"
         rating = 3
         leadStatus = "contacted"
-      elsif json["event"] == "delivered" && status != "open" && status != "click"
+      elsif json["event"] == "delivered" && status != "open" && status != "click" && status != "buy"
         status = "delivered"
         rating = 1
         leadStatus = "contacted"
