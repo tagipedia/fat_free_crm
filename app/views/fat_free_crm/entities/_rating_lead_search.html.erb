@@ -1,0 +1,26 @@
+<% model = "FatFreeCrm::#{controller.controller_name.classify}".constantize %>
+<% sort_by_menu_items = model.sort_by_fields.map { |field| options_menu_item(:sort_by, field) } %>
+<% current_sort_by = t("option_" + model.sort_by_map.invert[@sort_by]) %>
+<div style="margin: 0px 0px 6px 0px">
+
+  <div class="tabs">
+    <ul>
+      <li>
+        <%= link_to t('5'), '#', :"data-search-form-filter-value" => "5", :"data-search-form-filter" => "rating", class: (params[:filter_by_value] == "5"  ? "" : " active") %>
+      </li>
+      <li>
+        <%= link_to t('4'), '#',:"data-search-form-filter-value" => "4", :"data-search-form-filter" => "rating", class: (params[:filter_by_value] == "4"  ? "" : " active") %>
+      </li>
+      <li>
+        <%= link_to t('3'), '#',  :"data-search-form-filter-value" => "3", :"data-search-form-filter" => "rating", class: (params[:filter_by_value] == "3"  ? "" : " active") %>
+      </li>
+      <li>
+        <%= link_to t('2'), '#',   :"data-search-form-filter-value" => "2", :"data-search-form-filter" => "rating", class: (params[:filter_by_value] == "2"  ? "" : " active") %>
+      </li>
+      <li>
+        <%= link_to t('1'), '#',   :"data-search-form-filter-value" => "1", :"data-search-form-filter" => "rating", class: (params[:filter_by_value] == "1"  ? "" : " active") %>
+      </li>
+    </ul>
+  </div>
+
+</div>

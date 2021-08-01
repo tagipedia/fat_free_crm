@@ -347,10 +347,18 @@
       $("#loading").show()
       $list = $(list)
       $list.css opacity: 0.4
+      filter_by = query && query.filter_by
+      filter_by_value = query && query.filter_by_value
+      if typeof query == 'object' && query != null
+        query_param = query.value
+      else
+        query_param = query
       @searchRequest.abort()  if @searchRequest and @searchRequest.readyState isnt -4
       @searchRequest = $.get(
-        @base_url + "/" + controller + ".js"
-        query: query
+        @base_url + "/fat_free_crm/" + controller + ".js"
+        query: query_param
+        filter_by: filter_by
+        filter_by_value: filter_by_value
         ->
           $("#loading").hide()
           $list.css opacity: 1

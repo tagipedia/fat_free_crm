@@ -288,6 +288,22 @@ class Lead < ActiveRecord::Base
   def register_recipient
     FatFreeCrm::Lead.register_recipients([self])
   end
+  def self.validate_filter_by(filter_by)
+    ['status', 'rating', 'source'].include? filter_by
+  end
+
+  def self.status_filter_value
+    FatFreeCrm::Setting.unroll(:lead_status).map { |s| s.last.to_s }
+  end
+  def self.source_filter_value
+    FatFreeCrm::Setting.unroll(:lead_source).map { |s| s.last.to_s }
+  end
+  def self.rating_filter_value
+    ['1', '2', '3', '4', '5']
+  end
+  def self.get_filter_by_value_value(filter_by, filter_by_value)
+    FatFreeCrm::Lead.send("#{filter_by}_filter_value").include? filter_by_value
+  end
 
   def self.register_recipients(leads)
     sg = SendGrid::API.new(api_key: Rails.application.credentials[:SENDGRID_API_KEY])
