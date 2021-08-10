@@ -27,7 +27,7 @@
         $(this).next('.select2-container').disable()
         $(this).next('.select2-container').hide()    
 
-    $(".select2_tag").not(".select2-container, .select2-offscreen").each ->
+    $(".select2_tag, .select2_email_design").not(".select2-container, .select2-offscreen").each ->
       $(this).select2
         'width':'resolve'
         placeholder: $(this).data("placeholder")

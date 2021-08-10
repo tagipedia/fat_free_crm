@@ -368,6 +368,7 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 2.0)
     ruby-progressbar (1.11.0)
+    ruby_http_client (3.5.2)
     rubyzip (2.3.0)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
@@ -392,6 +393,8 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    sendgrid-ruby (6.4.0)
+      ruby_http_client (~> 3.4)
     shellany (0.0.1)
     simple_form (5.1.0)
       actionpack (>= 5.2)
@@ -511,6 +514,7 @@ DEPENDENCIES
   sass-rails (~> 5.0.3)
   select2-rails
   selenium-webdriver
+  sendgrid-ruby (~> 6.4.0)
   simple_form
   sprockets-rails (>= 3.0.0)
   sqlite3 (~> 1.4.0)
