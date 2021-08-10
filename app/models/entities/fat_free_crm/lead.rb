@@ -268,6 +268,7 @@ class Lead < ActiveRecord::Base
       #   status: self.status,
       #   source: self.source,
       #   mobile_number: self.mobile,
+      #   rating: self.rating,
       # },
       custom_fields: {
         e1_T: self.company || "",
@@ -277,6 +278,7 @@ class Lead < ActiveRecord::Base
         e5_T: self.status || "",
         e6_T: self.source || "",
         e7_T: self.mobile || "",
+        e8_N: self.rating || 0,
       }
     }
   end
