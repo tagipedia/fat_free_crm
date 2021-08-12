@@ -1,0 +1,16 @@
+<% model = "FatFreeCrm::#{controller.controller_name.classify}".constantize %>
+<% sort_by_menu_items = model.sort_by_fields.map { |field| options_menu_item(:sort_by, field) } %>
+<% current_sort_by = t("option_" + model.sort_by_map.invert[@sort_by]) %>
+<div style="margin: 0px 0px 6px 0px">
+
+  <div class="tabs search-form-filter-value">
+    <ul>
+      <% FatFreeCrm::Setting.unroll(:lead_status).each do |status|%>
+      <li>
+        <%= link_to t(status.first), '#',:"data-search-form-filter-value" => status.last, :"data-parent-search-form-filter" => "status", :"data-parent-search-form" => "basic_search",class: (params[:filter_by_value] == status.last  ? "" : " active") %>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+
+</div>

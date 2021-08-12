@@ -139,13 +139,18 @@ class EntitiesController < FatFreeCrm::ApplicationController
   def get_list_of_records(options = {})
     options[:query]  ||= params[:query]                        if params[:query]
     self.current_page  = options[:page]                        if options[:page]
+    filter_by = params["filter_by"]
+    filter_by_value = params["filter_by_value"]
     query, tags        = parse_query_and_tags(options[:query])
     self.current_query = query
     advanced_search = params[:q].present?
     wants = request.format
 
     scope = entities.merge(ransack_search.result(distinct: true))
-
+    klass = "FatFreeCrm::#{controller_name.classify}".constantize
+    if klass.try(:validate_filter_by, filter_by) && klass.try(:get_filter_by_value_value, filter_by, filter_by_value)
+      scope = scope.where("#{filter_by} = ?", filter_by_value)
+    end
     # Get filter from session, unless running an advanced search
     unless advanced_search
       filter = session[:"#{controller_name}_filter"].to_s.split(',')
