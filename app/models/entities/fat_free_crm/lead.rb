@@ -134,33 +134,40 @@ class Lead < ActiveRecord::Base
     leadStatus = ""
     json_array.each do |json|
       leads = FatFreeCrm::Lead.where(email: json["email"])
-      leadStatus = leads.first.status
-      rating = leads.first.rating
-      case leads.first.rating
-      when 1 then status = "delivered"
-      when 3 then status = "open"
-      when 4 then status = "click"
-      when 5 then status = "buy"
-      else status = ""
+      if leads.any?
+        leadStatus = leads.first.status
+        rating = leads.first.rating
+        campaignId = leads.first.campaign_id
+        case leads.first.rating
+        when 1 then status = "delivered"
+        when 3 then status = "open"
+        when 4 then status = "click"
+        when 5 then status = "buy"
+        else status = ""
+        end
+        if json["event"] == "bounce" || json["event"] == "spamreport"
+          status = "rejected"
+          rating = 0
+          leadStatus = "rejected"
+        elsif json["event"] == "click" && status != "buy"
+          status = "click"
+          rating = 4
+          leadStatus = "contacted"
+        elsif json["event"] == "open" && status != "click" && status != "buy"
+          status = "open"
+          rating = 3
+          leadStatus = "contacted"
+        elsif json["event"] == "delivered" && status != "open" && status != "click" && status != "buy"
+          status = "delivered"
+          rating = 1
+          leadStatus = "contacted"
+        end
+        if json["singlesend_id"].present? || json["mc_auto_id"].present?
+          emailDesign = EmailDesign.find_by(source_info_id: json["singlesend_id"] || json["mc_auto_id"], source_info_type: json["mc_stats"])
+          campaignId = emailDesign&.campaign_id || campaignId
+        end
+        leads.each {|lead| lead.update(rating: rating, status: leadStatus, campaign_id: campaignId)}
       end
-      if json["event"] == "bounce" || json["event"] == "spamreport"
-        status = "rejected"
-        rating = 0
-        leadStatus = "rejected"
-      elsif json["event"] == "click" && status != "buy"
-        status = "click"
-        rating = 4
-        leadStatus = "contacted"
-      elsif json["event"] == "open" && status != "click" && status != "buy"
-        status = "open"
-        rating = 3
-        leadStatus = "contacted"
-      elsif json["event"] == "delivered" && status != "open" && status != "click" && status != "buy"
-        status = "delivered"
-        rating = 1
-        leadStatus = "contacted"
-      end
-      leads.each {|lead| lead.update(rating: rating, status: leadStatus)}
     end
   end
 
