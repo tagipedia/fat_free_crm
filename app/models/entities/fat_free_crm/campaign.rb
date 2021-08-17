@@ -38,7 +38,7 @@ class Campaign < ActiveRecord::Base
   has_many :leads, -> { order "id DESC" }, dependent: :destroy
   has_many :opportunities, -> { order "id DESC" }, dependent: :destroy
   has_many :emails, as: :mediator
-  has_and_belongs_to_many :email_designs
+  has_many :email_designs
 
   serialize :subscribed_users, Set
 
@@ -77,12 +77,12 @@ class Campaign < ActiveRecord::Base
   # Attach given attachment to the campaign if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
-    unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
+    unless send("#{attachment.class.name.downcase.demodulize}_ids").include?(attachment.id)
       if attachment.is_a?(Task)
-        send(attachment.class.name.tableize) << attachment
+        send(attachment.class.name.demodulize.tableize) << attachment
       else # Leads, Opportunities
         attachment.update_attribute(:campaign, self)
-        attachment.send("increment_#{attachment.class.name.tableize}_count")
+        attachment.send("increment_#{attachment.class.name.demodulize.tableize}_count")
         [attachment]
       end
     end
@@ -94,7 +94,7 @@ class Campaign < ActiveRecord::Base
     if attachment.is_a?(Task)
       attachment.update_attribute(:asset, nil)
     else # Leads, Opportunities
-      attachment.send("decrement_#{attachment.class.name.tableize}_count")
+      attachment.send("decrement_#{attachment.class.name.demodulize.tableize}_count")
       attachment.update_attribute(:campaign, nil)
     end
   end

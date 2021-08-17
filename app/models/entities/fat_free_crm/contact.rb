@@ -155,7 +155,7 @@ class Contact < ActiveRecord::Base
   # Attach given attachment to the contact if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
-    send(attachment.class.name.tableize) << attachment unless send("#{attachment.class.name.downcase}_ids").include?(attachment.id)
+    send(attachment.class.name.demodulize.tableize) << attachment unless send("#{attachment.class.name.downcase.demodulize}_ids").include?(attachment.id)
   end
 
   # Discard given attachment from the contact.
@@ -164,7 +164,7 @@ class Contact < ActiveRecord::Base
     if attachment.is_a?(Task)
       attachment.update_attribute(:asset, nil)
     else # Opportunities
-      send(attachment.class.name.tableize).delete(attachment)
+      send(attachment.class.name.demodulize.tableize).delete(attachment)
     end
   end
 

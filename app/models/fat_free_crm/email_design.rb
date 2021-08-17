@@ -3,6 +3,6 @@ module FatFreeCrm
     attribute :source_info, :jsonb, default: {}
     enum source_info_type: {singlesend: "singlesend", automation: "automation"}
 
-    has_and_belongs_to_many :campaigns
+    belongs_to :campaign, optional: true
   end
 end
