@@ -441,6 +441,7 @@ en-US:
     with the existing or newly created account. Lead status will be automatically
     set to converted.
   create_lead: Create Lead
+  create_campaign_url: Create Campaign Url
   create_opp_for_contact: You can optionally create an opportunity for the %{value}
     contact by specifying the name, current stage, estimated closing date, sale probability,
     amount of the deal, and the discount offered.
@@ -457,6 +458,7 @@ en-US:
   lead_summary: Lead Summary
   lead_statuses: Lead Statuses
   leads: Leads
+  campaign_urls: Campaign Urls
   leads_options: Leads Options
   leads_small: leads
   none: None
@@ -464,6 +466,7 @@ en-US:
   reject: Reject
   reject_lead_confirm: Are you sure you want to reject this lead?
   save_lead: Save Lead
+  save_campaign_url: Save Campaign Url
   source: Source
   status: Status
   total_leads: Total Leads

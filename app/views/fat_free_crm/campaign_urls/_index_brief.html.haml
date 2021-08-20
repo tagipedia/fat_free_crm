@@ -1,0 +1,13 @@
+%li.highlight[campaign_url]
+  %ul.tools
+    - if can?(:update, campaign_url)
+      %li= link_to_edit(campaign_url)
+
+    - if can?(:destroy, campaign_url)
+      %li= link_to_delete(campaign_url)
+
+  .indent
+    %tt
+      = campaign_url.full_url if campaign_url.url?
+
+    = hook(:campaign_url_bottom, self, campaign_url: campaign_url)

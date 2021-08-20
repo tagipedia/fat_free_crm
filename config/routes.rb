@@ -153,6 +153,9 @@ FatFreeCrm.application.routes.draw do
     end
   end
 
+  resources :campaign_urls, id: /\d+/ do
+  end
+
   resources :users, id: /\d+/, except: %i[index destroy create] do
     member do
       get :avatar

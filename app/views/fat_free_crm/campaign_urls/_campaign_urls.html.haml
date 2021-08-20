@@ -1,0 +1,6 @@
+= section_without_select(object, :campaign_urls)
+.list#campaign_urls
+  - campaign_urls = object.campaign_urls.order('updated_at desc').paginate(page: 1, per_page: 20)
+  = render partial: "fat_free_crm/campaign_urls/campaign_url", collection: object.campaign_urls.paginate(page: 1, per_page: 20)
+
+= paginate( collection: campaign_urls, id: 'campaign_urls_pagination', params: { action: 'campaign_urls' } )

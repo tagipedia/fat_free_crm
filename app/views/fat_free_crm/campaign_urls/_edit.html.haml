@@ -1,0 +1,13 @@
+.remote
+  = simple_form_for(@campaign_url, html: one_submit_only, remote: true) do |f|
+    = link_to_close edit_campaign_url_path(@campaign_url)
+
+    = f.error_messages object_name: t('campaign_url')
+
+    = render "fat_free_crm/campaign_urls/top_section",    f: f, edit: true
+    = hook(:entity_form, self, {f: f, entity: @campaign_url})
+
+    .buttonbar
+      = f.submit t(:save_campaign_url), class: 'btn btn-primary'
+      #{t :or}
+      = link_to_cancel edit_campaign_url_path(@campaign_url)
