@@ -1,0 +1,6 @@
+= section(object, :email_designs)
+.list#email_designs
+  - email_designs = object.email_designs.order('updated_at desc').paginate(page: 1, per_page: 20)
+  = render partial: "fat_free_crm/email_designs/email_design", collection: object.email_designs.paginate(page: 1, per_page: 20)
+
+= paginate( collection: email_designs, id: 'email_designs_pagination', params: { action: 'email_designs' } )
