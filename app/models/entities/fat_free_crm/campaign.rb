@@ -39,6 +39,7 @@ class Campaign < ActiveRecord::Base
   has_many :opportunities, -> { order "id DESC" }, dependent: :destroy
   has_many :emails, as: :mediator
   has_many :email_designs
+  has_one :promotion, class_name: "Spree::Promotion", foreign_key: 'campaign_id'
 
   serialize :subscribed_users, Set
 
@@ -72,6 +73,15 @@ class Campaign < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def self.per_page
     20
+  end
+
+  def save_with_promotion(params)
+    # Quick sanitization, makes sure Account will not search for blank id.
+    params[:promotion].delete(:id) if params[:promotion][:id].blank?
+    promotion = Spree::Promotion.create_or_select_for(self, params[:promotion])
+    self.promotion = promotion
+    self.save
+    self
   end
 
   # Attach given attachment to the campaign if it hasn't been attached already.

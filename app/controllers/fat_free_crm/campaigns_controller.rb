@@ -69,6 +69,7 @@ class CampaignsController < FatFreeCrm::EntitiesController
   #----------------------------------------------------------------------------
   def new
     @campaign.attributes = { user: current_user, access: Setting.default_access, assigned_to: nil }
+    @promotion = Spree::Promotion.new
 
     if params[:related]
       model, id = params[:related].split('_')
@@ -85,6 +86,7 @@ class CampaignsController < FatFreeCrm::EntitiesController
   # GET /campaigns/1/edit                                                  AJAX
   #----------------------------------------------------------------------------
   def edit
+    @promotion = @campaign.promotion || Spree::Promotion.new
     @previous = Campaign.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
 
     respond_with(@campaign)
@@ -94,9 +96,8 @@ class CampaignsController < FatFreeCrm::EntitiesController
   #----------------------------------------------------------------------------
   def create
     @comment_body = params[:comment_body]
-
     respond_with(@campaign) do |_format|
-      if @campaign.save
+      if @campaign.save_with_promotion(params)
         @campaign.add_comment_by_user(@comment_body, current_user)
         @campaigns = get_campaigns
         get_data_for_sidebar

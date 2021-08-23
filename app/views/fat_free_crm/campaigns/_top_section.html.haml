@@ -17,15 +17,23 @@
         %td
           .label #{t :status}:
           = f.select :status, FatFreeCrm::Setting.unroll(:campaign_status), { selected: (@campaign.status || "planned").to_sym }, { style: "width:250px", class: 'select2' }
-
-      - if FatFreeCrm::Setting.background_info && FatFreeCrm::Setting.background_info.include?(:campaign)
+          
+    %table
+      = fields_for(@promotion) do |a|
         %tr
-          %td(colspan="5")
-            .label= t(:background_info) + ':'
-            = f.text_area :background_info, style: "width:500px", rows: 3
+          %td
+            != promotion_select_or_create(a) do |options|
+              - # Add [-- None --] promotion choice when editing existing campaign that has an promotion.
+              - options[:include_blank] = "" unless @campaign.new_record? || @campaign.promotion.blank?
 
-      = render partial: "/fat_free_crm/shared/tags", locals: {f: f, span: 5}
+        - if FatFreeCrm::Setting.background_info && FatFreeCrm::Setting.background_info.include?(:campaign)
+          %tr
+            %td(colspan="5")
+              .label= t(:background_info) + ':'
+              = f.text_area :background_info, style: "width:500px", rows: 3
 
-      = render partial: "/fat_free_crm/shared/designs", locals: {f: f, span: 5}
+        = render partial: "/fat_free_crm/shared/tags", locals: {f: f, span: 5}
 
-      = hook(:campaign_top_section_bottom, self, f: f)
+        = render partial: "/fat_free_crm/shared/designs", locals: {f: f, span: 5}
+
+        = hook(:campaign_top_section_bottom, self, f: f)

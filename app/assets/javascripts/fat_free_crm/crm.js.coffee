@@ -129,6 +129,46 @@
       $("#account_id").next(".select2-container").disable()
       $("#account_id").next(".select2-container").show()
       $("#account_id").prop('disabled', false)
+    #----------------------------------------------------------------------------
+    show_create_promotion: ->
+      $("#promotion_disabled_title").hide()
+      $("#promotion_create_title").show()
+      $("#promotion_select_title").hide()
+      $("#promotion_id").prop('disabled', true)
+      $("#promotion_id").next(".select2-container").disable()
+      $("#promotion_id").next(".select2-container").hide()
+      $("#promotion_name").prop('disabled', false)
+      $("#promotion_name").html ""
+      $("#promotion_name").show()
+
+
+    # Hide create account edit field and show accounts dropdown instead.
+    #----------------------------------------------------------------------------
+    show_select_promotion: ->
+      $("#promotion_disabled_title").hide()
+      $("#promotion_create_title").hide()
+      $("#promotion_select_title").show()
+      $("#promotion_name").hide()
+      $("#promotion_name").prop('disabled', true)
+      $("#promotion_id").prop('disabled', false)
+      $("#promotion_id").next(".select2-container").enable()
+      $("#promotion_id").next(".select2-container").show()
+
+
+    # Show accounts dropdown and disable it to prevent changing the account.
+    #----------------------------------------------------------------------------
+    show_disabled_select_promotion: ->
+      $("#promotion_disabled_title").show()
+      $("#promotion_create_title").hide()
+      $("#promotion_select_title").hide()
+      $("#promotion_name").hide()
+      $("#promotion_name").prop('disabled', true)
+
+      # Disable select2 account select but enable hidden
+      # account_id select so that value is POSTed
+      $("#promotion_id").next(".select2-container").disable()
+      $("#promotion_id").next(".select2-container").show()
+      $("#promotion_id").prop('disabled', false)
 
 
     #----------------------------------------------------------------------------
@@ -139,6 +179,14 @@
         @show_create_account() # create account edit field
       else
         @show_select_account() # accounts dropdown
+    #----------------------------------------------------------------------------
+    create_or_select_promotion: (selector) ->
+      if selector isnt true and selector > 0
+        @show_disabled_select_promotion() # disabled promotions dropdown
+      else if selector
+        @show_create_promotion() # create promotion edit field
+      else
+        @show_select_promotion() # promotions dropdown
 
 
     #----------------------------------------------------------------------------
