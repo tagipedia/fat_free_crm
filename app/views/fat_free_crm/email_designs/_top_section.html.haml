@@ -1,0 +1,15 @@
+= hook(:email_design_top_section, self, f: f) do
+  .section
+    %table
+      = simple_fields_for :source_info do |source_info_f|
+        %td
+          .label #{t :name}:
+          = source_info_f.text_field :name, autofocus: true
+        %td= spacer
+    %table
+      %tr
+        %td
+          .label #{t :source_info_type}:
+          = f.select :source_info_type, FatFreeCrm::EmailDesign.source_info_types.map{|k, v| [k.humanize, v]}, { selected: @email_design.source_info_type, include_blank: false }, { style: "width:160px", class: 'select2' }
+
+      = hook(:email_design_top_section_bottom, self, f: f)

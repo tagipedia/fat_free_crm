@@ -1,0 +1,13 @@
+%li.highlight[email_design]
+  %ul.tools
+    - if can?(:update, email_design)
+      %li= link_to_edit(email_design)
+
+    - if can?(:destroy, email_design)
+      %li= link_to_delete(email_design)
+
+  .indent
+    %tt
+      = email_design.source_info["name"] if email_design.source_info?
+
+    = hook(:email_design_bottom, self, email_design: email_design)

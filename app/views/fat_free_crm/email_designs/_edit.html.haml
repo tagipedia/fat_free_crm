@@ -1,0 +1,13 @@
+.remote
+  = simple_form_for(@email_design, html: one_submit_only, remote: true) do |f|
+    = link_to_close edit_email_design_path(@email_design)
+
+    = f.error_messages object_name: t('email_design')
+
+    = render "fat_free_crm/email_designs/top_section",    f: f, edit: true
+    = hook(:entity_form, self, {f: f, entity: @email_design})
+
+    .buttonbar
+      = f.submit t(:save_email_design), class: 'btn btn-primary'
+      #{t :or}
+      = link_to_cancel edit_email_design_path(@email_design)
