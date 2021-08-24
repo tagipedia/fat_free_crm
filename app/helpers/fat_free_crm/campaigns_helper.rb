@@ -42,7 +42,7 @@ module CampaignsHelper
                       { include_blank: true },
                       style: 'width:330px;', class: 'select2',
                       placeholder: t(:select_an_promotion),
-                      "data-url": spree.admin_promotion_auto_complete_path(format: 'json')
+                      "data-url": spree.auto_complete_admin_promotions_path(format: 'json')
   end
 
   def promotion_select_or_create(form, &_block)
