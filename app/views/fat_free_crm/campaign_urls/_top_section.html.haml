@@ -1,0 +1,29 @@
+= hook(:campaign_url_top_section, self, f: f) do
+  .section
+    %table
+      %tr
+        %td
+          .label #{t :url}:
+          = f.text_field :url, autofocus: true
+        %td= spacer
+        %td
+          .label #{t :utm_source}:
+          = f.text_field :utm_source
+      %tr
+        %td
+          .label #{t :utm_medium}:
+          = f.text_field :utm_medium
+        %td= spacer
+        %td
+          .label #{t :utm_campaign}:
+          = f.text_field :utm_campaign
+      %tr
+        %td
+          .label #{t :utm_term}:
+          = f.text_field :utm_term
+        %td= spacer
+        %td
+          .label #{t :utm_content}:
+          = f.text_field :utm_content
+
+      = hook(:campaign_url_top_section_bottom, self, f: f)

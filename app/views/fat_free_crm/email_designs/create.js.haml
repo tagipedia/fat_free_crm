@@ -8,13 +8,13 @@
   $('##{create_id}').slideUp(250);
   $('##{entity_name.pluralize}').prepend('#{ j render(partial: entity_name, collection: [ @entity ]) }');
   $('##{dom_id(@entity, 'fat_free_crm')}').effect("highlight", { duration:1500 });
-  = refresh_sidebar(:index)
-  $('#paginate').html('#{ j render(partial: "fat_free_crm/shared/paginate_with_per_page") }');
+  - if called_from_index_page?
+    = refresh_sidebar(:index)
+    $('#paginate').html('#{ j render(partial: "fat_free_crm/shared/paginate_with_per_page") }');
+  - elsif called_from_landing_page?("campaigns")
+    - @campaign.reload
+    = refresh_sidebar_for(:campaigns, :show)
   crm.flick('empty', 'remove');
 - else
   $('##{create_id}').html('#{ j render(partial: "new") }');
-  crm.create_or_select_promotion(#{ request.referer =~ /\/promotions\// || @campaign&.promotion&.id.blank? });
-  - if @entity.errors[:name].blank? and @entity.errors[:ends_on].present?
-    $('#campaign_ends_on').focus();
-  - else
-    $('#new_#{entity_name} input[type!=hidden]').first().focus();
+  $('#new_#{entity_name} input[type!=hidden]').first().focus();

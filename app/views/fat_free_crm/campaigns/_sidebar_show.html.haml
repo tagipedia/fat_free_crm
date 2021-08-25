@@ -79,6 +79,13 @@
       %dt= number_to_currency(@campaign.revenue, precision: 0) || t(:n_a)
       %tt== #{t :revenue}: #{performance(@campaign.revenue, @campaign.target_revenue)}
 
+  - if @campaign.promotion.present?
+    .caption #{t :campaign_promotions}
+    .email-design-stats
+      %a{ :href => "/spree_admin/promotions/#{@campaign.promotion.id}/edit", :title => @campaign.promotion.name }
+        %strong
+          #{@campaign.promotion.name}
+
   - if @campaign.email_designs.count
     .caption #{t :campaign_stats}
     - @campaign.email_designs.each do |email_design|

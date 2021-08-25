@@ -40,6 +40,7 @@ class Campaign < ActiveRecord::Base
   has_many :emails, as: :mediator
   has_many :email_designs
   has_one :promotion, class_name: "Spree::Promotion", foreign_key: 'campaign_id'
+  has_many :campaign_urls
 
   serialize :subscribed_users, Set
 
