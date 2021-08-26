@@ -313,6 +313,7 @@ en-US:
   account: Account
   account_id: Account
   select_an_account: Select an Account
+  select_an_promotion: Select an Promotion
   account_small: account
   account_summary: Account Summary
   account_categories: Account Categories
@@ -356,6 +357,7 @@ en-US:
   campaign_targets: Campaign Targets
   campaign_statuses: Campaign Statuses
   campaign_stats: Campaign Statistics
+  campaign_promotions: Campaign Promotions
   campaigns: Campaigns
   campaigns_options: Campaigns Options
   campaigns_small: campaigns

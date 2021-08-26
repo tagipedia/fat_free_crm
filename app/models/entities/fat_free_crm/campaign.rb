@@ -39,6 +39,7 @@ class Campaign < ActiveRecord::Base
   has_many :opportunities, -> { order "id DESC" }, dependent: :destroy
   has_many :emails, as: :mediator
   has_many :email_designs
+  has_one :promotion, class_name: "Spree::Promotion", foreign_key: 'campaign_id'
   has_many :campaign_urls
 
   serialize :subscribed_users, Set
@@ -75,6 +76,15 @@ class Campaign < ActiveRecord::Base
     20
   end
 
+  def save_with_promotion(params)
+    # Quick sanitization, makes sure Account will not search for blank id.
+    params[:promotion].delete(:id) if params[:promotion][:id].blank?
+    promotion = Spree::Promotion.create_or_select_for(self, params[:promotion])
+    self.promotion = promotion
+    self.save
+    self
+  end
+
   # Attach given attachment to the campaign if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
@@ -94,6 +104,8 @@ class Campaign < ActiveRecord::Base
   def discard!(attachment)
     if attachment.is_a?(Task)
       attachment.update_attribute(:asset, nil)
+    elsif attachment.is_a?(EmailDesign)
+      attachment.update_attribute(:campaign, nil)
     else # Leads, Opportunities
       attachment.send("decrement_#{attachment.class.name.demodulize.tableize}_count")
       attachment.update_attribute(:campaign, nil)
