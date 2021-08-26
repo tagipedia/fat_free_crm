@@ -1,7 +1,17 @@
 %li.highlight[email_design]
   %ul.tools
+    - if can?(:show, email_design)
+      - if email_design.singlesend?
+        %li= link_to(t(:show), "https://mc.sendgrid.com/single-sends/#{email_design.source_info_id}/editor/preview")
+      - elsif email_design.automation?
+        %li= link_to(t(:show), "https://mc.sendgrid.com/automations/#{email_design.source_info_id}/detail?view=raw")
+
     - if can?(:update, email_design)
-      %li= link_to_edit(email_design)
+      - if email_design.singlesend?
+        %li= link_to(t(:edit), "https://mc.sendgrid.com/single-sends/#{email_design.source_info_id}/stats?view=raw")
+      - elsif email_design.automation?
+        %li= link_to(t(:edit), "https://mc.sendgrid.com/automations/#{email_design.source_info_id}/detail?view=raw")
+
 
     - if can?(:destroy, email_design)
       %li= link_to_delete(email_design)

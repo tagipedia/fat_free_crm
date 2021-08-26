@@ -69,7 +69,7 @@ class CampaignUrlsController < FatFreeCrm::EntitiesController
   #----------------------------------------------------------------------------
   def destroy
     @campaign_url.destroy
-
+    update_sidebar
     respond_with(@campaign_url) do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
