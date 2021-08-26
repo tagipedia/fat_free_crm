@@ -13,8 +13,8 @@
         %li= link_to(t(:edit), "https://mc.sendgrid.com/automations/#{email_design.source_info_id}/detail?view=raw")
 
 
-    - if can?(:destroy, email_design)
-      %li= link_to_delete(email_design)
+    - if shown_on_landing_page?
+      %li= link_to_discard(email_design)
 
   .indent
     %tt
