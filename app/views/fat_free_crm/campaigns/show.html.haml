@@ -26,6 +26,6 @@
 
     = render "fat_free_crm/versions/versions", object: @campaign
 
-    = load_select_popups_for(@campaign, :tasks, :leads, :opportunities)
+    = load_select_popups_for(@campaign, :tasks, :leads, :opportunities, :email_designs)
 
   #export= render "fat_free_crm/shared/export", action: :show

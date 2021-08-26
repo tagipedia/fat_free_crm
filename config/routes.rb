@@ -157,6 +157,9 @@ FatFreeCrm.application.routes.draw do
   end
 
   resources :email_designs, id: /\d+/ do
+    collection do
+      match :auto_complete, via: %i[get post]
+    end
   end
 
   resources :users, id: /\d+/, except: %i[index destroy create] do

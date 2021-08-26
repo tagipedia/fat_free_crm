@@ -3,4 +3,4 @@
   %td{ valign: :top, colspan: span }
     .label= t(:email_designs) + ":"
 
-    = f.select :email_design_ids, FatFreeCrm::Campaign.get_email_designs.map{|d| [d.source_info["name"], d.id]}, {}, {class: "select2_email_design", data: {placeholder: t(:select_email_designs), multiple: true, asset_id: f.object.try(:id)}, multiple: true}
+    = f.select :email_design_ids, FatFreeCrm::EmailDesign.get_email_designs.map{|d| [d.source_info["name"], d.id]}, {}, {class: "select2_email_design", data: {placeholder: t(:select_email_designs), multiple: true, asset_id: f.object.try(:id)}, multiple: true}
