@@ -68,9 +68,8 @@ class EmailDesignsController < FatFreeCrm::EntitiesController
   # DELETE /email_designs/1
   #----------------------------------------------------------------------------
   def destroy
-    @email_design.campaign.email_designs.delete(@email_design.id)
-    # @email_design.destroy
-    update_sidebar
+    @email_design.destroy
+
     respond_with(@email_design) do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
