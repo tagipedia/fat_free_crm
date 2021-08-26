@@ -78,8 +78,8 @@ class Campaign < ActiveRecord::Base
   # Attach given attachment to the campaign if it hasn't been attached already.
   #----------------------------------------------------------------------------
   def attach!(attachment)
-    unless send("#{attachment.class.name.downcase.demodulize}_ids").include?(attachment.id)
-      if attachment.is_a?(Task)
+    unless send("#{attachment.class.name.demodulize.underscore.downcase}_ids").include?(attachment.id)
+      if attachment.is_a?(Task) || attachment.is_a?(EmailDesign)
         send(attachment.class.name.demodulize.tableize) << attachment
       else # Leads, Opportunities
         attachment.update_attribute(:campaign, self)
@@ -112,29 +112,6 @@ class Campaign < ActiveRecord::Base
   #----------------------------------------------------------------------------
   def users_for_shared_access
     errors.add(:access, :share_campaign) if self[:access] == "Shared" && permissions.none?
-  end
-
-  def self.get_email_designs
-    sg = SendGrid::API.new(api_key: Rails.application.credentials[:SENDGRID_API_KEY])
-    response = sg.client.marketing.singlesends.get()
-    response2 = sg.client.marketing.automations.get()
-    JSON.parse(response.body)["result"].each { |d|
-      email_design = EmailDesign.find_or_initialize_by(source_info_type: "singlesend", source_info_id: d["id"]) do |e|
-        e.source_info_type = "singlesend"
-        e.source_info_id = d["id"]
-      end
-      email_design.source_info = d.to_json
-      email_design.save!
-    }
-    JSON.parse(response2.body).each { |d|
-      email_design = EmailDesign.find_or_initialize_by(source_info_type: "automation", source_info_id: d["id"]) do |e|
-        e.source_info_type = "automation"
-        e.source_info_id = d["id"]
-      end
-      email_design.source_info = d.to_json
-      email_design.save!
-    }
-    EmailDesign.all
   end
 
   ActiveSupport.run_load_hooks(:fat_free_crm_campaign, self)
