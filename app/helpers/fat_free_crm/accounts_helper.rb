@@ -16,7 +16,7 @@ module AccountsHelper
   # Quick account summary for RSS/ATOM feeds.
   #----------------------------------------------------------------------------
   def account_summary(account)
-    [number_to_currency(account.opportunities.pipeline.map(&:weighted_amount).sum, precision: 0),
+    [number_to_currency(account.opportunities.pipeline.map(&:weighted_amount).sum, precision: 0, unit: Monetize.parse(Spree::Config[:currency]).symbol),
      t(:added_by, time_ago: time_ago_in_words(account.created_at), user: account.user_id_full_name),
      t('pluralize.contact', account.contacts_count),
      t('pluralize.opportunity', account.opportunities_count),
@@ -110,7 +110,7 @@ module AccountsHelper
   # - a helper that abstracts the logic to the backend
   def display_value(value)
     return "N/A" if value.zero?
-    number_to_currency(value, precision: 0)
+    number_to_currency(value, precision: 0, unit: Monetize.parse(Spree::Config[:currency]).symbol)
   end
 
   def display_assigned(account)

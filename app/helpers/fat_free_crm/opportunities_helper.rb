@@ -19,10 +19,10 @@ module OpportunitiesHelper
     summary = []
     amount = []
     summary << (opportunity.stage ? t(opportunity.stage) : t(:other))
-    summary << number_to_currency(opportunity.weighted_amount, precision: 0)
+    summary << number_to_currency(opportunity.weighted_amount, precision: 0, unit: Monetize.parse(Spree::Config[:currency]).symbol)
     unless %w[won lost].include?(opportunity.stage)
-      amount << number_to_currency(opportunity.amount.to_f, precision: 0)
-      amount << (opportunity.discount ? t(:discount_number, number_to_currency(opportunity.discount, precision: 0)) : t(:no_discount))
+      amount << number_to_currency(opportunity.amount.to_f, precision: 0, unit: Monetize.parse(Spree::Config[:currency]).symbol)
+      amount << (opportunity.discount ? t(:discount_number, number_to_currency(opportunity.discount, precision: 0, unit: Monetize.parse(Spree::Config[:currency]).symbol)) : t(:no_discount))
       amount << t(:probability_number, opportunity.probability.to_i.to_s + '%')
       summary << amount.join(' ')
     end
@@ -52,13 +52,13 @@ module OpportunitiesHelper
     msg = []
     won_or_lost = %w[won lost].include?(opportunity.stage)
 
-    msg << content_tag(:b, number_to_currency(opportunity.weighted_amount, precision: 0)) if opportunity.weighted_amount != 0
+    msg << content_tag(:b, number_to_currency(opportunity.weighted_amount, precision: 0, unit: Monetize.parse(Spree::Config[:currency]).symbol)) if opportunity.weighted_amount != 0
 
     unless won_or_lost
       if detailed
-        msg << number_to_currency(opportunity.amount.to_f, precision: 0) if opportunity.amount.to_f != 0
+        msg << number_to_currency(opportunity.amount.to_f, precision: 0, unit: Monetize.parse(Spree::Config[:currency]).symbol) if opportunity.amount.to_f != 0
 
-        msg << t(:discount) + ' ' + number_to_currency(opportunity.discount, precision: 0) if opportunity.discount.to_f != 0
+        msg << t(:discount) + ' ' + number_to_currency(opportunity.discount, precision: 0, unit: Monetize.parse(Spree::Config[:currency]).symbol) if opportunity.discount.to_f != 0
       end
 
       msg << t(:probability) + ' ' + opportunity.probability.to_s + '%' if opportunity.probability.to_i != 0

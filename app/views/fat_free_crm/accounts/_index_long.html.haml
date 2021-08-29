@@ -17,7 +17,7 @@
   .indent
     = link_to(account.name, account)
     - if amount != 0.0
-      %span.amount= number_to_currency(amount, precision: 0)
+      %span.amount= number_to_currency(amount, precision: 0, unit: Monetize.parse(Spree::Config[:currency]).symbol)
     &ndash;
     %tt
       = account.location + ", " unless account.location.blank?

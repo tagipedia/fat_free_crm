@@ -11,7 +11,7 @@
       %dt= @campaign.status ? t(@campaign.status) : t(:n_a)
       %tt #{t :status}:
     %li.last
-      %dt= number_to_currency(@campaign.budget, precision: 0) || t(:n_a)
+      %dt= number_to_currency(@campaign.budget, precision: 0, unit: Monetize.parse(Spree::Config[:currency]).symbol) || t(:n_a)
       %tt #{t :budget}:
 
   .caption #{t :campaign_targets}
@@ -42,7 +42,7 @@
     -# Target Revenue.
     -#---------------------------------------------------------------------------
     %li.last
-      %dt= number_to_currency(@campaign.target_revenue, precision: 0) || t(:n_a)
+      %dt= number_to_currency(@campaign.target_revenue, precision: 0, unit: Monetize.parse(Spree::Config[:currency]).symbol) || t(:n_a)
       %tt #{t :revenue}:
 
   .caption #{t :actual_performance}
@@ -76,7 +76,7 @@
     -# Actual Revenue.
     -#---------------------------------------------------------------------------
     %li.last
-      %dt= number_to_currency(@campaign.revenue, precision: 0) || t(:n_a)
+      %dt= number_to_currency(@campaign.revenue, precision: 0, unit: Monetize.parse(Spree::Config[:currency]).symbol) || t(:n_a)
       %tt== #{t :revenue}: #{performance(@campaign.revenue, @campaign.target_revenue)}
 
   - if @campaign.promotion.present?
