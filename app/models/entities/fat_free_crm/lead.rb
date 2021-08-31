@@ -42,6 +42,7 @@ require 'sendgrid-ruby'
 
 module FatFreeCrm
 class Lead < ActiveRecord::Base
+  include FfcrmMerge::Leads
   belongs_to :user, optional: true # TODO: Is this really optional?
   belongs_to :campaign, optional: true # TODO: Is this really optional?
   belongs_to :assignee, class_name: "User", foreign_key: :assigned_to, optional: true # TODO: Is this really optional?
