@@ -62,3 +62,5 @@ require "country_select"
 require "gravatar_image_tag"
 
 require "ransack_ui/ransack_ui"
+
+require "ffcrm_merge/leads"
