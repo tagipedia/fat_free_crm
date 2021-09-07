@@ -96,7 +96,7 @@ class Lead < ActiveRecord::Base
     super_user = FatFreeCrm::User.where(admin: true).first
     leads = []
     (2..spreadsheet.last_row).each_with_index do |i, index|
-      if spreadsheet.row(i)[1].present? && spreadsheet.row(i)[2].present?
+      if spreadsheet.row(i)[1].present? && spreadsheet.row(i)[2].present? && spreadsheet.row(i)[3].present?
         lead = FatFreeCrm::Lead.find_or_initialize_by_email(spreadsheet.row(i)[3]) do |l|
           l.email = spreadsheet.row(i)[3]
           l.alt_email = spreadsheet.row(i)[3]
@@ -104,15 +104,17 @@ class Lead < ActiveRecord::Base
           l.status = 'new'
           l.source = 'self'
         end
-        lead.first_name = spreadsheet.row(i)[1]
-        lead.last_name = spreadsheet.row(i)[2]
-        lead.company = spreadsheet.row(i)[7]
-        lead.title = spreadsheet.row(i)[8]
+        lead.first_name = spreadsheet.row(i)[1] || lead.first_name
+        lead.last_name = spreadsheet.row(i)[2] || lead.last_name
+        lead.company = spreadsheet.row(i)[7] || lead.company
+        lead.title = spreadsheet.row(i)[8] || lead.title
         lead.tag_list = lead.tag_list || []
         lead.tag_list << "contact_excl"
-        lead.phone = spreadsheet.row(i)[4]
-        lead.mobile = spreadsheet.row(i)[5]
-        lead.business_address_attributes = {address_type: "Business", street1: spreadsheet.row(i)[10], street2: spreadsheet.row(i)[11], city: spreadsheet.row(i)[14], state: spreadsheet.row(i)[15], zipcode: spreadsheet.row(i)[16],country: spreadsheet.row(i)[17]}
+        lead.phone = spreadsheet.row(i)[4] || lead.phone
+        lead.mobile = spreadsheet.row(i)[5] || lead.mobile
+        if spreadsheet.row(i)[10].present? ||  spreadsheet.row(i)[11].present? ||  spreadsheet.row(i)[14].present? ||  spreadsheet.row(i)[15].present? ||  spreadsheet.row(i)[16].present? || spreadsheet.row(i)[17].present?
+          lead.business_address_attributes = {address_type: "Business", street1: spreadsheet.row(i)[10], street2: spreadsheet.row(i)[11], city: spreadsheet.row(i)[14], state: spreadsheet.row(i)[15], zipcode: spreadsheet.row(i)[16],country: spreadsheet.row(i)[17]}
+        end
         lead.skip_register_recipient = true
         puts "index", index, spreadsheet.row(i)[1], spreadsheet.row(i)[2], lead.save!
         leads << lead
