@@ -62,7 +62,20 @@ module CampaignsHelper
       form.text_field(:name, style: 'width:324px; display:none;')
   end
 
+  def ga_tracker
+    @ga_tracker ||= Spree::Tracker.current(:google_analytics)
+  end
 
+  def analytics_url_builder(campaign_url)
+    url = "_r.drilldown="
+    if campaign_url.utm_campaign.present?
+      url += "analytics.campaign:#{campaign_url.utm_campaign}"
+    end
+    if campaign_url.utm_source.present?
+      url += ",analytics.sourceMedium:#{campaign_url.utm_source}%20~2F%20#{campaign_url.utm_medium}"
+    end
+    url
+  end
 
 end
 end

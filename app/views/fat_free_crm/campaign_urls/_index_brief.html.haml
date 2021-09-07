@@ -3,6 +3,9 @@
     - if can?(:update, campaign_url)
       %li= link_to_edit(campaign_url)
 
+    - if can?(:show, campaign_url)
+      %li= link_to(t(:analytics), "https://analytics.google.com/analytics/web/#/report/trafficsources-campaigns/#{ga_tracker.analytics_url_id}/#{analytics_url_builder(campaign_url)}")
+
     - if can?(:destroy, campaign_url)
       %li= link_to_delete(campaign_url)
 
