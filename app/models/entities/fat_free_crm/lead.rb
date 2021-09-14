@@ -338,6 +338,13 @@ class Lead < ActiveRecord::Base
     response = sg.client.marketing.contacts.put(request_body: data)
   end
 
+  def self.delete_recipient(lead)
+    sg = SendGrid::API.new(api_key: Rails.application.credentials[:SENDGRID_API_KEY])
+    response = sg.client.marketing.contacts.search.post(request_body: {"query"=>"email = '#{lead.email}'"})
+    ids = ActiveSupport::JSON.decode(response.body)['result'].pluck("id")
+    response = sg.client..marketing.contacts.delete({query_params: {ids: ids}})
+  end
+
   ActiveSupport.run_load_hooks(:fat_free_crm_lead, self)
 end
 end
