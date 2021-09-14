@@ -101,7 +101,7 @@ class LeadsController < FatFreeCrm::EntitiesController
   #----------------------------------------------------------------------------
   def destroy
     @lead.destroy
-
+    FatFreeCrm::Lead.delete_recipient(@lead)
     respond_with(@lead) do |format|
       format.html { respond_to_destroy(:html) }
       format.js   { respond_to_destroy(:ajax) }
