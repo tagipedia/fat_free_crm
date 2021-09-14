@@ -97,7 +97,7 @@ class Lead < ActiveRecord::Base
     leads = []
     (2..spreadsheet.last_row).each_with_index do |i, index|
       if spreadsheet.row(i)[1].present? && spreadsheet.row(i)[2].present? && spreadsheet.row(i)[3].present?
-        lead = FatFreeCrm::Lead.find_or_initialize_by_email(spreadsheet.row(i)[3]) do |l|
+        lead = FatFreeCrm::Lead.find_or_initialize_by(email: spreadsheet.row(i)[3]) do |l|
           l.email = spreadsheet.row(i)[3]
           l.alt_email = spreadsheet.row(i)[3]
           l.user_id = super_user.id
