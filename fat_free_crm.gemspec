@@ -61,4 +61,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'email_reply_parser_ffcrm'
 
   gem.add_dependency 'sendgrid-ruby', '~> 6.4.0'
+  gem.add_dependency "roo", "~> 2.8.0"
+  gem.add_dependency 'ransack_ui', '~> 1.4'
 end
