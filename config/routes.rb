@@ -14,7 +14,7 @@ FatFreeCrm.application.routes.draw do
   get '/login',  to: redirect('/fat_free_crm/users/sign_in')
   get '/signup', to: redirect('/fat_free_crm/users/sign_up')
 
-  devise_for :fat_free_crm_users, path: 'users', class_name: 'FatFreeCrm::User', module: :devise, controllers: { registrations: 'fat_free_crm/registrations',
+  devise_for :fat_free_crm_users, path: 'users', class_name: 'FatFreeCrm::User', module: :devise, mailer: 'FatFreeCrm::DeviseMailer', encryptor: :authlogic_sha512, router_name: :fat_free_crm, controllers: { registrations: 'fat_free_crm/registrations',
                                     sessions: 'fat_free_crm/sessions',
                                     passwords: 'fat_free_crm/passwords',
                                     confirmations: 'fat_free_crm/confirmations' }
