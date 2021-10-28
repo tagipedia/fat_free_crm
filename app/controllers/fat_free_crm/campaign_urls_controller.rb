@@ -16,7 +16,7 @@ class CampaignUrlsController < FatFreeCrm::EntitiesController
 
     if params[:related]
       model, id = params[:related].split('_')
-      if related = "FatFreeCrm::#{model.classify}".constantize.my(current_user).find_by_id(id)
+      if related = "FatFreeCrm::#{model.classify}".constantize.my(current_fat_free_crm_user).find_by_id(id)
         instance_variable_set("@#{model}", related)
       else
         respond_to_related_not_found(model) && return
@@ -31,7 +31,7 @@ class CampaignUrlsController < FatFreeCrm::EntitiesController
   def edit
     get_campaigns
 
-    @previous = CampaignUrl.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
+    @previous = CampaignUrl.my(current_fat_free_crm_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
 
     respond_with(@campaign_url)
   end
@@ -60,7 +60,7 @@ class CampaignUrlsController < FatFreeCrm::EntitiesController
       if @campaign_url.update_with_params(resource_params)
         update_sidebar
       else
-        @campaigns = Campaign.my(current_user).order('name')
+        @campaigns = Campaign.my(current_fat_free_crm_user).order('name')
       end
     end
   end
@@ -83,7 +83,7 @@ class CampaignUrlsController < FatFreeCrm::EntitiesController
 
   #----------------------------------------------------------------------------
   def get_campaigns
-    @campaigns = Campaign.my(current_user).order('name')
+    @campaigns = Campaign.my(current_fat_free_crm_user).order('name')
   end
 
   #----------------------------------------------------------------------------

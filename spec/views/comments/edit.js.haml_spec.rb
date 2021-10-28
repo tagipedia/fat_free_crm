@@ -17,7 +17,7 @@ describe "/comments/edit" do
                                 new_record?: false,
                                 commentable: stub_model(Contact, id: '123')))
     # params["contact_id"] = "123"
-    assign(:current_user, stub_model(User,
+    assign(:current_fat_free_crm_user, stub_model(User,
                                      email: 'test@example.com'))
   end
 

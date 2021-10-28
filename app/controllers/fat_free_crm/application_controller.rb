@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :configure_devise_parameters, if: :devise_controller?
-  before_action :authenticate_user!
+  before_action :authenticate_fat_free_crm_user!
   before_action :set_paper_trail_whodunnit
   before_action :set_context
   before_action :clear_setting_cache
@@ -38,10 +38,10 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def auto_complete
     @query = params[:term] || ''
-    @auto_complete = hook(:auto_complete, self, query: @query, user: current_user)
+    @auto_complete = hook(:auto_complete, self, query: @query, user: current_fat_free_crm_user)
     if @auto_complete.empty?
       exclude_ids = auto_complete_ids_to_exclude(params[:related])
-      @auto_complete = klass.my(current_user).text_search(@query).ransack(id_not_in: exclude_ids).result.limit(10)
+      @auto_complete = klass.my(current_fat_free_crm_user).text_search(@query).ransack(id_not_in: exclude_ids).result.limit(10)
     else
       @auto_complete = @auto_complete.last
     end
@@ -64,7 +64,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_ability
-    @current_ability ||= FatFreeCrm::Ability.new(current_user)
+    @current_ability ||= FatFreeCrm::Ability.new(current_fat_free_crm_user)
   end
 
   # To deal with pre rails 6 users, reset the session and ask them to relogin
@@ -120,7 +120,7 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def set_context
     Time.zone = ActiveSupport::TimeZone[session[:timezone_offset]] if session[:timezone_offset]
-    if current_user.present? && (locale = current_user.preference[:locale]).present?
+    if current_fat_free_crm_user.present? && (locale = current_fat_free_crm_user.preference[:locale]).present?
       ::I18n.locale = locale
     elsif Setting.locale.present?
       ::I18n.locale = Setting.locale
@@ -234,7 +234,7 @@ class ApplicationController < ActionController::Base
   #----------------------------------------------------------------------------
   def redirection_url
     # Try to redirect somewhere sensible. Note: not all controllers have an index action
-    if current_user.present?
+    if current_fat_free_crm_user.present?
       respond_to?(:index) && action_name != 'index' ? { action: 'index' } : root_url
     else
       login_url

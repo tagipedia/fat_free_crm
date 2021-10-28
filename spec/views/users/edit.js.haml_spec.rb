@@ -12,7 +12,7 @@ describe "/users/edit" do
 
   before do
     login
-    assign(:user, @user = current_user)
+    assign(:user, @user = current_fat_free_crm_user)
   end
 
   it "cancel: should hide [Edit Profile] form and restore title" do

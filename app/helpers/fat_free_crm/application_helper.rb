@@ -360,7 +360,7 @@ module ApplicationHelper
   # Helper to display links to supported data export formats.
   #----------------------------------------------------------------------------
   def links_to_export(action = :index)
-    token = current_user.authentication_token
+    token = current_fat_free_crm_user.authentication_token
     url_params = { action: action }
     url_params[:id] = params[:id] unless params[:id].blank?
     url_params[:query] = params[:query] unless params[:query].blank?
@@ -508,7 +508,7 @@ module ApplicationHelper
 
   #----------------------------------------------------------------------------
   # Ajaxification FTW!
-  # e.g. collection = Opportunity.my(current_user).scope
+  # e.g. collection = Opportunity.my(current_fat_free_crm_user).scope
   #         options = { renderer: {...} , params: {...}
   def paginate(options = {})
     collection = options.delete(:collection)
@@ -534,7 +534,7 @@ module ApplicationHelper
   end
 
   def current_view_name
-    current_user.pref[:"#{controller.controller_name}_#{show_or_index_action}_view"]
+    current_fat_free_crm_user.pref[:"#{controller.controller_name}_#{show_or_index_action}_view"]
   end
 end
 end

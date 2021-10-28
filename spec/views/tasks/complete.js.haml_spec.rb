@@ -47,7 +47,7 @@ describe "/tasks/complete" do
 
   describe "complete from related asset" do
     it "should replace pending partial with the completed one" do
-      @task = build_stubbed(:task, completed_at: Time.now, completor: current_user)
+      @task = build_stubbed(:task, completed_at: Time.now, completor: current_fat_free_crm_user)
       assign(:task, @task)
 
       render
@@ -56,7 +56,7 @@ describe "/tasks/complete" do
     end
 
     it "should update recently viewed items" do
-      @task = build_stubbed(:task, completed_at: Time.now, completor: current_user)
+      @task = build_stubbed(:task, completed_at: Time.now, completor: current_fat_free_crm_user)
       assign(:task, @task)
       controller.request.env["HTTP_REFERER"] = "http://localhost/leads/123"
 

@@ -10,8 +10,8 @@ atom_feed do |feed|
   feed.updated @activities.max_by(&:created_at).try(:created_at)
   feed.generator "Fat Free CRM v#{FatFreeCrm::VERSION::STRING}"
   feed.author do |author|
-    author.name  current_user.full_name
-    author.email current_user.email
+    author.name  current_fat_free_crm_user.full_name
+    author.email current_fat_free_crm_user.email
   end
 
   @activities.each do |activity|

@@ -12,7 +12,7 @@ describe "/users/update" do
 
   before do
     login
-    assign(:user, @user = current_user)
+    assign(:user, @user = current_fat_free_crm_user)
   end
 
   describe "no errors:" do

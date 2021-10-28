@@ -18,7 +18,7 @@ describe "/contacts/_edit" do
 
   it "should render [edit contact] form" do
     assign(:contact, @contact = create(:contact))
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
 
     render
     expect(view).to render_template(partial: "contacts/_top_section")
@@ -32,7 +32,7 @@ describe "/contacts/_edit" do
   end
 
   it "should pick default assignee (Myself)" do
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
     assign(:contact, create(:contact, assignee: nil))
 
     render
@@ -43,7 +43,7 @@ describe "/contacts/_edit" do
 
   it "should show correct assignee" do
     @user = create(:user)
-    assign(:users, [current_user, @user])
+    assign(:users, [current_fat_free_crm_user, @user])
     assign(:contact, create(:contact, assignee: @user))
 
     render
@@ -54,7 +54,7 @@ describe "/contacts/_edit" do
   end
 
   it "should render background info field if settings require so" do
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
     assign(:contact, create(:contact))
     Setting.background_info = [:contact]
 
@@ -63,7 +63,7 @@ describe "/contacts/_edit" do
   end
 
   it "should not render background info field if settings do not require so" do
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
     assign(:contact, create(:contact))
     Setting.background_info = []
 

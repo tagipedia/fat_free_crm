@@ -12,8 +12,8 @@ describe "/accounts/edit" do
 
   before do
     login
-    assign(:account, @account = build_stubbed(:account, user: current_user))
-    assign(:users, [current_user])
+    assign(:account, @account = build_stubbed(:account, user: current_fat_free_crm_user))
+    assign(:users, [current_fat_free_crm_user])
   end
 
   it "cancel from accounts index page: should replace [Edit Account] form with account partial" do
@@ -33,7 +33,7 @@ describe "/accounts/edit" do
 
   it "edit: should hide previously open [Edit Account] for and replace it with account partial" do
     params[:cancel] = nil
-    assign(:previous, previous = build_stubbed(:account, user: current_user))
+    assign(:previous, previous = build_stubbed(:account, user: current_fat_free_crm_user))
 
     render
     expect(rendered).to include("account_#{previous.id}")

@@ -2,7 +2,7 @@
 
 - if params[:cancel].true?     # <----------------- Hide [Edit Task]
 
-  - partial = (@task.assigned_to && @task.assigned_to != current_user.id) ? "assigned" : "pending"
+  - partial = (@task.assigned_to && @task.assigned_to != current_fat_free_crm_user.id) ? "assigned" : "pending"
   $('##{id}').html('#{ j render(partial: partial, collection: [ @task ], locals: { bucket: @task.bucket }) }');
 
 - else # <----------------------------------------  Show [Edit Task] form.
@@ -13,7 +13,7 @@
   -# Hide open [Edit Lead] form if any.
   - if @previous
     - if @previous.is_a?(Task)
-      - partial = (@previous.assigned_to && @previous.assigned_to != current_user.id) ? "assigned" : "pending"
+      - partial = (@previous.assigned_to && @previous.assigned_to != current_fat_free_crm_user.id) ? "assigned" : "pending"
       $('##{dom_id(@previous, 'fat_free_crm')}').replaceWith('#{ j render(partial: partial, collection: [ @previous ], locals: { bucket: nil }) }');
     - else
       crm.flick('task_#{@previous}', 'remove');

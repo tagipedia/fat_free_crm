@@ -24,8 +24,8 @@ class Admin::ApplicationController < FatFreeCrm::ApplicationController
 
   #----------------------------------------------------------------------------
   def require_admin_user
-    authenticate_user!
-    unless current_user&.admin?
+    authenticate_fat_free_crm_user!
+    unless current_fat_free_crm_user&.admin?
       flash[:notice] = t(:msg_require_admin)
       redirect_to root_path
     end

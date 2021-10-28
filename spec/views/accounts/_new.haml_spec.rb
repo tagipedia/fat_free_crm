@@ -13,7 +13,7 @@ describe "/accounts/_new" do
   before do
     login
     assign(:account, Account.new)
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
   end
 
   it "should render [create account] form" do

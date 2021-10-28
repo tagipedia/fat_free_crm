@@ -2,9 +2,9 @@
 - asset.tasks.each do |task|
   - if task.completed_at?
     = render "fat_free_crm/tasks/completed", completed: task, bucket: nil
-  - elsif task.my?(current_user)
+  - elsif task.my?(current_fat_free_crm_user)
     = render "fat_free_crm/tasks/pending", pending: task, bucket: nil
-  - elsif task.assigned_by?(current_user)
+  - elsif task.assigned_by?(current_fat_free_crm_user)
     = render "fat_free_crm/tasks/assigned", assigned: task, bucket: nil
   - else
     = render "fat_free_crm/tasks/related", related: task, bucket: nil

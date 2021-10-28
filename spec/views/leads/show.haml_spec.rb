@@ -13,7 +13,7 @@ describe "/leads/show" do
   before do
     login
     assign(:lead, @lead = build_stubbed(:lead, id: 42))
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
     assign(:comment, Comment.new)
     assign(:timeline, [build_stubbed(:comment, commentable: @lead)])
 

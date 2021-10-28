@@ -26,7 +26,7 @@ describe CampaignsController do
     end
 
     it "should expose all campaigns as @campaigns and render [index] template" do
-      @campaigns = [create(:campaign, user: current_user)]
+      @campaigns = [create(:campaign, user: current_fat_free_crm_user)]
 
       get :index
       expect(assigns[:campaigns]).to eq(@campaigns)
@@ -34,7 +34,7 @@ describe CampaignsController do
     end
 
     it "should collect the data for the opportunities sidebar" do
-      @campaigns = [create(:campaign, user: current_user)]
+      @campaigns = [create(:campaign, user: current_fat_free_crm_user)]
 
       get :index
       expect(assigns[:campaign_status_total].keys.map(&:to_sym) - (@status << :all << :other)).to eq([])
@@ -43,12 +43,12 @@ describe CampaignsController do
     it "should filter out campaigns by status" do
       controller.session[:campaigns_filter] = "planned,started"
       @campaigns = [
-        create(:campaign, user: current_user, status: "started"),
-        create(:campaign, user: current_user, status: "planned")
+        create(:campaign, user: current_fat_free_crm_user, status: "started"),
+        create(:campaign, user: current_fat_free_crm_user, status: "planned")
       ]
 
       # This one should be filtered out.
-      create(:campaign, user: current_user, status: "completed")
+      create(:campaign, user: current_fat_free_crm_user, status: "completed")
 
       get :index
       # Note: can't compare campaigns directly because of BigDecimal objects.
@@ -57,8 +57,8 @@ describe CampaignsController do
     end
 
     it "should perform lookup using query string" do
-      @first  = create(:campaign, user: current_user, name: "Hello, world!")
-      @second = create(:campaign, user: current_user, name: "Hello again")
+      @first  = create(:campaign, user: current_fat_free_crm_user, name: "Hello, world!")
+      @second = create(:campaign, user: current_fat_free_crm_user, name: "Hello again")
 
       get :index, params: { query: "again" }
       expect(assigns[:campaigns]).to eq([@second])
@@ -68,7 +68,7 @@ describe CampaignsController do
 
     describe "AJAX pagination" do
       it "should pick up page number from params" do
-        @campaigns = [create(:campaign, user: current_user)]
+        @campaigns = [create(:campaign, user: current_fat_free_crm_user)]
         get :index, params: { page: 42 }, xhr: true
 
         expect(assigns[:current_page].to_i).to eq(42)
@@ -79,7 +79,7 @@ describe CampaignsController do
 
       it "should pick up saved page number from session" do
         session[:campaigns_current_page] = 42
-        @campaigns = [create(:campaign, user: current_user)]
+        @campaigns = [create(:campaign, user: current_fat_free_crm_user)]
         get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(42)
@@ -90,7 +90,7 @@ describe CampaignsController do
       it "should reset current_page when query is altered" do
         session[:campaigns_current_page] = 42
         session[:campaigns_current_query] = "bill"
-        @campaigns = [create(:campaign, user: current_user)]
+        @campaigns = [create(:campaign, user: current_fat_free_crm_user)]
         get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(1)
@@ -128,7 +128,7 @@ describe CampaignsController do
   describe "responding to GET show" do
     describe "with mime type of HTML" do
       before(:each) do
-        @campaign = create(:campaign, id: 42, user: current_user)
+        @campaign = create(:campaign, id: 42, user: current_fat_free_crm_user)
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
       end
@@ -149,7 +149,7 @@ describe CampaignsController do
 
     describe "with mime type of JSON" do
       it "should render the requested campaign as JSON" do
-        @campaign = create(:campaign, id: 42, user: current_user)
+        @campaign = create(:campaign, id: 42, user: current_fat_free_crm_user)
         expect(Campaign).to receive(:find).and_return(@campaign)
         expect(@campaign).to receive(:to_json).and_return("generated JSON")
 
@@ -161,7 +161,7 @@ describe CampaignsController do
 
     describe "with mime type of XML" do
       it "should render the requested campaign as XML" do
-        @campaign = create(:campaign, id: 42, user: current_user)
+        @campaign = create(:campaign, id: 42, user: current_fat_free_crm_user)
         expect(Campaign).to receive(:find).and_return(@campaign)
         expect(@campaign).to receive(:to_xml).and_return("generated XML")
 
@@ -173,7 +173,7 @@ describe CampaignsController do
 
     describe "campaign got deleted or otherwise unavailable" do
       it "should redirect to campaign index if the campaign got deleted" do
-        @campaign = create(:campaign, user: current_user)
+        @campaign = create(:campaign, user: current_fat_free_crm_user)
         @campaign.destroy
 
         get :show, params: { id: @campaign.id }
@@ -190,7 +190,7 @@ describe CampaignsController do
       end
 
       it "should return 404 (Not Found) JSON error" do
-        @campaign = create(:campaign, user: current_user)
+        @campaign = create(:campaign, user: current_fat_free_crm_user)
         @campaign.destroy
         request.env["HTTP_ACCEPT"] = "application/json"
 
@@ -199,7 +199,7 @@ describe CampaignsController do
       end
 
       it "should return 404 (Not Found) XML error" do
-        @campaign = create(:campaign, user: current_user)
+        @campaign = create(:campaign, user: current_fat_free_crm_user)
         @campaign.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
@@ -214,7 +214,7 @@ describe CampaignsController do
   #----------------------------------------------------------------------------
   describe "responding to GET new" do
     it "should expose a new campaign as @campaign" do
-      @campaign = Campaign.new(user: current_user,
+      @campaign = Campaign.new(user: current_fat_free_crm_user,
                                access: Setting.default_access)
       get :new, xhr: true
       expect(assigns[:campaign].attributes).to eq(@campaign.attributes)
@@ -233,7 +233,7 @@ describe CampaignsController do
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
     it "should expose the requested campaign as @campaign and render [edit] template" do
-      @campaign = create(:campaign, id: 42, user: current_user)
+      @campaign = create(:campaign, id: 42, user: current_fat_free_crm_user)
 
       get :edit, params: { id: 42 }, xhr: true
       expect(assigns[:campaign]).to eq(@campaign)
@@ -251,7 +251,7 @@ describe CampaignsController do
 
     describe "(campaign got deleted or is otherwise unavailable)" do
       it "should reload current page with the flash message if the campaign got deleted" do
-        @campaign = create(:campaign, user: current_user)
+        @campaign = create(:campaign, user: current_fat_free_crm_user)
         @campaign.destroy
 
         get :edit, params: { id: @campaign.id }, xhr: true
@@ -270,7 +270,7 @@ describe CampaignsController do
 
     describe "(previous campaign got deleted or is otherwise unavailable)" do
       before(:each) do
-        @campaign = create(:campaign, user: current_user)
+        @campaign = create(:campaign, user: current_fat_free_crm_user)
         @previous = create(:campaign, user: create(:user))
       end
 
@@ -300,7 +300,7 @@ describe CampaignsController do
   describe "responding to POST create" do
     describe "with valid params" do
       it "should expose a newly created campaign as @campaign and render [create] template" do
-        @campaign = build(:campaign, name: "Hello", user: current_user)
+        @campaign = build(:campaign, name: "Hello", user: current_fat_free_crm_user)
         allow(Campaign).to receive(:new).and_return(@campaign)
 
         post :create, params: { campaign: { name: "Hello" } }, xhr: true
@@ -309,7 +309,7 @@ describe CampaignsController do
       end
 
       it "should get data to update campaign sidebar" do
-        @campaign = build(:campaign, name: "Hello", user: current_user)
+        @campaign = build(:campaign, name: "Hello", user: current_fat_free_crm_user)
         allow(Campaign).to receive(:new).and_return(@campaign)
 
         post :create, params: { campaign: { name: "Hello" } }, xhr: true
@@ -317,7 +317,7 @@ describe CampaignsController do
       end
 
       it "should reload campaigns to update pagination" do
-        @campaign = build(:campaign, user: current_user)
+        @campaign = build(:campaign, user: current_fat_free_crm_user)
         allow(Campaign).to receive(:new).and_return(@campaign)
 
         post :create, params: { campaign: { name: "Hello" } }, xhr: true
@@ -325,7 +325,7 @@ describe CampaignsController do
       end
 
       it "should add a new comment to the newly created campaign when specified" do
-        @campaign = build(:campaign, name: "Hello world", user: current_user)
+        @campaign = build(:campaign, name: "Hello world", user: current_fat_free_crm_user)
         allow(Campaign).to receive(:new).and_return(@campaign)
 
         post :create, params: { campaign: { name: "Hello world" }, comment_body: "Awesome comment is awesome" }, xhr: true
@@ -335,7 +335,7 @@ describe CampaignsController do
 
     describe "with invalid params" do
       it "should expose a newly created but unsaved campaign as @campaign and still render [create] template" do
-        @campaign = build(:campaign, id: nil, name: nil, user: current_user)
+        @campaign = build(:campaign, id: nil, name: nil, user: current_fat_free_crm_user)
         allow(Campaign).to receive(:new).and_return(@campaign)
 
         post :create, params: { campaign: {} }, xhr: true
@@ -380,7 +380,7 @@ describe CampaignsController do
 
       describe "campaign got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the campaign got deleted" do
-          @campaign = create(:campaign, user: current_user)
+          @campaign = create(:campaign, user: current_fat_free_crm_user)
           @campaign.destroy
 
           put :update, params: { id: @campaign.id }, xhr: true
@@ -400,7 +400,7 @@ describe CampaignsController do
 
     describe "with invalid params" do
       it "should not update the requested campaign, but still expose it as @campaign and still render [update] template" do
-        @campaign = create(:campaign, id: 42, name: "Hello", user: current_user)
+        @campaign = create(:campaign, id: 42, name: "Hello", user: current_fat_free_crm_user)
 
         put :update, params: { id: 42, campaign: { name: nil } }, xhr: true
         expect(@campaign.reload.name).to eq("Hello")
@@ -415,12 +415,12 @@ describe CampaignsController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
     before(:each) do
-      @campaign = create(:campaign, user: current_user)
+      @campaign = create(:campaign, user: current_fat_free_crm_user)
     end
 
     describe "AJAX request" do
       it "should destroy the requested campaign and render [destroy] template" do
-        @another_campaign = create(:campaign, user: current_user)
+        @another_campaign = create(:campaign, user: current_fat_free_crm_user)
         delete :destroy, params: { id: @campaign.id }, xhr: true
 
         expect(assigns[:campaigns]).to eq([@another_campaign])
@@ -452,7 +452,7 @@ describe CampaignsController do
 
       describe "campaign got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the campaign got deleted" do
-          @campaign = create(:campaign, user: current_user)
+          @campaign = create(:campaign, user: current_fat_free_crm_user)
           @campaign.destroy
 
           delete :destroy, params: { id: @campaign.id }, xhr: true
@@ -479,7 +479,7 @@ describe CampaignsController do
       end
 
       it "should redirect to campaign index with the flash message is the campaign got deleted" do
-        @campaign = create(:campaign, user: current_user)
+        @campaign = create(:campaign, user: current_fat_free_crm_user)
         @campaign.destroy
 
         delete :destroy, params: { id: @campaign.id }
@@ -590,7 +590,7 @@ describe CampaignsController do
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
     before(:each) do
-      @auto_complete_matches = [create(:campaign, name: "Hello World", user: current_user)]
+      @auto_complete_matches = [create(:campaign, name: "Hello World", user: current_fat_free_crm_user)]
     end
 
     it_should_behave_like("auto complete")
@@ -601,9 +601,9 @@ describe CampaignsController do
   describe "responding to GET redraw" do
     it "should save user selected campaign preference" do
       get :redraw, params: { per_page: 42, view: "brief", sort_by: "name" }, xhr: true
-      expect(current_user.preference[:campaigns_per_page]).to eq(42)
-      expect(current_user.preference[:campaigns_index_view]).to eq("brief")
-      expect(current_user.preference[:campaigns_sort_by]).to eq("campaigns.name ASC")
+      expect(current_fat_free_crm_user.preference[:campaigns_per_page]).to eq(42)
+      expect(current_fat_free_crm_user.preference[:campaigns_index_view]).to eq("brief")
+      expect(current_fat_free_crm_user.preference[:campaigns_sort_by]).to eq("campaigns.name ASC")
     end
 
     it "should reset current page to 1" do
@@ -613,8 +613,8 @@ describe CampaignsController do
 
     it "should select @campaigns and render [index] template" do
       @campaigns = [
-        create(:campaign, name: "A", user: current_user),
-        create(:campaign, name: "B", user: current_user)
+        create(:campaign, name: "A", user: current_fat_free_crm_user),
+        create(:campaign, name: "B", user: current_fat_free_crm_user)
       ]
 
       get :redraw, params: { per_page: 1, sort_by: "name" }, xhr: true
@@ -628,7 +628,7 @@ describe CampaignsController do
   describe "responding to POST filter" do
     it "should expose filtered campaigns as @campaigns and render [index] template" do
       session[:campaigns_filter] = "planned,started"
-      @campaigns = [create(:campaign, status: "completed", user: current_user)]
+      @campaigns = [create(:campaign, status: "completed", user: current_fat_free_crm_user)]
 
       post :filter, params: { status: "completed" }, xhr: true
       expect(assigns(:campaigns)).to eq(@campaigns)

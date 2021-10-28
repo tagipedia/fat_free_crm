@@ -10,17 +10,17 @@ class EntityObserver < ActiveRecord::Observer
   observe FatFreeCrm::Account, FatFreeCrm::Contact, FatFreeCrm::Lead, FatFreeCrm::Opportunity
 
   def after_create(item)
-    send_notification_to_assignee(item) if current_user != item.assignee
+    send_notification_to_assignee(item) if current_fat_free_crm_user != item.assignee
   end
 
   def after_update(item)
-    send_notification_to_assignee(item) if item.saved_change_to_assigned_to? && item.assignee != current_user
+    send_notification_to_assignee(item) if item.saved_change_to_assigned_to? && item.assignee != current_fat_free_crm_user
   end
 
   private
 
   def send_notification_to_assignee(item)
-    UserMailer.assigned_entity_notification(item, current_user).deliver_now if item.assignee.present? && current_user.present? && can_send_email?
+    UserMailer.assigned_entity_notification(item, current_fat_free_crm_user).deliver_now if item.assignee.present? && current_fat_free_crm_user.present? && can_send_email?
   end
 
   # Need to have a host set before email can be sent
@@ -28,7 +28,7 @@ class EntityObserver < ActiveRecord::Observer
     Setting.host.present?
   end
 
-  def current_user
+  def current_fat_free_crm_user
     # this deals with whodunnit inconsistencies, where in some cases it's set to a user's id and others the user object itself
     user_id_or_user = PaperTrail.request.whodunnit
     if user_id_or_user.is_a?(User)

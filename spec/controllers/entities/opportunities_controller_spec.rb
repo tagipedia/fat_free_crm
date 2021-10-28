@@ -26,7 +26,7 @@ describe OpportunitiesController do
     end
 
     it "should expose all opportunities as @opportunities and render [index] template" do
-      @opportunities = [create(:opportunity, user: current_user)]
+      @opportunities = [create(:opportunity, user: current_fat_free_crm_user)]
 
       get :index
       expect(assigns[:opportunities]).to eq(@opportunities)
@@ -42,11 +42,11 @@ describe OpportunitiesController do
     it "should filter out opportunities by stage" do
       controller.session[:opportunities_filter] = "prospecting,negotiation"
       @opportunities = [
-        create(:opportunity, user: current_user, stage: "negotiation"),
-        create(:opportunity, user: current_user, stage: "prospecting")
+        create(:opportunity, user: current_fat_free_crm_user, stage: "negotiation"),
+        create(:opportunity, user: current_fat_free_crm_user, stage: "prospecting")
       ]
       # This one should be filtered out.
-      create(:opportunity, user: current_user, stage: "analysis")
+      create(:opportunity, user: current_fat_free_crm_user, stage: "analysis")
 
       get :index
       # Note: can't compare opportunities directly because of BigDecimal objects.
@@ -55,8 +55,8 @@ describe OpportunitiesController do
     end
 
     it "should perform lookup using query string" do
-      @first  = create(:opportunity, user: current_user, name: "The first one")
-      @second = create(:opportunity, user: current_user, name: "The second one")
+      @first  = create(:opportunity, user: current_fat_free_crm_user, name: "The first one")
+      @second = create(:opportunity, user: current_fat_free_crm_user, name: "The second one")
 
       get :index, params: { query: "second" }
       expect(assigns[:opportunities]).to eq([@second])
@@ -66,7 +66,7 @@ describe OpportunitiesController do
 
     describe "AJAX pagination" do
       it "should pick up page number from params" do
-        @opportunities = [create(:opportunity, user: current_user)]
+        @opportunities = [create(:opportunity, user: current_fat_free_crm_user)]
         get :index, params: { page: 42 }, xhr: true
 
         expect(assigns[:current_page].to_i).to eq(42)
@@ -77,7 +77,7 @@ describe OpportunitiesController do
 
       it "should pick up saved page number from session" do
         session[:opportunities_current_page] = 42
-        @opportunities = [create(:opportunity, user: current_user)]
+        @opportunities = [create(:opportunity, user: current_fat_free_crm_user)]
         get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(42)
@@ -88,7 +88,7 @@ describe OpportunitiesController do
       it "should reset current_page when query is altered" do
         session[:opportunities_current_page] = 42
         session[:opportunities_current_query] = "bill"
-        @opportunities = [create(:opportunity, user: current_user)]
+        @opportunities = [create(:opportunity, user: current_fat_free_crm_user)]
         get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(1)
@@ -182,7 +182,7 @@ describe OpportunitiesController do
 
     describe "opportunity got deleted or otherwise unavailable" do
       it "should redirect to opportunity index if the opportunity got deleted" do
-        @opportunity = create(:opportunity, user: current_user)
+        @opportunity = create(:opportunity, user: current_fat_free_crm_user)
         @opportunity.destroy
 
         get :show, params: { id: @opportunity.id }
@@ -199,7 +199,7 @@ describe OpportunitiesController do
       end
 
       it "should return 404 (Not Found) JSON error" do
-        @opportunity = create(:opportunity, user: current_user)
+        @opportunity = create(:opportunity, user: current_fat_free_crm_user)
         @opportunity.destroy
         request.env["HTTP_ACCEPT"] = "application/json"
 
@@ -208,7 +208,7 @@ describe OpportunitiesController do
       end
 
       it "should return 404 (Not Found) XML error" do
-        @opportunity = create(:opportunity, user: current_user)
+        @opportunity = create(:opportunity, user: current_fat_free_crm_user)
         @opportunity.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
@@ -223,9 +223,9 @@ describe OpportunitiesController do
   #----------------------------------------------------------------------------
   describe "responding to GET new" do
     it "should expose a new opportunity as @opportunity and render [new] template" do
-      @opportunity = Opportunity.new(user: current_user, access: Setting.default_access, stage: "prospecting")
-      @account = Account.new(user: current_user, access: Setting.default_access)
-      @accounts = [create(:account, user: current_user)]
+      @opportunity = Opportunity.new(user: current_fat_free_crm_user, access: Setting.default_access, stage: "prospecting")
+      @account = Account.new(user: current_fat_free_crm_user, access: Setting.default_access)
+      @accounts = [create(:account, user: current_fat_free_crm_user)]
 
       get :new, xhr: true
       expect(assigns[:opportunity].attributes).to eq(@opportunity.attributes)
@@ -267,8 +267,8 @@ describe OpportunitiesController do
     it "should expose the requested opportunity as @opportunity and render [edit] template" do
       # Note: campaign => nil makes sure campaign factory is not invoked which has a side
       # effect of creating an extra (campaign) user.
-      @account = create(:account, user: current_user)
-      @opportunity = create(:opportunity, id: 42, user: current_user, campaign: nil,
+      @account = create(:account, user: current_fat_free_crm_user)
+      @opportunity = create(:opportunity, id: 42, user: current_fat_free_crm_user, campaign: nil,
                                           account: @account)
       @stage = Setting.unroll(:opportunity_stage)
       @accounts = [@account]
@@ -293,7 +293,7 @@ describe OpportunitiesController do
 
     describe "opportunity got deleted or is otherwise unavailable" do
       it "should reload current page with the flash message if the opportunity got deleted" do
-        @opportunity = create(:opportunity, user: current_user)
+        @opportunity = create(:opportunity, user: current_fat_free_crm_user)
         @opportunity.destroy
 
         get :edit, params: { id: @opportunity.id }, xhr: true
@@ -312,7 +312,7 @@ describe OpportunitiesController do
 
     describe "(previous opportunity got deleted or is otherwise unavailable)" do
       before do
-        @opportunity = create(:opportunity, user: current_user)
+        @opportunity = create(:opportunity, user: current_fat_free_crm_user)
         @previous = create(:opportunity, user: create(:user))
       end
 
@@ -342,7 +342,7 @@ describe OpportunitiesController do
   describe "responding to POST create" do
     describe "with valid params" do
       before do
-        @opportunity = build(:opportunity, user: current_user)
+        @opportunity = build(:opportunity, user: current_fat_free_crm_user)
         allow(Opportunity).to receive(:new).and_return(@opportunity)
         @stage = Setting.unroll(:opportunity_stage)
       end
@@ -362,7 +362,7 @@ describe OpportunitiesController do
       end
 
       it "should find related account if called from account landing page" do
-        @account = create(:account, user: current_user)
+        @account = create(:account, user: current_fat_free_crm_user)
         request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
         post :create, params: { opportunity: { name: "Hello" }, account: { id: @account.id } }, xhr: true
@@ -370,7 +370,7 @@ describe OpportunitiesController do
       end
 
       it "should find related campaign if called from campaign landing page" do
-        @campaign = create(:campaign, user: current_user)
+        @campaign = create(:campaign, user: current_fat_free_crm_user)
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
 
         post :create, params: { opportunity: { name: "Hello" }, campaign: @campaign.id, account: { name: "Hello again" } }, xhr: true
@@ -420,7 +420,7 @@ describe OpportunitiesController do
 
       it "should update related campaign revenue if won" do
         @campaign = create(:campaign, revenue: 0)
-        @opportunity = build(:opportunity, user: current_user, stage: "won", amount: 1100, discount: 100)
+        @opportunity = build(:opportunity, user: current_fat_free_crm_user, stage: "won", amount: 1100, discount: 100)
         allow(Opportunity).to receive(:new).and_return(@opportunity)
 
         post :create, params: { opportunity: { name: "Hello world" }, campaign: @campaign.id, account: { name: "Test Account" } }, xhr: true
@@ -430,7 +430,7 @@ describe OpportunitiesController do
       end
 
       it "should add a new comment to the newly created opportunity when specified" do
-        @opportunity = build(:opportunity, user: current_user)
+        @opportunity = build(:opportunity, user: current_fat_free_crm_user)
         allow(Opportunity).to receive(:new).and_return(@opportunity)
 
         post :create, params: { opportunity: { name: "Opportunity Knocks" }, account: { name: "My Account" }, comment_body: "Awesome comment is awesome" }, xhr: true
@@ -440,15 +440,15 @@ describe OpportunitiesController do
 
     describe "with invalid params" do
       it "should expose a newly created but unsaved opportunity as @opportunity with blank @account and render [create] template" do
-        @account = Account.new(user: current_user)
-        @opportunity = build(:opportunity, name: nil, campaign: nil, user: current_user,
+        @account = Account.new(user: current_fat_free_crm_user)
+        @opportunity = build(:opportunity, name: nil, campaign: nil, user: current_fat_free_crm_user,
                                            account: @account)
         allow(Opportunity).to receive(:new).and_return(@opportunity)
         @stage = Setting.unroll(:opportunity_stage)
-        @accounts = [create(:account, user: current_user)]
+        @accounts = [create(:account, user: current_fat_free_crm_user)]
 
         # Expect to redraw [create] form with blank account.
-        post :create, params: { opportunity: {}, account: { user_id: current_user.id } }, xhr: true
+        post :create, params: { opportunity: {}, account: { user_id: current_fat_free_crm_user.id } }, xhr: true
         expect(assigns(:opportunity)).to eq(@opportunity)
         expect(assigns(:account).attributes).to eq(@account.attributes)
         expect(assigns(:accounts)).to eq(@accounts)
@@ -456,14 +456,14 @@ describe OpportunitiesController do
       end
 
       it "should expose a newly created but unsaved opportunity as @opportunity with existing @account and render [create] template" do
-        @account = create(:account, id: 42, user: current_user)
-        @opportunity = build(:opportunity, name: nil, campaign: nil, user: current_user,
+        @account = create(:account, id: 42, user: current_fat_free_crm_user)
+        @opportunity = build(:opportunity, name: nil, campaign: nil, user: current_fat_free_crm_user,
                                            account: @account)
         allow(Opportunity).to receive(:new).and_return(@opportunity)
         @stage = Setting.unroll(:opportunity_stage)
 
         # Expect to redraw [create] form with selected account.
-        post :create, params: { opportunity: {}, account: { id: 42, user_id: current_user.id } }, xhr: true
+        post :create, params: { opportunity: {}, account: { id: 42, user_id: current_fat_free_crm_user.id } }, xhr: true
         expect(assigns(:opportunity)).to eq(@opportunity)
         expect(assigns(:account)).to eq(@account)
         expect(assigns(:accounts)).to eq([@account])
@@ -516,7 +516,7 @@ describe OpportunitiesController do
       end
 
       it "should find related account if called from account landing page" do
-        @account = create(:account, user: current_user)
+        @account = create(:account, user: current_fat_free_crm_user)
         @opportunity = create(:opportunity, id: 42, account: @account)
         request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
@@ -525,7 +525,7 @@ describe OpportunitiesController do
       end
 
       it "should remove related account if blank :account param is given" do
-        @account = create(:account, user: current_user)
+        @account = create(:account, user: current_fat_free_crm_user)
         @opportunity = create(:opportunity, id: 42, account: @account)
         request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
@@ -534,8 +534,8 @@ describe OpportunitiesController do
       end
 
       it "should find related campaign if called from campaign landing page" do
-        @campaign = create(:campaign, user: current_user)
-        @opportunity = create(:opportunity, id: 42, user: current_user)
+        @campaign = create(:campaign, user: current_fat_free_crm_user)
+        @opportunity = create(:opportunity, id: 42, user: current_fat_free_crm_user)
         @campaign.opportunities << @opportunity
         request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
 
@@ -639,7 +639,7 @@ describe OpportunitiesController do
 
       describe "opportunity got deleted or otherwise unavailable" do
         it "should reload current page with the flash message if the opportunity got deleted" do
-          @opportunity = create(:opportunity, user: current_user)
+          @opportunity = create(:opportunity, user: current_fat_free_crm_user)
           @opportunity.destroy
 
           put :update, params: { id: @opportunity.id }, xhr: true
@@ -684,7 +684,7 @@ describe OpportunitiesController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
     before do
-      @opportunity = create(:opportunity, user: current_user)
+      @opportunity = create(:opportunity, user: current_fat_free_crm_user)
     end
 
     describe "AJAX request" do
@@ -734,7 +734,7 @@ describe OpportunitiesController do
 
         it "should reload campaiign to be able to refresh its summary" do
           @account = create(:account)
-          @opportunity = create(:opportunity, user: current_user, account: @account)
+          @opportunity = create(:opportunity, user: current_fat_free_crm_user, account: @account)
           request.env["HTTP_REFERER"] = "http://localhost/accounts/#{@account.id}"
 
           delete :destroy, params: { id: @opportunity.id }, xhr: true
@@ -744,7 +744,7 @@ describe OpportunitiesController do
 
         it "should reload campaiign to be able to refresh its summary" do
           @campaign = create(:campaign)
-          @opportunity = create(:opportunity, user: current_user, campaign: @campaign)
+          @opportunity = create(:opportunity, user: current_fat_free_crm_user, campaign: @campaign)
           request.env["HTTP_REFERER"] = "http://localhost/campaigns/#{@campaign.id}"
 
           delete :destroy, params: { id: @opportunity.id }, xhr: true
@@ -755,7 +755,7 @@ describe OpportunitiesController do
 
       describe "opportunity got deleted or otherwise unavailable" do
         it "should reload current page is the opportunity got deleted" do
-          @opportunity = create(:opportunity, user: current_user)
+          @opportunity = create(:opportunity, user: current_fat_free_crm_user)
           @opportunity.destroy
 
           delete :destroy, params: { id: @opportunity.id }, xhr: true
@@ -781,7 +781,7 @@ describe OpportunitiesController do
       end
 
       it "should redirect to opportunity index with the flash message is the opportunity got deleted" do
-        @opportunity = create(:opportunity, user: current_user)
+        @opportunity = create(:opportunity, user: current_fat_free_crm_user)
         @opportunity.destroy
 
         delete :destroy, params: { id: @opportunity.id }
@@ -846,7 +846,7 @@ describe OpportunitiesController do
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
     before do
-      @auto_complete_matches = [create(:opportunity, name: "Hello World", user: current_user)]
+      @auto_complete_matches = [create(:opportunity, name: "Hello World", user: current_fat_free_crm_user)]
     end
 
     it_should_behave_like("auto complete")
@@ -857,9 +857,9 @@ describe OpportunitiesController do
   describe "responding to GET redraw" do
     it "should save user selected opportunity preference" do
       get :redraw, params: { per_page: 42, view: "brief", sort_by: "name" }, xhr: true
-      expect(current_user.preference[:opportunities_per_page]).to eq(42)
-      expect(current_user.preference[:opportunities_index_view]).to eq("brief")
-      expect(current_user.preference[:opportunities_sort_by]).to eq("fat_free_crm_opportunities.name ASC")
+      expect(current_fat_free_crm_user.preference[:opportunities_per_page]).to eq(42)
+      expect(current_fat_free_crm_user.preference[:opportunities_index_view]).to eq("brief")
+      expect(current_fat_free_crm_user.preference[:opportunities_sort_by]).to eq("fat_free_crm_opportunities.name ASC")
     end
 
     it "should reset current page to 1" do
@@ -869,8 +869,8 @@ describe OpportunitiesController do
 
     it "should select @opportunities and render [index] template" do
       @opportunities = [
-        create(:opportunity, name: "A", user: current_user),
-        create(:opportunity, name: "B", user: current_user)
+        create(:opportunity, name: "A", user: current_fat_free_crm_user),
+        create(:opportunity, name: "B", user: current_fat_free_crm_user)
       ]
 
       get :redraw, params: { per_page: 1, sort_by: "name" }, xhr: true
@@ -884,7 +884,7 @@ describe OpportunitiesController do
   describe "responding to GET filter" do
     it "should expose filtered opportunities as @opportunity and render [filter] template" do
       session[:opportunities_filter] = "negotiation,analysis"
-      @opportunities = [create(:opportunity, stage: "prospecting", user: current_user)]
+      @opportunities = [create(:opportunity, stage: "prospecting", user: current_fat_free_crm_user)]
       @stage = Setting.unroll(:opportunity_stage)
 
       get :filter, params: { stage: "prospecting" }, xhr: true

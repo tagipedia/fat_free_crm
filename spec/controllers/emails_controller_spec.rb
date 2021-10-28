@@ -23,7 +23,7 @@ describe EmailsController, "handling GET /emails" do
         MEDIATOR.each do |asset|
           it "should destroy the requested email and render [destroy] template" do
             @asset = create(asset)
-            @email = create(:email, mediator: @asset, user: current_user)
+            @email = create(:email, mediator: @asset, user: current_fat_free_crm_user)
             allow(Email).to receive(:new).and_return(@email)
 
             delete :destroy, params: { id: @email.id }, xhr: true

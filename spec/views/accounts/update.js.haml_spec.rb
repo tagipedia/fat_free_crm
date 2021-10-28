@@ -13,8 +13,8 @@ describe "/accounts/update" do
   before do
     login
 
-    assign(:account, @account = build_stubbed(:account, user: current_user))
-    assign(:users, [current_user])
+    assign(:account, @account = build_stubbed(:account, user: current_fat_free_crm_user))
+    assign(:users, [current_fat_free_crm_user])
     assign(:account_category_total, Hash.new(1))
   end
 

@@ -8,7 +8,7 @@
       %tr
         %td
           .label #{t :assigned_to}:
-          = user_select(:account, FatFreeCrm::User.without_user(current_user), current_user)
+          = user_select(:account, FatFreeCrm::User.without_user(current_fat_free_crm_user), current_fat_free_crm_user)
         %td= spacer
         %td
           .label #{t :category}:

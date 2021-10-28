@@ -18,7 +18,7 @@ describe "/opportunities/_edit" do
   end
 
   it "should render [edit opportunity] form" do
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
     assign(:opportunity, @opportunity = build_stubbed(:opportunity, campaign: @campaign = build_stubbed(:campaign)))
     render
 
@@ -29,7 +29,7 @@ describe "/opportunities/_edit" do
   end
 
   it "should pick default assignee (Myself)" do
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
     assign(:opportunity, build_stubbed(:opportunity, assignee: nil))
     render
 
@@ -40,7 +40,7 @@ describe "/opportunities/_edit" do
 
   it "should show correct assignee" do
     @user = create(:user)
-    assign(:users, [current_user, @user])
+    assign(:users, [current_fat_free_crm_user, @user])
     assign(:opportunity, create(:opportunity, assignee: @user))
     render
 
@@ -51,7 +51,7 @@ describe "/opportunities/_edit" do
   end
 
   it "should render background info field if settings require so" do
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
     assign(:opportunity, build_stubbed(:opportunity))
     Setting.background_info = [:opportunity]
 
@@ -60,7 +60,7 @@ describe "/opportunities/_edit" do
   end
 
   it "should not render background info field if settings do not require so" do
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
     assign(:opportunity, build_stubbed(:opportunity))
     Setting.background_info = []
 

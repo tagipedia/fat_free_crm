@@ -7,15 +7,15 @@
 #------------------------------------------------------------------------------
 module FatFreeCrm
 class HomeController < FatFreeCrm::ApplicationController
-  skip_before_action :authenticate_user!, only: %i[timezone]
+  skip_before_action :authenticate_fat_free_crm_user!, only: %i[timezone]
   before_action :set_current_tab, only: :index
 
   #----------------------------------------------------------------------------
   def index
     @activities = get_activities
-    @my_tasks = Task.visible_on_dashboard(current_user).includes(:user, :asset).by_due_at
-    @my_opportunities = Opportunity.visible_on_dashboard(current_user).includes(:account, :user, :tags).by_closes_on.by_amount
-    @my_accounts = Account.visible_on_dashboard(current_user).includes(:user, :tags).by_name
+    @my_tasks = Task.visible_on_dashboard(current_fat_free_crm_user).includes(:user, :asset).by_due_at
+    @my_opportunities = Opportunity.visible_on_dashboard(current_fat_free_crm_user).includes(:account, :user, :tags).by_closes_on.by_amount
+    @my_accounts = Account.visible_on_dashboard(current_fat_free_crm_user).includes(:user, :tags).by_name
     respond_with @activities do |format|
       format.xls { render xls: @activities, layout: 'header' }
     end
@@ -25,10 +25,10 @@ class HomeController < FatFreeCrm::ApplicationController
   #----------------------------------------------------------------------------
   def options
     unless params[:cancel].true?
-      @asset = current_user.pref[:activity_asset] || "all"
-      @action = current_user.pref[:activity_event] || "all_events"
-      @user = current_user.pref[:activity_user] || "all_users"
-      @duration = current_user.pref[:activity_duration] || "two_days"
+      @asset = current_fat_free_crm_user.pref[:activity_asset] || "all"
+      @action = current_fat_free_crm_user.pref[:activity_event] || "all_events"
+      @user = current_fat_free_crm_user.pref[:activity_user] || "all_users"
+      @duration = current_fat_free_crm_user.pref[:activity_duration] || "two_days"
       @all_users = User.order("first_name, last_name")
     end
   end
@@ -36,10 +36,10 @@ class HomeController < FatFreeCrm::ApplicationController
   # GET /home/redraw                                                       AJAX
   #----------------------------------------------------------------------------
   def redraw
-    current_user.pref[:activity_asset] = params[:asset] if params[:asset]
-    current_user.pref[:activity_event] = params[:event] if params[:event]
-    current_user.pref[:activity_user] = params[:user] if params[:user]
-    current_user.pref[:activity_duration] = params[:duration] if params[:duration]
+    current_fat_free_crm_user.pref[:activity_asset] = params[:asset] if params[:asset]
+    current_fat_free_crm_user.pref[:activity_event] = params[:event] if params[:event]
+    current_fat_free_crm_user.pref[:activity_user] = params[:user] if params[:user]
+    current_fat_free_crm_user.pref[:activity_duration] = params[:duration] if params[:duration]
     @activities = get_activities
 
     respond_with(@activities) do |format|
@@ -110,12 +110,12 @@ class HomeController < FatFreeCrm::ApplicationController
     options[:duration] ||= activity_duration
     options[:max]      ||= 500
 
-    Version.includes(user: [:avatar]).latest(options).visible_to(current_user)
+    Version.includes(user: [:avatar]).latest(options).visible_to(current_fat_free_crm_user)
   end
 
   #----------------------------------------------------------------------------
   def activity_asset
-    asset = current_user.pref[:activity_asset]
+    asset = current_fat_free_crm_user.pref[:activity_asset]
     if asset.nil? || asset == "all"
       nil
     else
@@ -125,7 +125,7 @@ class HomeController < FatFreeCrm::ApplicationController
 
   #----------------------------------------------------------------------------
   def activity_event
-    event = current_user.pref[:activity_event]
+    event = current_fat_free_crm_user.pref[:activity_event]
     if event == "all_events"
       %w[create update destroy]
     else
@@ -138,15 +138,15 @@ class HomeController < FatFreeCrm::ApplicationController
   # needs refactoring to use user id instead. Permuations based on name or email
   # yield incorrect results.
   def activity_user
-    return nil if current_user.pref[:activity_user] == "all_users"
-    return nil unless current_user.pref[:activity_user]
+    return nil if current_fat_free_crm_user.pref[:activity_user] == "all_users"
+    return nil unless current_fat_free_crm_user.pref[:activity_user]
 
-    is_email = current_user.pref[:activity_user].include?("@")
+    is_email = current_fat_free_crm_user.pref[:activity_user].include?("@")
 
     user = if is_email
-             User.where(email: current_user.pref[:activity_user]).first
+             User.where(email: current_fat_free_crm_user.pref[:activity_user]).first
            else # first_name middle_name last_name any_name
-             name_query(current_user.pref[:activity_user])
+             name_query(current_fat_free_crm_user.pref[:activity_user])
            end
 
     user.is_a?(User) ? user.id : nil
@@ -164,7 +164,7 @@ class HomeController < FatFreeCrm::ApplicationController
 
   #----------------------------------------------------------------------------
   def activity_duration
-    duration = current_user.pref[:activity_duration]
+    duration = current_fat_free_crm_user.pref[:activity_duration]
     if duration
       words = duration.split("_") # "two_weeks" => 2.weeks
       %w[zero one two].index(words.first).send(words.last) if %w[one two].include?(words.first) && %w[hour day days week weeks month].include?(words.last)

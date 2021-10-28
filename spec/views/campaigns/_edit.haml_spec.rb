@@ -13,7 +13,7 @@ describe "/campaigns/_edit" do
   before do
     login
     assign(:campaign, @campaign = build_stubbed(:campaign))
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
   end
 
   it "should render [edit campaign] form" do

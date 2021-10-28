@@ -13,8 +13,8 @@ describe "/opportunities/new" do
   before do
     login
     @account = build_stubbed(:account)
-    assign(:opportunity, Opportunity.new(user: current_user))
-    assign(:users, [current_user])
+    assign(:opportunity, Opportunity.new(user: current_fat_free_crm_user))
+    assign(:users, [current_fat_free_crm_user])
     assign(:account, @account)
     assign(:accounts, [@account])
     assign(:stage, Setting.unroll(:opportunity_stage))

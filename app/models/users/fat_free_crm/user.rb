@@ -77,7 +77,7 @@ class User < ActiveRecord::Base
     where('upper(username) LIKE upper(:s) OR upper(email) LIKE upper(:s) OR upper(first_name) LIKE upper(:s) OR upper(last_name) LIKE upper(:s)', s: "%#{query}%")
   }
 
-  scope :my, ->(current_user) { accessible_by(current_user.ability) }
+  scope :my, ->(current_fat_free_crm_user) { accessible_by(current_fat_free_crm_user.ability) }
 
   scope :have_assigned_opportunities, lambda {
     joins("INNER JOIN fat_free_crm_opportunities ON fat_free_crm_users.id = fat_free_crm_opportunities.assigned_to")
@@ -170,8 +170,8 @@ class User < ActiveRecord::Base
 
   # Returns true if this user is allowed to be destroyed.
   #----------------------------------------------------------------------------
-  def destroyable?(current_user)
-    current_user != self && !has_related_assets?
+  def destroyable?(current_fat_free_crm_user)
+    current_fat_free_crm_user != self && !has_related_assets?
   end
 
   # Suspend newly created user if signup requires an approval.

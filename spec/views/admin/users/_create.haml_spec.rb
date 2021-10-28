@@ -11,7 +11,7 @@ describe "admin/users/_new" do
   before do
     login_admin
     assign(:user, User.new)
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
   end
 
   it "renders [Create User] form" do

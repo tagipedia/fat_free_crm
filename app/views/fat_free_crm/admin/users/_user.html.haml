@@ -17,13 +17,13 @@
 
       - if user.suspended?
         = link_to_reactivate(user) + " | "
-      - elsif user != current_user
+      - elsif user != current_fat_free_crm_user
         = link_to_suspend(user) + " | "
       - else
         %span.grayed #{t :suspend}!
         = " | "
 
-      - if user != current_user
+      - if user != current_fat_free_crm_user
         = link_to_confirm(user)
       - else
         %span.grayed #{t :delete}?

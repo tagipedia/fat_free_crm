@@ -12,7 +12,7 @@ describe "/leads/_sidebar_show" do
 
   before do
     login
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
     assign(:comment, Comment.new)
     assign(:lead, build_stubbed(:lead,
                                 blog: 'http://www.blogger.com/home',

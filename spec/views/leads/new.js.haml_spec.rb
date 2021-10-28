@@ -13,8 +13,8 @@ describe "/leads/new" do
   before do
     login
     @campaign = build_stubbed(:campaign)
-    assign(:lead, Lead.new(user: current_user))
-    assign(:users, [current_user])
+    assign(:lead, Lead.new(user: current_fat_free_crm_user))
+    assign(:users, [current_fat_free_crm_user])
     assign(:campaign, @campaign)
     assign(:campaigns, [@campaign])
   end

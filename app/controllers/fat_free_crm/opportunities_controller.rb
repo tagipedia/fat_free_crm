@@ -34,13 +34,13 @@ class OpportunitiesController < FatFreeCrm::EntitiesController
   # GET /opportunities/new
   #----------------------------------------------------------------------------
   def new
-    @opportunity.attributes = { user: current_user, stage: Opportunity.default_stage, access: Setting.default_access, assigned_to: nil }
-    @account = Account.new(user: current_user, access: Setting.default_access)
-    @accounts = Account.my(current_user).order('name')
+    @opportunity.attributes = { user: current_fat_free_crm_user, stage: Opportunity.default_stage, access: Setting.default_access, assigned_to: nil }
+    @account = Account.new(user: current_fat_free_crm_user, access: Setting.default_access)
+    @accounts = Account.my(current_fat_free_crm_user).order('name')
 
     if params[:related]
       model, id = params[:related].split('_')
-      if related = "FatFreeCrm::#{model.classify}".constantize.my(current_user).find_by_id(id)
+      if related = "FatFreeCrm::#{model.classify}".constantize.my(current_fat_free_crm_user).find_by_id(id)
         instance_variable_set("@#{model}", related)
         @account = related.account if related.respond_to?(:account) && !related.account.nil?
         @campaign = related.campaign if related.respond_to?(:campaign)
@@ -55,10 +55,10 @@ class OpportunitiesController < FatFreeCrm::EntitiesController
   # GET /opportunities/1/edit                                              AJAX
   #----------------------------------------------------------------------------
   def edit
-    @account  = @opportunity.account || Account.new(user: current_user)
-    @accounts = Account.my(current_user).order('name')
+    @account  = @opportunity.account || Account.new(user: current_fat_free_crm_user)
+    @accounts = Account.my(current_fat_free_crm_user).order('name')
 
-    @previous = Opportunity.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
+    @previous = Opportunity.my(current_fat_free_crm_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
 
     respond_with(@opportunity)
   end
@@ -69,7 +69,7 @@ class OpportunitiesController < FatFreeCrm::EntitiesController
     @comment_body = params[:comment_body]
     respond_with(@opportunity) do |_format|
       if @opportunity.save_with_account_and_permissions(params.permit!)
-        @opportunity.add_comment_by_user(@comment_body, current_user)
+        @opportunity.add_comment_by_user(@comment_body, current_fat_free_crm_user)
         if called_from_index_page?
           @opportunities = get_opportunities
           get_data_for_sidebar
@@ -79,8 +79,8 @@ class OpportunitiesController < FatFreeCrm::EntitiesController
           get_data_for_sidebar(:campaign)
         end
       else
-        @accounts = Account.my(current_user).order('name')
-        @account = guess_related_account(params[:account][:id], request.referer, current_user)
+        @accounts = Account.my(current_fat_free_crm_user).order('name')
+        @account = guess_related_account(params[:account][:id], request.referer, current_fat_free_crm_user)
         @contact = Contact.find(params[:contact]) unless params[:contact].blank?
         @campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
       end
@@ -100,11 +100,11 @@ class OpportunitiesController < FatFreeCrm::EntitiesController
           get_data_for_sidebar(:campaign)
         end
       else
-        @accounts = Account.my(current_user).order('name')
+        @accounts = Account.my(current_fat_free_crm_user).order('name')
         @account = if @opportunity.account
                      Account.find(@opportunity.account.id)
                    else
-                     Account.new(user: current_user)
+                     Account.new(user: current_fat_free_crm_user)
                    end
       end
     end
@@ -199,7 +199,7 @@ class OpportunitiesController < FatFreeCrm::EntitiesController
       instance_variable_set("@#{related}", @opportunity.send(related)) if called_from_landing_page?(related.to_s.pluralize)
     else
       @opportunity_stage_total = HashWithIndifferentAccess[
-                                 all: Opportunity.my(current_user).count,
+                                 all: Opportunity.my(current_fat_free_crm_user).count,
                                  other: 0
       ]
       stages = []
@@ -208,7 +208,7 @@ class OpportunitiesController < FatFreeCrm::EntitiesController
         @opportunity_stage_total[key] = 0
       end
 
-      stage_counts = Opportunity.my(current_user).where(stage: stages).group(:stage).count
+      stage_counts = Opportunity.my(current_fat_free_crm_user).where(stage: stages).group(:stage).count
       stage_counts.each do |key, total|
         @opportunity_stage_total[key.to_sym] = total
         @opportunity_stage_total[:other] -= total
@@ -224,8 +224,8 @@ class OpportunitiesController < FatFreeCrm::EntitiesController
 
   #----------------------------------------------------------------------------
   def set_params
-    current_user.pref[:opportunities_per_page] = per_page_param if per_page_param
-    current_user.pref[:opportunities_sort_by]  = Opportunity.sort_by_map[params[:sort_by]] if params[:sort_by]
+    current_fat_free_crm_user.pref[:opportunities_per_page] = per_page_param if per_page_param
+    current_fat_free_crm_user.pref[:opportunities_sort_by]  = Opportunity.sort_by_map[params[:sort_by]] if params[:sort_by]
     session[:opportunities_filter] = params[:stage] if params[:stage]
   end
 end

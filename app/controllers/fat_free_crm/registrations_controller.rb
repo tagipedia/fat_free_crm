@@ -17,7 +17,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def after_inactive_sign_up_path_for(*)
-    new_user_session_path
+    new_fat_free_crm_user_session_path
   end
 end
 end

@@ -12,8 +12,8 @@ describe "/campaigns/new" do
 
   before do
     login
-    assign(:campaign, Campaign.new(user: current_user))
-    assign(:users, [current_user])
+    assign(:campaign, Campaign.new(user: current_fat_free_crm_user))
+    assign(:users, [current_fat_free_crm_user])
   end
 
   it "should toggle empty message div if it exists" do

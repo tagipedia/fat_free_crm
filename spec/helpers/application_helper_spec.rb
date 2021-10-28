@@ -73,7 +73,7 @@ describe ApplicationHelper do
   describe "current_view_name" do
     before(:each) do
       @user = mock_model(User)
-      allow(helper).to receive(:current_user).and_return(@user)
+      allow(helper).to receive(:current_fat_free_crm_user).and_return(@user)
       allow(controller).to receive(:action_name).and_return('show')
       allow(controller).to receive(:controller_name).and_return('contacts')
     end

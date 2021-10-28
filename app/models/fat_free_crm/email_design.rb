@@ -10,7 +10,7 @@ module FatFreeCrm
     has_ransackable_associations %w[campaign]
     ransack_can_autocomplete
 
-    scope :my, ->(current_user) { self }
+    scope :my, ->(current_fat_free_crm_user) { self }
 
     scope :text_search, lambda { |query|
       sg = SendGrid::API.new(api_key: Rails.application.credentials[:SENDGRID_API_KEY])

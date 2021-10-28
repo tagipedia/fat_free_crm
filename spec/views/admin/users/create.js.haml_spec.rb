@@ -32,7 +32,7 @@ describe "admin/users/create" do
   describe "create failure" do
     it "should re-render [create] template in :create_user div" do
       assign(:user, build(:user, username: nil)) # make it invalid
-      assign(:users, [current_user])
+      assign(:users, [current_fat_free_crm_user])
       render
 
       expect(rendered).to include('Please specify username')

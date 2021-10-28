@@ -23,7 +23,7 @@
       crm.language = "#{I18n.locale}"
       window.controller = "#{controller.controller_name}"
 
-    - if current_user.present?
+    - if current_fat_free_crm_user.present?
       :javascript
         #{yield :javascript}
         var _ffcrm_users = [

@@ -13,8 +13,8 @@ describe "/contacts/new" do
   before do
     login
     @account = build_stubbed(:account)
-    assign(:contact, Contact.new(user: current_user))
-    assign(:users, [current_user])
+    assign(:contact, Contact.new(user: current_fat_free_crm_user))
+    assign(:users, [current_fat_free_crm_user])
     assign(:account, @account)
     assign(:accounts, [@account])
   end

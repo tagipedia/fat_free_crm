@@ -14,7 +14,7 @@ class TasksController < FatFreeCrm::ApplicationController
   #----------------------------------------------------------------------------
   def index
     @view = view
-    @tasks = Task.find_all_grouped(current_user, @view)
+    @tasks = Task.find_all_grouped(current_fat_free_crm_user, @view)
 
     respond_with @tasks do |format|
       format.xls { render layout: 'header' }
@@ -26,7 +26,7 @@ class TasksController < FatFreeCrm::ApplicationController
   # GET /tasks/1
   #----------------------------------------------------------------------------
   def show
-    @task = Task.tracked_by(current_user).find(params[:id])
+    @task = Task.tracked_by(current_fat_free_crm_user).find(params[:id])
     respond_with(@task)
   end
 
@@ -40,7 +40,7 @@ class TasksController < FatFreeCrm::ApplicationController
 
     if params[:related]
       model, id = params[:related].split(/_(\d+)/)
-      if related = "FatFreeCrm::#{model.classify}".constantize.my(current_user).find_by_id(id)
+      if related = "FatFreeCrm::#{model.classify}".constantize.my(current_fat_free_crm_user).find_by_id(id)
         instance_variable_set("@asset", related)
       else
         respond_to_related_not_found(model) && return
@@ -54,12 +54,12 @@ class TasksController < FatFreeCrm::ApplicationController
   #----------------------------------------------------------------------------
   def edit
     @view = view
-    @task = Task.tracked_by(current_user).find(params[:id])
+    @task = Task.tracked_by(current_fat_free_crm_user).find(params[:id])
     @bucket = Setting.unroll(:task_bucket)[1..-1] << [t(:due_specific_date, default: 'On Specific Date...'), :specific_time]
     @category = Setting.unroll(:task_category)
     @asset = @task.asset if @task.asset_id?
 
-    @previous = Task.tracked_by(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
+    @previous = Task.tracked_by(current_fat_free_crm_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
 
     respond_with(@task)
   end
@@ -81,7 +81,7 @@ class TasksController < FatFreeCrm::ApplicationController
   #----------------------------------------------------------------------------
   def update
     @view = view
-    @task = Task.tracked_by(current_user).find(params[:id])
+    @task = Task.tracked_by(current_fat_free_crm_user).find(params[:id])
     @task_before_update = @task.dup
 
     @task_before_update.bucket = if @task.due_at && (@task.due_at < Date.today.to_time)
@@ -94,7 +94,7 @@ class TasksController < FatFreeCrm::ApplicationController
       if @task.update(task_params)
         @task.bucket = @task.computed_bucket
         if called_from_index_page?
-          @empty_bucket = @task_before_update.bucket if Task.bucket_empty?(@task_before_update.bucket, current_user, @view)
+          @empty_bucket = @task_before_update.bucket if Task.bucket_empty?(@task_before_update.bucket, current_fat_free_crm_user, @view)
           update_sidebar
         end
       end
@@ -105,11 +105,11 @@ class TasksController < FatFreeCrm::ApplicationController
   #----------------------------------------------------------------------------
   def destroy
     @view = view
-    @task = Task.tracked_by(current_user).find(params[:id])
+    @task = Task.tracked_by(current_fat_free_crm_user).find(params[:id])
     @task.destroy
 
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
-    @empty_bucket = params[:bucket] if Task.bucket_empty?(params[:bucket], current_user, @view)
+    @empty_bucket = params[:bucket] if Task.bucket_empty?(params[:bucket], current_fat_free_crm_user, @view)
 
     update_sidebar if called_from_index_page?
     respond_with(@task)
@@ -118,11 +118,11 @@ class TasksController < FatFreeCrm::ApplicationController
   # PUT /tasks/1/complete
   #----------------------------------------------------------------------------
   def complete
-    @task = Task.tracked_by(current_user).find(params[:id])
-    @task&.update(completed_at: Time.now, completed_by: current_user.id)
+    @task = Task.tracked_by(current_fat_free_crm_user).find(params[:id])
+    @task&.update(completed_at: Time.now, completed_by: current_fat_free_crm_user.id)
 
     # Make sure bucket's div gets hidden if it's the last completed task in the bucket.
-    @empty_bucket = params[:bucket] if Task.bucket_empty?(params[:bucket], current_user)
+    @empty_bucket = params[:bucket] if Task.bucket_empty?(params[:bucket], current_fat_free_crm_user)
 
     update_sidebar unless params[:bucket].blank?
     respond_with(@task)
@@ -131,11 +131,11 @@ class TasksController < FatFreeCrm::ApplicationController
   # PUT /tasks/1/uncomplete
   #----------------------------------------------------------------------------
   def uncomplete
-    @task = Task.tracked_by(current_user).find(params[:id])
+    @task = Task.tracked_by(current_fat_free_crm_user).find(params[:id])
     @task&.update(completed_at: nil, completed_by: nil)
 
     # Make sure bucket's div gets hidden if we're deleting last task in the bucket.
-    @empty_bucket = params[:bucket] if Task.bucket_empty?(params[:bucket], current_user, @view)
+    @empty_bucket = params[:bucket] if Task.bucket_empty?(params[:bucket], current_fat_free_crm_user, @view)
 
     update_sidebar
     respond_with(@task)
@@ -197,7 +197,7 @@ class TasksController < FatFreeCrm::ApplicationController
   #----------------------------------------------------------------------------
   def update_sidebar
     @view = view
-    @task_total = Task.totals(current_user, @view)
+    @task_total = Task.totals(current_fat_free_crm_user, @view)
 
     # Update filters session if we added, deleted, or completed a task.
     if @task

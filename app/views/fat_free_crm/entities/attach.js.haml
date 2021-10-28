@@ -4,7 +4,7 @@
   - if partial == "task"
     - if @attachment.completed?
       - view = "completed"
-    - elsif @attachment.my?(current_user)
+    - elsif @attachment.my?(current_fat_free_crm_user)
       - view = "pending"
     - else
       - view = "assigned"

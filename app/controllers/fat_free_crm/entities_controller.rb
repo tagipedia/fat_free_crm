@@ -42,7 +42,7 @@ class EntitiesController < FatFreeCrm::ApplicationController
   # Common subscribe handler for all core controllers.
   #----------------------------------------------------------------------------
   def subscribe
-    entity.subscribed_users += [current_user.id]
+    entity.subscribed_users += [current_fat_free_crm_user.id]
     entity.save
 
     respond_with(@entity) do |format|
@@ -53,7 +53,7 @@ class EntitiesController < FatFreeCrm::ApplicationController
   # Common unsubscribe handler for all core controllers.
   #----------------------------------------------------------------------------
   def unsubscribe
-    entity.subscribed_users -= [current_user.id]
+    entity.subscribed_users -= [current_fat_free_crm_user.id]
     entity.save
 
     respond_with(entity) do |format|
@@ -111,14 +111,14 @@ class EntitiesController < FatFreeCrm::ApplicationController
 
   #----------------------------------------------------------------------------
   def entities
-    instance_variable_get("@#{controller_name}") || klass.my(current_user)
+    instance_variable_get("@#{controller_name}") || klass.my(current_fat_free_crm_user)
   end
 
   def set_options
     unless params[:cancel].true?
       klass = "FatFreeCrm::#{controller_name.classify}".constantize
-      @per_page = current_user.pref[:"#{controller_name}_per_page"] || klass.per_page
-      @sort_by  = current_user.pref[:"#{controller_name}_sort_by"]  || klass.sort_by
+      @per_page = current_fat_free_crm_user.pref[:"#{controller_name}_per_page"] || klass.per_page
+      @sort_by  = current_fat_free_crm_user.pref[:"#{controller_name}_sort_by"]  || klass.sort_by
     end
   end
 
@@ -162,7 +162,7 @@ class EntitiesController < FatFreeCrm::ApplicationController
 
     # Ignore this order when doing advanced search
     unless advanced_search
-      order = current_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
+      order = current_fat_free_crm_user.pref[:"#{controller_name}_sort_by"] || klass.sort_by
       scope = order_by_attributes(scope, order)
     end
 
@@ -173,7 +173,7 @@ class EntitiesController < FatFreeCrm::ApplicationController
       per_page = if options[:per_page]
                    options[:per_page] == 'all' ? @search_results_count : options[:per_page]
                  else
-                   current_user.pref[:"#{controller_name}_per_page"]
+                   current_fat_free_crm_user.pref[:"#{controller_name}_per_page"]
       end
       scope = scope.paginate(page: current_page, per_page: per_page)
     end
@@ -228,7 +228,7 @@ class EntitiesController < FatFreeCrm::ApplicationController
     if params['view']
       controller = params['controller']
       action = params['action'] == 'show' ? 'show' : 'index' # create update redraw filter index actions all use index view
-      current_user.pref[:"#{controller}_#{action}_view"] = params['view']
+      current_fat_free_crm_user.pref[:"#{controller}_#{action}_view"] = params['view']
     end
   end
 

@@ -82,7 +82,7 @@ describe CommentsController do
     COMMENTABLE.each do |asset|
       it "should expose the requested comment as @commment and render [edit] template" do
         @asset = create(asset)
-        @comment = create(:comment, id: 42, commentable: @asset, user: current_user)
+        @comment = create(:comment, id: 42, commentable: @asset, user: current_fat_free_crm_user)
         allow(Comment).to receive(:new).and_return(@comment)
 
         get :edit, params: { id: 42 }, xhr: true
@@ -100,10 +100,10 @@ describe CommentsController do
       COMMENTABLE.each do |asset|
         it "should expose a newly created comment as @comment for the #{asset}" do
           @asset = create(asset)
-          @comment = build(:comment, commentable: @asset, user: current_user)
+          @comment = build(:comment, commentable: @asset, user: current_fat_free_crm_user)
           allow(Comment).to receive(:new).and_return(@comment)
 
-          post :create, params: { comment: { commentable_type: asset.to_s.classify, commentable_id: @asset.id, user_id: current_user.id, comment: "Hello" } }, xhr: true
+          post :create, params: { comment: { commentable_type: asset.to_s.classify, commentable_id: @asset.id, user_id: current_fat_free_crm_user.id, comment: "Hello" } }, xhr: true
           expect(assigns[:comment]).to eq(@comment)
           expect(response).to render_template("comments/create")
         end
@@ -114,7 +114,7 @@ describe CommentsController do
       COMMENTABLE.each do |asset|
         it "should expose a newly created but unsaved comment as @comment for #{asset}" do
           @asset = create(asset)
-          @comment = build(:comment, commentable: @asset, user: current_user)
+          @comment = build(:comment, commentable: @asset, user: current_fat_free_crm_user)
           allow(Comment).to receive(:new).and_return(@comment)
 
           post :create, params: { comment: {} }, xhr: true
@@ -181,7 +181,7 @@ describe CommentsController do
         COMMENTABLE.each do |asset|
           it "should destroy the requested comment and render [destroy] template" do
             @asset = create(asset)
-            @comment = create(:comment, commentable: @asset, user: current_user)
+            @comment = create(:comment, commentable: @asset, user: current_fat_free_crm_user)
             allow(Comment).to receive(:new).and_return(@comment)
 
             delete :destroy, params: { id: @comment.id }, xhr: true

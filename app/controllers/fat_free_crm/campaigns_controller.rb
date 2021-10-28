@@ -68,12 +68,12 @@ class CampaignsController < FatFreeCrm::EntitiesController
   # GET /campaigns/new.xml                                                 AJAX
   #----------------------------------------------------------------------------
   def new
-    @campaign.attributes = { user: current_user, access: Setting.default_access, assigned_to: nil }
+    @campaign.attributes = { user: current_fat_free_crm_user, access: Setting.default_access, assigned_to: nil }
     @promotion = Spree::Promotion.new
 
     if params[:related]
       model, id = params[:related].split('_')
-      if related = "FatFreeCrm::#{model.classify}".constantize.my(current_user).find_by_id(id)
+      if related = "FatFreeCrm::#{model.classify}".constantize.my(current_fat_free_crm_user).find_by_id(id)
         instance_variable_set("@#{model}", related)
       else
         respond_to_related_not_found(model) && return
@@ -87,7 +87,7 @@ class CampaignsController < FatFreeCrm::EntitiesController
   #----------------------------------------------------------------------------
   def edit
     @promotion = @campaign.promotion || Spree::Promotion.new
-    @previous = Campaign.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
+    @previous = Campaign.my(current_fat_free_crm_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
 
     respond_with(@campaign)
   end
@@ -98,7 +98,7 @@ class CampaignsController < FatFreeCrm::EntitiesController
     @comment_body = params[:comment_body]
     respond_with(@campaign) do |_format|
       if @campaign.save_with_promotion(params.permit!)
-        @campaign.add_comment_by_user(@comment_body, current_user)
+        @campaign.add_comment_by_user(@comment_body, current_fat_free_crm_user)
         @campaigns = get_campaigns
         get_data_for_sidebar
       end
@@ -141,8 +141,8 @@ class CampaignsController < FatFreeCrm::EntitiesController
   # GET /campaigns/redraw                                                  AJAX
   #----------------------------------------------------------------------------
   def redraw
-    current_user.pref[:campaigns_per_page] = per_page_param if per_page_param
-    current_user.pref[:campaigns_sort_by]  = Campaign.sort_by_map[params[:sort_by]] if params[:sort_by]
+    current_fat_free_crm_user.pref[:campaigns_per_page] = per_page_param if per_page_param
+    current_fat_free_crm_user.pref[:campaigns_sort_by]  = Campaign.sort_by_map[params[:sort_by]] if params[:sort_by]
     @campaigns = get_campaigns(page: 1, per_page: per_page_param)
     set_options # Refresh options
 
@@ -192,14 +192,14 @@ class CampaignsController < FatFreeCrm::EntitiesController
   #----------------------------------------------------------------------------
   def get_data_for_sidebar
     @campaign_status_total = HashWithIndifferentAccess[
-                             all: Campaign.my(current_user).count,
+                             all: Campaign.my(current_fat_free_crm_user).count,
                              other: 0
     ]
     Setting.campaign_status.each do |key|
       @campaign_status_total[key] = 0
     end
 
-    status_counts = Campaign.my(current_user).where(status: Setting.campaign_status).group(:status).count
+    status_counts = Campaign.my(current_fat_free_crm_user).where(status: Setting.campaign_status).group(:status).count
     status_counts.each do |key, total|
       @campaign_status_total[key.to_sym] = total
       @campaign_status_total[:other] -= total

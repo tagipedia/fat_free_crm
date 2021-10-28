@@ -11,8 +11,8 @@ describe "/opportunities/update" do
   before do
     login
 
-    assign(:opportunity, @opportunity = build_stubbed(:opportunity, user: current_user, assignee: build_stubbed(:user)))
-    assign(:users, [current_user])
+    assign(:opportunity, @opportunity = build_stubbed(:opportunity, user: current_fat_free_crm_user, assignee: build_stubbed(:user)))
+    assign(:users, [current_fat_free_crm_user])
     assign(:account, @account = build_stubbed(:account))
     assign(:accounts, [@account])
     assign(:stage, Setting.unroll(:opportunity_stage))

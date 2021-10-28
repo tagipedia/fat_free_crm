@@ -73,7 +73,7 @@ class Admin::UsersController < FatFreeCrm::Admin::ApplicationController
   # DELETE /admin/users/1.xml                                              AJAX
   #----------------------------------------------------------------------------
   def destroy
-    flash[:warning] = t(:msg_cant_delete_user, @user.full_name) unless @user.destroyable?(current_user) && @user.destroy
+    flash[:warning] = t(:msg_cant_delete_user, @user.full_name) unless @user.destroyable?(current_fat_free_crm_user) && @user.destroy
 
     respond_with(@user)
   end
@@ -86,7 +86,7 @@ class Admin::UsersController < FatFreeCrm::Admin::ApplicationController
   # PUT /admin/users/1/suspend.xml                                         AJAX
   #----------------------------------------------------------------------------
   def suspend
-    @user.update_attribute(:suspended_at, Time.now) if @user != current_user
+    @user.update_attribute(:suspended_at, Time.now) if @user != current_fat_free_crm_user
 
     respond_with(@user)
   end

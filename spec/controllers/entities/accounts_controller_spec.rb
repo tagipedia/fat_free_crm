@@ -26,14 +26,14 @@ describe AccountsController do
     end
 
     it "should expose all accounts as @accounts and render [index] template" do
-      @accounts = [create(:account, user: current_user)]
+      @accounts = [create(:account, user: current_fat_free_crm_user)]
       get :index
       expect(assigns[:accounts]).to eq(@accounts)
       expect(response).to render_template("accounts/index")
     end
 
     it "should collect the data for the accounts sidebar" do
-      @accounts = [create(:account, user: current_user)]
+      @accounts = [create(:account, user: current_fat_free_crm_user)]
 
       get :index
       expect(assigns[:account_category_total].keys.map(&:to_sym) - (@category << :all << :other)).to eq([])
@@ -43,19 +43,19 @@ describe AccountsController do
       categories = %w[customer vendor]
       controller.session[:accounts_filter] = categories.join(',')
       @accounts = [
-        create(:account, user: current_user, category: categories.first),
-        create(:account, user: current_user, category: categories.last)
+        create(:account, user: current_fat_free_crm_user, category: categories.first),
+        create(:account, user: current_fat_free_crm_user, category: categories.last)
       ]
       # This one should be filtered out.
-      create(:account, user: current_user, category: "competitor")
+      create(:account, user: current_fat_free_crm_user, category: "competitor")
 
       get :index
       expect(assigns[:accounts]).to eq(@accounts)
     end
 
     it "should perform lookup using query string" do
-      @first  = create(:account, user: current_user, name: "The first one")
-      @second = create(:account, user: current_user, name: "The second one")
+      @first  = create(:account, user: current_fat_free_crm_user, name: "The first one")
+      @second = create(:account, user: current_fat_free_crm_user, name: "The second one")
 
       get :index, params: { query: "second" }
       expect(assigns[:accounts]).to eq([@second])
@@ -65,7 +65,7 @@ describe AccountsController do
 
     describe "AJAX pagination" do
       it "should pick up page number from params" do
-        @accounts = [create(:account, user: current_user)]
+        @accounts = [create(:account, user: current_fat_free_crm_user)]
         get :index, params: { page: 42 }, xhr: true
 
         expect(assigns[:current_page].to_i).to eq(42)
@@ -76,7 +76,7 @@ describe AccountsController do
 
       it "should pick up saved page number from session" do
         session[:accounts_current_page] = 42
-        @accounts = [create(:account, user: current_user)]
+        @accounts = [create(:account, user: current_fat_free_crm_user)]
         get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(42)
@@ -87,7 +87,7 @@ describe AccountsController do
       it "should reset current_page when query is altered" do
         session[:accounts_current_page] = 42
         session[:accounts_current_query] = "bill"
-        @accounts = [create(:account, user: current_user)]
+        @accounts = [create(:account, user: current_fat_free_crm_user)]
         get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(1)
@@ -125,7 +125,7 @@ describe AccountsController do
   describe "responding to GET show" do
     describe "with mime type of HTML" do
       before do
-        @account = create(:account, user: current_user)
+        @account = create(:account, user: current_fat_free_crm_user)
         @stage = Setting.unroll(:opportunity_stage)
         @comment = Comment.new
       end
@@ -146,7 +146,7 @@ describe AccountsController do
 
     describe "with mime type of JSON" do
       it "should render the requested account as json" do
-        @account = create(:account, user: current_user)
+        @account = create(:account, user: current_fat_free_crm_user)
         expect(Account).to receive(:find).and_return(@account)
         expect(@account).to receive(:to_json).and_return("generated JSON")
 
@@ -158,7 +158,7 @@ describe AccountsController do
 
     describe "with mime type of XML" do
       it "should render the requested account as xml" do
-        @account = create(:account, user: current_user)
+        @account = create(:account, user: current_fat_free_crm_user)
         expect(Account).to receive(:find).and_return(@account)
         expect(@account).to receive(:to_xml).and_return("generated XML")
 
@@ -170,7 +170,7 @@ describe AccountsController do
 
     describe "account got deleted or otherwise unavailable" do
       it "should redirect to account index if the account got deleted" do
-        @account = create(:account, user: current_user)
+        @account = create(:account, user: current_fat_free_crm_user)
         @account.destroy
 
         get :show, params: { id: @account.id }
@@ -187,7 +187,7 @@ describe AccountsController do
       end
 
       it "should return 404 (Not Found) JSON error" do
-        @account = create(:account, user: current_user)
+        @account = create(:account, user: current_fat_free_crm_user)
         @account.destroy
         request.env["HTTP_ACCEPT"] = "application/json"
 
@@ -196,7 +196,7 @@ describe AccountsController do
       end
 
       it "should return 404 (Not Found) XML error" do
-        @account = create(:account, user: current_user)
+        @account = create(:account, user: current_fat_free_crm_user)
         @account.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
@@ -211,7 +211,7 @@ describe AccountsController do
   #----------------------------------------------------------------------------
   describe "responding to GET new" do
     it "should expose a new account as @account and render [new] template" do
-      @account = Account.new(user: current_user,
+      @account = Account.new(user: current_fat_free_crm_user,
                              access: Setting.default_access)
       get :new, xhr: true
       expect(assigns[:account].attributes).to eq(@account.attributes)
@@ -231,7 +231,7 @@ describe AccountsController do
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
     it "should expose the requested account as @account and render [edit] template" do
-      @account = create(:account, id: 42, user: current_user)
+      @account = create(:account, id: 42, user: current_fat_free_crm_user)
 
       get :edit, params: { id: 42 }, xhr: true
       expect(assigns[:account]).to eq(@account)
@@ -249,7 +249,7 @@ describe AccountsController do
 
     describe "(account got deleted or is otherwise unavailable)" do
       it "should reload current page with the flash message if the account got deleted" do
-        @account = create(:account, user: current_user)
+        @account = create(:account, user: current_fat_free_crm_user)
         @account.destroy
 
         get :edit, params: { id: @account.id }, xhr: true
@@ -268,7 +268,7 @@ describe AccountsController do
 
     describe "(previous account got deleted or is otherwise unavailable)" do
       before do
-        @account = create(:account, user: current_user)
+        @account = create(:account, user: current_fat_free_crm_user)
         @previous = create(:account, user: create(:user))
       end
 
@@ -298,7 +298,7 @@ describe AccountsController do
   describe "responding to POST create" do
     describe "with valid params" do
       it "should expose a newly created account as @account and render [create] template" do
-        @account = build(:account, name: "Hello world", user: current_user)
+        @account = build(:account, name: "Hello world", user: current_fat_free_crm_user)
         allow(Account).to receive(:new).and_return(@account)
 
         post :create, params: { account: { name: "Hello world" } }, xhr: true
@@ -308,7 +308,7 @@ describe AccountsController do
 
       # Note: [Create Account] is shown only on Accounts index page.
       it "should reload accounts to update pagination" do
-        @account = build(:account, user: current_user)
+        @account = build(:account, user: current_fat_free_crm_user)
         allow(Account).to receive(:new).and_return(@account)
 
         post :create, params: { account: { name: "Hello" } }, xhr: true
@@ -316,7 +316,7 @@ describe AccountsController do
       end
 
       it "should get data to update account sidebar" do
-        @account = build(:account, name: "Hello", user: current_user)
+        @account = build(:account, name: "Hello", user: current_fat_free_crm_user)
         allow(Campaign).to receive(:new).and_return(@account)
 
         post :create, params: { account: { name: "Hello" } }, xhr: true
@@ -324,7 +324,7 @@ describe AccountsController do
       end
 
       it "should add a new comment to the newly created account when specified" do
-        @account = build(:account, name: "Hello world", user: current_user)
+        @account = build(:account, name: "Hello world", user: current_fat_free_crm_user)
         allow(Account).to receive(:new).and_return(@account)
 
         post :create, params: { account: { name: "Hello world" }, comment_body: "Awesome comment is awesome" }, xhr: true
@@ -377,7 +377,7 @@ describe AccountsController do
 
       describe "account got deleted or otherwise unavailable" do
         it "should reload current page is the account got deleted" do
-          @account = create(:account, user: current_user)
+          @account = create(:account, user: current_fat_free_crm_user)
           @account.destroy
 
           put :update, params: { id: @account.id }, xhr: true
@@ -412,12 +412,12 @@ describe AccountsController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
     before do
-      @account = create(:account, user: current_user)
+      @account = create(:account, user: current_fat_free_crm_user)
     end
 
     describe "AJAX request" do
       it "should destroy the requested account and render [destroy] template" do
-        @another_account = create(:account, user: current_user)
+        @another_account = create(:account, user: current_fat_free_crm_user)
         delete :destroy, params: { id: @account.id }, xhr: true
 
         expect { Account.find(@account.id) }.to raise_error(ActiveRecord::RecordNotFound)
@@ -449,7 +449,7 @@ describe AccountsController do
 
       describe "account got deleted or otherwise unavailable" do
         it "should reload current page is the account got deleted" do
-          @account = create(:account, user: current_user)
+          @account = create(:account, user: current_fat_free_crm_user)
           @account.destroy
 
           delete :destroy, params: { id: @account.id }, xhr: true
@@ -476,7 +476,7 @@ describe AccountsController do
       end
 
       it "should redirect to account index with the flash message is the account got deleted" do
-        @account = create(:account, user: current_user)
+        @account = create(:account, user: current_fat_free_crm_user)
         @account.destroy
 
         delete :destroy, params: { id: @account.id }
@@ -552,7 +552,7 @@ describe AccountsController do
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
     before do
-      @auto_complete_matches = [create(:account, name: "Hello World", user: current_user)]
+      @auto_complete_matches = [create(:account, name: "Hello World", user: current_fat_free_crm_user)]
     end
 
     it_should_behave_like("auto complete")
@@ -563,9 +563,9 @@ describe AccountsController do
   describe "responding to GET redraw" do
     it "should save user selected account preference" do
       get :redraw, params: { per_page: 42, view: "brief", sort_by: "name" }, xhr: true
-      expect(current_user.preference[:accounts_per_page]).to eq(42)
-      expect(current_user.preference[:accounts_index_view]).to eq("brief")
-      expect(current_user.preference[:accounts_sort_by]).to eq("accounts.name ASC")
+      expect(current_fat_free_crm_user.preference[:accounts_per_page]).to eq(42)
+      expect(current_fat_free_crm_user.preference[:accounts_index_view]).to eq("brief")
+      expect(current_fat_free_crm_user.preference[:accounts_sort_by]).to eq("accounts.name ASC")
     end
 
     it "should reset current page to 1" do
@@ -575,8 +575,8 @@ describe AccountsController do
 
     it "should select @accounts and render [index] template" do
       @accounts = [
-        create(:account, name: "A", user: current_user),
-        create(:account, name: "B", user: current_user)
+        create(:account, name: "A", user: current_fat_free_crm_user),
+        create(:account, name: "B", user: current_fat_free_crm_user)
       ]
 
       get :redraw, params: { per_page: 1, sort_by: "name" }, xhr: true
@@ -590,7 +590,7 @@ describe AccountsController do
   describe "responding to POST filter" do
     it "should expose filtered accounts as @accounts and render [index] template" do
       session[:accounts_filter] = "customer,vendor"
-      @accounts = [create(:account, category: "partner", user: current_user)]
+      @accounts = [create(:account, category: "partner", user: current_fat_free_crm_user)]
 
       post :filter, params: { category: "partner" }, xhr: true
       expect(assigns(:accounts)).to eq(@accounts)

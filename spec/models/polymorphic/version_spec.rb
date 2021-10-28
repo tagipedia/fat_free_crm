@@ -23,8 +23,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Version, versioning: true do
-  let(:current_user) { create(:user) }
-  before { PaperTrail.request.whodunnit = current_user.id.to_s }
+  let(:current_fat_free_crm_user) { create(:user) }
+  before { PaperTrail.request.whodunnit = current_fat_free_crm_user.id.to_s }
 
   it "should create a new instance given valid attributes" do
     create(:version, whodunnit: PaperTrail.request.whodunnit, item: create(:lead))
@@ -41,37 +41,37 @@ describe Version, versioning: true do
     end
 
     it "should not include view events" do
-      @versions = Version.for(current_user).exclude_events(:view)
+      @versions = Version.for(current_fat_free_crm_user).exclude_events(:view)
       expect(@versions.pluck(:event).sort).not_to include('view')
     end
 
     it "should exclude create, update and destroy events" do
-      @versions = Version.for(current_user).exclude_events(:create, :update, :destroy)
+      @versions = Version.for(current_fat_free_crm_user).exclude_events(:create, :update, :destroy)
       expect(@versions.pluck(:event)).not_to include('create')
       expect(@versions.pluck(:event)).not_to include('update')
       expect(@versions.pluck(:event)).not_to include('destroy')
     end
 
     it "should include only destroy events" do
-      @versions = Version.for(current_user).include_events(:destroy)
+      @versions = Version.for(current_fat_free_crm_user).include_events(:destroy)
       expect(@versions.pluck(:event).uniq).to eq(['destroy'])
     end
 
     it "should include create and update events" do
-      @versions = Version.for(current_user).include_events(:create, :update)
+      @versions = Version.for(current_fat_free_crm_user).include_events(:create, :update)
       expect(@versions.pluck(:event).uniq.sort).to eq(%w[create update])
     end
 
     it "should select all versions for a given user" do
-      @versions = Version.for(current_user)
-      expect(@versions.map(&:whodunnit).uniq).to eq([current_user.id.to_s])
+      @versions = Version.for(current_fat_free_crm_user)
+      expect(@versions.map(&:whodunnit).uniq).to eq([current_fat_free_crm_user.id.to_s])
     end
   end
 
   %w[account campaign contact lead opportunity task].each do |item|
     describe "Create, update, and delete (#{item})" do
       before :each do
-        @item = create(item.to_sym, user: current_user)
+        @item = create(item.to_sym, user: current_fat_free_crm_user)
         @conditions = { item_id: @item.id, item_type: @item.class.name, whodunnit: PaperTrail.request.whodunnit }
       end
 
@@ -99,7 +99,7 @@ describe Version, versioning: true do
       end
 
       it "should add a version when commenting on a #{item}" do
-        @comment = create(:comment, commentable: @item, user: current_user)
+        @comment = create(:comment, commentable: @item, user: current_fat_free_crm_user)
 
         @version = Version.where(related_id: @item.id, related_type: @item.class.name, whodunnit: PaperTrail.request.whodunnit, event: 'create').first
         expect(@version).not_to eq(nil)
@@ -128,7 +128,7 @@ describe Version, versioning: true do
 
   describe "Action refinements for task updates" do
     before do
-      @task = create(:task, user: current_user)
+      @task = create(:task, user: current_fat_free_crm_user)
       @conditions = { item_id: @task.id, item_type: @task.class.name, whodunnit: PaperTrail.request.whodunnit }
     end
 
@@ -140,7 +140,7 @@ describe Version, versioning: true do
     end
 
     it "should create 'reassigned' task event" do
-      @task.update(assigned_to: current_user.id + 1)
+      @task.update(assigned_to: current_fat_free_crm_user.id + 1)
 
       versions = Version.where(@conditions)
       expect(versions.pluck(:event)).to include('reassign')
@@ -156,7 +156,7 @@ describe Version, versioning: true do
 
   describe "Rejecting a lead" do
     before do
-      @lead = create(:lead, user: current_user, status: "new")
+      @lead = create(:lead, user: current_fat_free_crm_user, status: "new")
       @conditions = { item_id: @lead.id, item_type: @lead.class.name, whodunnit: PaperTrail.request.whodunnit }
     end
 
@@ -175,7 +175,7 @@ describe Version, versioning: true do
     end
 
     it "should not show the create/update versions if the item is private" do
-      @item = create(:account, user: current_user, access: "Private")
+      @item = create(:account, user: current_fat_free_crm_user, access: "Private")
       @item.update(name: 'New Name')
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
@@ -186,7 +186,7 @@ describe Version, versioning: true do
     end
 
     it "should not show the destroy version if the item is private" do
-      @item = create(:account, user: current_user, access: "Private")
+      @item = create(:account, user: current_fat_free_crm_user, access: "Private")
       @item.destroy
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
@@ -198,9 +198,9 @@ describe Version, versioning: true do
 
     it "should not show create/update versions if the item was not shared with the user" do
       @item = create(:account,
-                     user: current_user,
+                     user: current_fat_free_crm_user,
                      access: "Shared",
-                     permissions: [build(:permission, user: current_user, asset: @item)])
+                     permissions: [build(:permission, user: current_fat_free_crm_user, asset: @item)])
       @item.update(name: 'New Name')
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
@@ -212,9 +212,9 @@ describe Version, versioning: true do
 
     it "should not show the destroy version if the item was not shared with the user" do
       @item = create(:account,
-                     user: current_user,
+                     user: current_fat_free_crm_user,
                      access: "Shared",
-                     permissions: [build(:permission, user: current_user, asset: @item)])
+                     permissions: [build(:permission, user: current_fat_free_crm_user, asset: @item)])
       @item.destroy
 
       versions = Version.where(item_id: @item.id, item_type: @item.class.name)
@@ -226,7 +226,7 @@ describe Version, versioning: true do
 
     it "should show create/update versions if the item was shared with the user" do
       @item = create(:account,
-                     user: current_user,
+                     user: current_fat_free_crm_user,
                      access: "Shared",
                      permissions: [build(:permission, user: @user, asset: @item)])
       @item.update(name: 'New Name')

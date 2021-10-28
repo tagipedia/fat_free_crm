@@ -14,7 +14,7 @@ describe "/leads/_convert" do
     login
     @account = build_stubbed(:account)
     assign(:lead, build_stubbed(:lead))
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
     assign(:account, @account)
     assign(:accounts, [@account])
     assign(:opportunity, build_stubbed(:opportunity))

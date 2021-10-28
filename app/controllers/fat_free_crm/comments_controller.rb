@@ -14,7 +14,7 @@ class CommentsController < FatFreeCrm::ApplicationController
   def index
     @commentable = extract_commentable_name(params)
     if @commentable
-      @asset = find_class(@commentable).my(current_user).find(params[:"#{@commentable}_id"])
+      @asset = find_class(@commentable).my(current_fat_free_crm_user).find(params[:"#{@commentable}_id"])
       @comments = @asset.comments.order("created_at DESC")
     end
     respond_with(@comments) do |format|
@@ -36,7 +36,7 @@ class CommentsController < FatFreeCrm::ApplicationController
 
     model = find_class(@comment.commentable_type)
     id = @comment.commentable_id
-    respond_to_related_not_found(model.downcase) unless model.my(current_user).find_by_id(id)
+    respond_to_related_not_found(model.downcase) unless model.my(current_fat_free_crm_user).find_by_id(id)
   end
 
   # POST /comments
@@ -45,12 +45,12 @@ class CommentsController < FatFreeCrm::ApplicationController
   #----------------------------------------------------------------------------
   def create
     @comment = Comment.new(
-      comment_params.merge(user_id: current_user.id)
+      comment_params.merge(user_id: current_fat_free_crm_user.id)
     )
     # Make sure commentable object exists and is accessible to the current user.
     model = find_class(@comment.commentable_type)
     id = @comment.commentable_id
-    if model.my(current_user).find_by_id(id)
+    if model.my(current_fat_free_crm_user).find_by_id(id)
       @comment.save
       respond_with(@comment)
     else

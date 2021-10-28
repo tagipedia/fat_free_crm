@@ -33,7 +33,7 @@ class AccountsController < FatFreeCrm::EntitiesController
   # GET /accounts/new
   #----------------------------------------------------------------------------
   def new
-    @account.attributes = { user: current_user, access: Setting.default_access, assigned_to: nil }
+    @account.attributes = { user: current_fat_free_crm_user, access: Setting.default_access, assigned_to: nil }
 
     if params[:related]
       model, id = params[:related].split('_')
@@ -46,7 +46,7 @@ class AccountsController < FatFreeCrm::EntitiesController
   # GET /accounts/1/edit                                                   AJAX
   #----------------------------------------------------------------------------
   def edit
-    @previous = Account.my(current_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
+    @previous = Account.my(current_fat_free_crm_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
 
     respond_with(@account)
   end
@@ -57,7 +57,7 @@ class AccountsController < FatFreeCrm::EntitiesController
     @comment_body = params[:comment_body]
     respond_with(@account) do |_format|
       if @account.save
-        @account.add_comment_by_user(@comment_body, current_user)
+        @account.add_comment_by_user(@comment_body, current_fat_free_crm_user)
         # None: account can only be created from the Accounts index page, so we
         # don't have to check whether we're on the index page.
         @accounts = get_accounts
@@ -102,8 +102,8 @@ class AccountsController < FatFreeCrm::EntitiesController
   # GET /accounts/redraw                                                   AJAX
   #----------------------------------------------------------------------------
   def redraw
-    current_user.pref[:accounts_per_page] = per_page_param if per_page_param
-    current_user.pref[:accounts_sort_by]  = Account.sort_by_map[params[:sort_by]] if params[:sort_by]
+    current_fat_free_crm_user.pref[:accounts_per_page] = per_page_param if per_page_param
+    current_fat_free_crm_user.pref[:accounts_sort_by]  = Account.sort_by_map[params[:sort_by]] if params[:sort_by]
     @accounts = get_accounts(page: 1, per_page: per_page_param)
     set_options # Refresh options
 
@@ -154,11 +154,11 @@ class AccountsController < FatFreeCrm::EntitiesController
   def get_data_for_sidebar
     @account_category_total = HashWithIndifferentAccess[
                               Setting.account_category.map do |key|
-                                [key, Account.my(current_user).where(category: key.to_s).count]
+                                [key, Account.my(current_fat_free_crm_user).where(category: key.to_s).count]
                               end
     ]
     categorized = @account_category_total.values.sum
-    @account_category_total[:all] = Account.my(current_user).count
+    @account_category_total[:all] = Account.my(current_fat_free_crm_user).count
     @account_category_total[:other] = @account_category_total[:all] - categorized
   end
 end

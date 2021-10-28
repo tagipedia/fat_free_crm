@@ -18,7 +18,7 @@ describe Admin::UsersController do
   #----------------------------------------------------------------------------
   describe "GET index" do
     it "assigns all users as @users and renders [index] template" do
-      @users = [current_user, create(:user)]
+      @users = [current_fat_free_crm_user, create(:user)]
 
       get :index
       expect(assigns[:users].first).to eq(@users.last) # get_users() sorts by id DESC
@@ -210,7 +210,7 @@ describe Admin::UsersController do
     end
 
     it "doesn't suspend current user" do
-      @user = current_user
+      @user = current_fat_free_crm_user
 
       put :suspend, params: { id: @user.id }, xhr: true
       expect(assigns[:user].suspended?).to eq(false)

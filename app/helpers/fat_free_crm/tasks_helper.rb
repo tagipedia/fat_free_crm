@@ -63,7 +63,7 @@ module TasksHelper
   def task_summary(task)
     summary = [task.category.blank? ? t(:other) : t(task.category)]
     if @view != "completed"
-      if @view == "pending" && task.user != current_user
+      if @view == "pending" && task.user != current_fat_free_crm_user
         summary << t(:task_from, task.user.full_name)
       elsif @view == "assigned"
         summary << t(:task_from, task.assignee.full_name)
@@ -89,13 +89,13 @@ module TasksHelper
   #----------------------------------------------------------------------------
   def hide_task_and_possibly_bucket(task, bucket)
     text = "$('##{h dom_id(task)}').remove();\n"
-    text += "$('#list_#{h bucket.to_s}').fadeOut({ duration:500 });\n" if Task.bucket_empty?(bucket, current_user, @view)
+    text += "$('#list_#{h bucket.to_s}').fadeOut({ duration:500 });\n" if Task.bucket_empty?(bucket, current_fat_free_crm_user, @view)
     text.html_safe
   end
 
   #----------------------------------------------------------------------------
   def replace_content(task, bucket = nil)
-    partial = task.assigned_to && task.assigned_to != current_user.id ? "assigned" : "pending"
+    partial = task.assigned_to && task.assigned_to != current_fat_free_crm_user.id ? "assigned" : "pending"
     html = render(partial: "tasks/#{partial}", collection: [task], locals: { bucket: bucket })
     text = "$('##{dom_id(task)}').html('#{j html}');\n".html_safe
     text
@@ -120,7 +120,7 @@ module TasksHelper
   #----------------------------------------------------------------------------
   def reassign(task)
     text = ''.html_safe
-    if @view == "pending" && @task.assigned_to.present? && @task.assigned_to != current_user.id
+    if @view == "pending" && @task.assigned_to.present? && @task.assigned_to != current_fat_free_crm_user.id
       text << hide_task_and_possibly_bucket(task, @task_before_update.bucket)
       text << tasks_flash(t(:task_assigned, (h @task.assignee.try(:full_name))) + " (#{link_to(t(:view_assigned_tasks), url_for(controller: :tasks, view: :assigned))})")
     elsif @view == "assigned" && @task.assigned_to.blank?

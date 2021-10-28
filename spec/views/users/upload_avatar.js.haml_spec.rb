@@ -16,9 +16,9 @@ describe "/users/upload_avatar" do
 
   describe "no errors:" do
     before do
-      @avatar = build_stubbed(:avatar, entity: current_user)
-      allow(current_user).to receive(:avatar).and_return(@avatar)
-      assign(:user, @user = current_user)
+      @avatar = build_stubbed(:avatar, entity: current_fat_free_crm_user)
+      allow(current_fat_free_crm_user).to receive(:avatar).and_return(@avatar)
+      assign(:user, @user = current_fat_free_crm_user)
     end
 
     it "should flip [Upload Avatar] form" do
@@ -31,10 +31,10 @@ describe "/users/upload_avatar" do
 
   describe "validation errors:" do
     before do
-      @avatar = build_stubbed(:avatar, entity: current_user)
+      @avatar = build_stubbed(:avatar, entity: current_fat_free_crm_user)
       @avatar.errors.add(:image, "error")
       allow_any_instance_of(User).to receive(:avatar).and_return(@avatar)
-      assign(:user, @user = current_user)
+      assign(:user, @user = current_fat_free_crm_user)
     end
 
     it "should redraw the [Upload Avatar] form" do

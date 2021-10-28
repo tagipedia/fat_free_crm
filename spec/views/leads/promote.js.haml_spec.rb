@@ -10,7 +10,7 @@ require 'spec_helper'
 describe "/leads/promote" do
   before do
     login
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
     assign(:account, @account = build_stubbed(:account))
     assign(:accounts, [@account])
     assign(:contact, build_stubbed(:contact))
@@ -20,7 +20,7 @@ describe "/leads/promote" do
 
   describe "no errors :" do
     before do
-      assign(:lead, @lead = build_stubbed(:lead, status: "converted", user: current_user, assignee: current_user))
+      assign(:lead, @lead = build_stubbed(:lead, status: "converted", user: current_fat_free_crm_user, assignee: current_fat_free_crm_user))
     end
 
     describe "from lead landing page -" do
@@ -90,7 +90,7 @@ describe "/leads/promote" do
 
   describe "validation errors:" do
     before do
-      assign(:lead, @lead = build_stubbed(:lead, status: "new", user: current_user, assignee: current_user))
+      assign(:lead, @lead = build_stubbed(:lead, status: "new", user: current_fat_free_crm_user, assignee: current_fat_free_crm_user))
     end
 
     describe "from lead landing page -" do

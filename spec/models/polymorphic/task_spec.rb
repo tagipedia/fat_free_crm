@@ -167,71 +167,71 @@ describe Task do
 
   # named_scope :my, lambda { |user| { :conditions => [ "(user_id = ? AND assigned_to IS NULL) OR assigned_to = ?", user.id, user.id ], :include => :assignee } }
   describe "task.my?" do
-    let(:current_user) { create(:user) }
+    let(:current_fat_free_crm_user) { create(:user) }
 
     it "should match a task created by the user" do
-      task = create(:task, user: current_user, assignee: nil)
-      expect(task.my?(current_user)).to eq(true)
+      task = create(:task, user: current_fat_free_crm_user, assignee: nil)
+      expect(task.my?(current_fat_free_crm_user)).to eq(true)
     end
 
     it "should match a task assigned to the user" do
-      task = create(:task, user: create(:user), assignee: current_user)
-      expect(task.my?(current_user)).to eq(true)
+      task = create(:task, user: create(:user), assignee: current_fat_free_crm_user)
+      expect(task.my?(current_fat_free_crm_user)).to eq(true)
     end
 
     it "should Not match a task not created by the user" do
       task = create(:task, user: create(:user))
-      expect(task.my?(current_user)).to eq(false)
+      expect(task.my?(current_fat_free_crm_user)).to eq(false)
     end
 
     it "should Not match a task created by the user but assigned to somebody else" do
-      task = create(:task, user: current_user, assignee: create(:user))
-      expect(task.my?(current_user)).to eq(false)
+      task = create(:task, user: current_fat_free_crm_user, assignee: create(:user))
+      expect(task.my?(current_fat_free_crm_user)).to eq(false)
     end
   end
 
   # named_scope :assigned_by, lambda { |user| { :conditions => [ "user_id = ? AND assigned_to IS NOT NULL AND assigned_to != ?", user.id, user.id ], :include => :assignee } }
   describe "task.assigned_by?" do
-    let(:current_user) { create(:user) }
+    let(:current_fat_free_crm_user) { create(:user) }
 
     it "should match a task assigned by the user to somebody else" do
-      task = create(:task, user: current_user, assignee: create(:user))
-      expect(task.assigned_by?(current_user)).to eq(true)
+      task = create(:task, user: current_fat_free_crm_user, assignee: create(:user))
+      expect(task.assigned_by?(current_fat_free_crm_user)).to eq(true)
     end
 
     it "should Not match a task not created by the user" do
       task = create(:task, user: create(:user))
-      expect(task.assigned_by?(current_user)).to eq(false)
+      expect(task.assigned_by?(current_fat_free_crm_user)).to eq(false)
     end
 
     it "should Not match a task not assigned to anybody" do
       task = create(:task, assignee: nil)
-      expect(task.assigned_by?(current_user)).to eq(false)
+      expect(task.assigned_by?(current_fat_free_crm_user)).to eq(false)
     end
 
     it "should Not match a task assigned to the user" do
-      task = create(:task, assignee: current_user)
-      expect(task.assigned_by?(current_user)).to eq(false)
+      task = create(:task, assignee: current_fat_free_crm_user)
+      expect(task.assigned_by?(current_fat_free_crm_user)).to eq(false)
     end
   end
 
   # named_scope :tracked_by, lambda { |user| { :conditions => [ "user_id = ? OR assigned_to = ?", user.id, user.id ], :include => :assignee } }
   describe "task.tracked_by?" do
-    let(:current_user) { create(:user) }
+    let(:current_fat_free_crm_user) { create(:user) }
 
     it "should match a task created by the user" do
-      task = create(:task, user: current_user)
-      expect(task.tracked_by?(current_user)).to eq(true)
+      task = create(:task, user: current_fat_free_crm_user)
+      expect(task.tracked_by?(current_fat_free_crm_user)).to eq(true)
     end
 
     it "should match a task assigned to the user" do
-      task = create(:task, assignee: current_user)
-      expect(task.tracked_by?(current_user)).to eq(true)
+      task = create(:task, assignee: current_fat_free_crm_user)
+      expect(task.tracked_by?(current_fat_free_crm_user)).to eq(true)
     end
 
     it "should Not match a task that is neither created nor assigned to the user" do
       task = create(:task, user: create(:user), assignee: create(:user))
-      expect(task.tracked_by?(current_user)).to eq(false)
+      expect(task.tracked_by?(current_fat_free_crm_user)).to eq(false)
     end
   end
 

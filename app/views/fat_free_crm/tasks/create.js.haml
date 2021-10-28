@@ -6,7 +6,7 @@
     $('#title').html('#{ j (@view == "assigned" ? t(:assigned_tasks) : t(:tasks)) }');
 
     -# Show flash if assigned to somebody else from the [Pending Tasks] page.
-    - if @view == "pending" && @task.assigned_to && @task.assigned_to != current_user.id
+    - if @view == "pending" && @task.assigned_to && @task.assigned_to != current_fat_free_crm_user.id
       $('#flash').html('#{j t(:task_created)} #{j t(:task_assigned_to, @task.assignee.full_name)} (#{j link_to(t(:view_assigned_tasks), url_for(view: "assigned"))}).');
       crm.flash('notice', true);
       $('#recently').replaceWith('#{ j render(partial: "fat_free_crm/shared/recently") }');
@@ -28,7 +28,7 @@
 
   - else # Inline [Create Task] form reqested from any of the core asset landing pages.
     $('#create_task_title').html('#{ j t(:tasks) }');
-    - partial = (@task.assigned_to && @task.assigned_to != current_user.id) ? "assigned" : "pending"
+    - partial = (@task.assigned_to && @task.assigned_to != current_fat_free_crm_user.id) ? "assigned" : "pending"
     $('#tasks').prepend('#{ j render(partial: "fat_free_crm/tasks/#{partial}", collection: [@task], locals: { bucket: nil }) }');
     $('##{dom_id(@task, 'fat_free_crm')}').effect("highlight", { duration:1500 });
     $('#recently').replaceWith('#{ j render(partial: "fat_free_crm/shared/recently") }');

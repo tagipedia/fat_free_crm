@@ -32,7 +32,7 @@
           %td= spacer
           %td
             .label #{t :assigned_to}:
-            = user_select(:contact, all_users, current_user)
+            = user_select(:contact, all_users, current_fat_free_crm_user)
 
         - if FatFreeCrm::Setting.background_info && FatFreeCrm::Setting.background_info.include?(:contact)
           %tr

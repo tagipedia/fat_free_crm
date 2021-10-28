@@ -1,7 +1,7 @@
 - class_name = entity.class.name.downcase
 - id_prefix = dom_id(entity, 'fat_free_crm')
 
-- subscribed = entity.subscribed_users.include?(current_user.id)
+- subscribed = entity.subscribed_users.include?(current_fat_free_crm_user.id)
 
 - if subscribed
   - link_text, action = [t(:disable_email_subscriptions), "unsubscribe"]

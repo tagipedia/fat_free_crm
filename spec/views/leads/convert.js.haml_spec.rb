@@ -13,8 +13,8 @@ describe "/leads/convert" do
   before do
     login
 
-    assign(:lead, @lead = build_stubbed(:lead, user: current_user))
-    assign(:users, [current_user])
+    assign(:lead, @lead = build_stubbed(:lead, user: current_fat_free_crm_user))
+    assign(:users, [current_fat_free_crm_user])
     assign(:account, @account = build_stubbed(:account))
     assign(:accounts, [@account])
     assign(:opportunity, build_stubbed(:opportunity))
@@ -37,7 +37,7 @@ describe "/leads/convert" do
 
   it "convert: should hide previously open [Convert Lead] and replace it with lead partial" do
     params[:cancel] = nil
-    assign(:previous, previous = build_stubbed(:lead, user: current_user))
+    assign(:previous, previous = build_stubbed(:lead, user: current_fat_free_crm_user))
 
     render
     expect(rendered).to include("$('#lead_#{previous.id}').replaceWith")

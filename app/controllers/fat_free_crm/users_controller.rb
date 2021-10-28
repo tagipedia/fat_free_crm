@@ -19,7 +19,7 @@ class UsersController < FatFreeCrm::ApplicationController
   # GET /users/1.js
   #----------------------------------------------------------------------------
   def show
-    @user = current_user if params[:id].nil?
+    @user = current_fat_free_crm_user if params[:id].nil?
     respond_with(@user)
   end
 
@@ -101,15 +101,15 @@ class UsersController < FatFreeCrm::ApplicationController
   # GET /users/1/redraw
   #----------------------------------------------------------------------------
   def redraw
-    current_user.preference[:locale] = params[:locale]
-    render js: %(window.location.href = "#{user_path(current_user)}";)
+    current_fat_free_crm_user.preference[:locale] = params[:locale]
+    render js: %(window.location.href = "#{user_path(current_fat_free_crm_user)}";)
   end
 
   # GET /users/opportunities_overview
   #----------------------------------------------------------------------------
   def opportunities_overview
     @users_with_opportunities = User.have_assigned_opportunities.order(:first_name)
-    @unassigned_opportunities = Opportunity.my(current_user).unassigned.pipeline.order(:stage).includes(:account, :user, :tags)
+    @unassigned_opportunities = Opportunity.my(current_fat_free_crm_user).unassigned.pipeline.order(:stage).includes(:account, :user, :tags)
   end
 
   protected

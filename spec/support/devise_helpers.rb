@@ -22,7 +22,7 @@ module DeviseHelpers
     sign_in user
   end
 
-  def current_user
+  def current_fat_free_crm_user
     User.find_by_id(session['warden.user.user.key'][0][0])
   end
 end

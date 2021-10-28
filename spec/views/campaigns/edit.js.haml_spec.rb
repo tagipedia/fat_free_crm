@@ -12,8 +12,8 @@ describe "/campaigns/edit" do
 
   before do
     login
-    assign(:campaign, @campaign = build_stubbed(:campaign, user: current_user))
-    assign(:users, [current_user])
+    assign(:campaign, @campaign = build_stubbed(:campaign, user: current_fat_free_crm_user))
+    assign(:users, [current_fat_free_crm_user])
   end
 
   it "cancel from campaign index page: should replace [Edit Campaign] form with campaign partial" do
@@ -33,7 +33,7 @@ describe "/campaigns/edit" do
 
   it "edit: should hide previously open [Edit Campaign] for and replace it with campaign partial" do
     params[:cancel] = nil
-    assign(:previous, previous = build_stubbed(:campaign, user: current_user))
+    assign(:previous, previous = build_stubbed(:campaign, user: current_fat_free_crm_user))
 
     render
     expect(rendered).to include("$('#campaign_#{previous.id}').replaceWith('<li class=\\'highlight campaign\\' id=\\'campaign_#{previous.id}\\'")

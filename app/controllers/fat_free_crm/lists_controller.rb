@@ -10,7 +10,7 @@ class ListsController < FatFreeCrm::ApplicationController
   # POST /lists
   #----------------------------------------------------------------------------
   def create
-    list_params[:user_id] = (current_user.id if params[:is_global].to_i.zero?)
+    list_params[:user_id] = (current_fat_free_crm_user.id if params[:is_global].to_i.zero?)
 
     # Find any existing list with the same name (case insensitive)
     if @list = List.where("lower(name) = ?", list_params[:name].downcase).where(user_id: list_params[:user_id]).first

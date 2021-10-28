@@ -12,7 +12,7 @@ describe "/users/avatar" do
 
   before do
     login
-    assign(:user, current_user)
+    assign(:user, current_fat_free_crm_user)
   end
 
   it "cancel: should hide [Upload Avatar] form and restore title" do

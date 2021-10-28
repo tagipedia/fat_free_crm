@@ -17,14 +17,14 @@ describe UsersController do
     end
 
     it "should render [show] template" do
-      get :show, params: { id: current_user.id }
-      expect(assigns[:user]).to eq(current_user)
+      get :show, params: { id: current_fat_free_crm_user.id }
+      expect(assigns[:user]).to eq(current_fat_free_crm_user)
       expect(response).to render_template("users/show")
     end
 
     it "should expose current user as @user if no specific user was requested" do
       get :show
-      expect(assigns[:user]).to eq(current_user)
+      expect(assigns[:user]).to eq(current_fat_free_crm_user)
       expect(response).to render_template("users/show")
     end
 
@@ -48,9 +48,9 @@ describe UsersController do
       end
 
       it "should render the requested user as JSON" do
-        expect(User).to receive(:find).and_return(current_user)
+        expect(User).to receive(:find).and_return(current_fat_free_crm_user)
         expect_any_instance_of(User).to receive(:to_json).and_return("generated JSON")
-        get :show, params: { id: current_user.id }
+        get :show, params: { id: current_fat_free_crm_user.id }
         expect(response.body).to eq("generated JSON")
       end
 
@@ -68,10 +68,10 @@ describe UsersController do
       end
 
       it "should render the requested user as XML" do
-        expect(User).to receive(:find).and_return(current_user)
+        expect(User).to receive(:find).and_return(current_fat_free_crm_user)
         expect_any_instance_of(User).to receive(:to_xml).and_return("generated XML")
 
-        get :show, params: { id: current_user.id }
+        get :show, params: { id: current_fat_free_crm_user.id }
         expect(response.body).to eq("generated XML")
       end
 
@@ -89,9 +89,9 @@ describe UsersController do
   describe "responding to GET edit" do
     it "should expose current user as @user and render [edit] template" do
       login
-      @user = current_user
+      @user = current_fat_free_crm_user
       get :edit, params: { id: @user.id }, xhr: true
-      expect(assigns[:user]).to eq(current_user)
+      expect(assigns[:user]).to eq(current_fat_free_crm_user)
       expect(response).to render_template("users/edit")
     end
 
@@ -117,7 +117,7 @@ describe UsersController do
   describe "responding to PUT update" do
     before(:each) do
       login
-      @user = current_user
+      @user = current_fat_free_crm_user
     end
 
     describe "with valid params" do
@@ -134,7 +134,7 @@ describe UsersController do
     describe "with invalid params" do
       it "should not update the user information and redraw [update] template" do
         put :update, params: { id: @user.id, user: { first_name: nil } }, xhr: true
-        expect(@user.reload.first_name).to eq(current_user.first_name)
+        expect(@user.reload.first_name).to eq(current_fat_free_crm_user.first_name)
         expect(assigns[:user]).to eq(@user)
         expect(response).to render_template("users/update")
       end
@@ -162,12 +162,12 @@ describe UsersController do
   describe "responding to GET avatar" do
     before(:each) do
       login
-      @user = current_user
+      @user = current_fat_free_crm_user
     end
 
     it "should expose current user as @user and render [avatar] template" do
       get :avatar, params: { id: @user.id }, xhr: true
-      expect(assigns[:user]).to eq(current_user)
+      expect(assigns[:user]).to eq(current_fat_free_crm_user)
       expect(response).to render_template("users/avatar")
     end
   end
@@ -178,7 +178,7 @@ describe UsersController do
   describe "responding to PUT update_avatar" do
     before(:each) do
       login
-      @user = current_user
+      @user = current_fat_free_crm_user
     end
 
     it "should delete avatar if user chooses to use Gravatar" do
@@ -226,12 +226,12 @@ describe UsersController do
   describe "responding to GET avatar" do
     before(:each) do
       login
-      @user = current_user
+      @user = current_fat_free_crm_user
     end
 
     it "should expose current user as @user and render [pssword] template" do
       get :password, params: { id: @user.id }, xhr: true
-      expect(assigns[:user]).to eq(current_user)
+      expect(assigns[:user]).to eq(current_fat_free_crm_user)
       expect(response).to render_template("users/password")
     end
   end
@@ -258,7 +258,7 @@ describe UsersController do
     end
 
     it "should not allow to change password if current password is blank" do
-      current_user.encrypted_password = nil
+      current_fat_free_crm_user.encrypted_password = nil
       put :change_password, params: { id: @user.id, current_password: "", user: { password: @new_password, password_confirmation: @new_password } }, xhr: true
       expect(assigns[:user].password).to eq(nil)
       expect(assigns[:user].errors.size).to eq(1) # .error_on(:current_password)
@@ -268,7 +268,7 @@ describe UsersController do
 
     it "should not change user password if password field is blank" do
       put :change_password, params: { id: @user.id, current_password: @old_password, user: { password: "", password_confirmation: "" } }, xhr: true
-      expect(assigns[:user]).to eq(current_user)
+      expect(assigns[:user]).to eq(current_fat_free_crm_user)
       expect(assigns[:user].password).to eq(nil)
       expect(assigns[:user].errors).to be_empty # no errors
       expect(assigns[:user].reload.encrypted_password).to eq(@old_encrypted_password) # password stays the same
@@ -298,7 +298,7 @@ describe UsersController do
   describe "responding to GET opportunities_overview" do
     before(:each) do
       login
-      @user = current_user
+      @user = current_fat_free_crm_user
       @user.update(first_name: "Apple", last_name: "Boy")
     end
 

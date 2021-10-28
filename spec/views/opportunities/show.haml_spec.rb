@@ -15,7 +15,7 @@ describe "/opportunities/show" do
     @opportunity = create(:opportunity, id: 42,
                                         contacts: [create(:contact)])
     assign(:opportunity, @opportunity)
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
     assign(:comment, Comment.new)
     assign(:timeline, [create(:comment, commentable: @opportunity)])
 

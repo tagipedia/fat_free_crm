@@ -13,7 +13,7 @@ describe "/campaigns/_new" do
   before do
     login
     assign(:campaign, Campaign.new)
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
   end
 
   it "should render [create campaign] form" do

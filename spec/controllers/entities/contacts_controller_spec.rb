@@ -18,7 +18,7 @@ describe ContactsController do
   #----------------------------------------------------------------------------
   describe "responding to GET index" do
     it "should expose all contacts as @contacts and render [index] template" do
-      @contacts = [create(:contact, user: current_user)]
+      @contacts = [create(:contact, user: current_fat_free_crm_user)]
       get :index
       expect(assigns[:contacts].count).to eq(@contacts.count)
       expect(assigns[:contacts]).to eq(@contacts)
@@ -26,8 +26,8 @@ describe ContactsController do
     end
 
     it "should perform lookup using query string" do
-      @billy_bones   = create(:contact, user: current_user, first_name: "Billy",   last_name: "Bones")
-      @captain_flint = create(:contact, user: current_user, first_name: "Captain", last_name: "Flint")
+      @billy_bones   = create(:contact, user: current_fat_free_crm_user, first_name: "Billy",   last_name: "Bones")
+      @captain_flint = create(:contact, user: current_fat_free_crm_user, first_name: "Captain", last_name: "Flint")
 
       get :index, params: { query: @billy_bones.email }
       expect(assigns[:contacts]).to eq([@billy_bones])
@@ -37,7 +37,7 @@ describe ContactsController do
 
     describe "AJAX pagination" do
       it "should pick up page number from params" do
-        @contacts = [create(:contact, user: current_user)]
+        @contacts = [create(:contact, user: current_fat_free_crm_user)]
         get :index, params: { page: 42 }, xhr: true
 
         expect(assigns[:current_page].to_i).to eq(42)
@@ -48,7 +48,7 @@ describe ContactsController do
 
       it "should pick up saved page number from session" do
         session[:contacts_current_page] = 42
-        @contacts = [create(:contact, user: current_user)]
+        @contacts = [create(:contact, user: current_fat_free_crm_user)]
         get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(42)
@@ -59,7 +59,7 @@ describe ContactsController do
       it "should reset current_page when query is altered" do
         session[:contacts_current_page] = 42
         session[:contacts_current_query] = "bill"
-        @contacts = [create(:contact, user: current_user)]
+        @contacts = [create(:contact, user: current_fat_free_crm_user)]
         get :index, xhr: true
 
         expect(assigns[:current_page]).to eq(1)
@@ -142,7 +142,7 @@ describe ContactsController do
 
     describe "contact got deleted or otherwise unavailable" do
       it "should redirect to contact index if the contact got deleted" do
-        @contact = create(:contact, user: current_user)
+        @contact = create(:contact, user: current_fat_free_crm_user)
         @contact.destroy
 
         get :show, params: { id: @contact.id }
@@ -159,7 +159,7 @@ describe ContactsController do
       end
 
       it "should return 404 (Not Found) XML error" do
-        @contact = create(:contact, user: current_user)
+        @contact = create(:contact, user: current_fat_free_crm_user)
         @contact.destroy
         request.env["HTTP_ACCEPT"] = "application/xml"
 
@@ -174,10 +174,10 @@ describe ContactsController do
   #----------------------------------------------------------------------------
   describe "responding to GET new" do
     it "should expose a new contact as @contact and render [new] template" do
-      @contact = Contact.new(user: current_user,
+      @contact = Contact.new(user: current_fat_free_crm_user,
                              access: Setting.default_access)
-      @account = Account.new(user: current_user)
-      @accounts = [create(:account, user: current_user)]
+      @account = Account.new(user: current_fat_free_crm_user)
+      @accounts = [create(:account, user: current_fat_free_crm_user)]
 
       get :new, xhr: true
       expect(assigns[:contact].attributes).to eq(@contact.attributes)
@@ -252,8 +252,8 @@ describe ContactsController do
   #----------------------------------------------------------------------------
   describe "responding to GET edit" do
     it "should expose the requested contact as @contact and render [edit] template" do
-      @contact = create(:contact, id: 42, user: current_user, lead: nil)
-      @account = Account.new(user: current_user)
+      @contact = create(:contact, id: 42, user: current_fat_free_crm_user, lead: nil)
+      @account = Account.new(user: current_fat_free_crm_user)
 
       get :edit, params: { id: 42 }, xhr: true
       expect(assigns[:contact]).to eq(@contact)
@@ -264,7 +264,7 @@ describe ContactsController do
 
     it "should expose the requested contact as @contact and linked account as @account" do
       @account = create(:account, id: 99)
-      @contact = create(:contact, id: 42, user: current_user, lead: nil)
+      @contact = create(:contact, id: 42, user: current_fat_free_crm_user, lead: nil)
       create(:account_contact, account: @account, contact: @contact)
 
       get :edit, params: { id: 42 }, xhr: true
@@ -282,7 +282,7 @@ describe ContactsController do
 
     describe "(contact got deleted or is otherwise unavailable)" do
       it "should reload current page with the flash message if the contact got deleted" do
-        @contact = create(:contact, user: current_user)
+        @contact = create(:contact, user: current_fat_free_crm_user)
         @contact.destroy
 
         get :edit, params: { id: @contact.id }, xhr: true
@@ -301,7 +301,7 @@ describe ContactsController do
 
     describe "(previous contact got deleted or is otherwise unavailable)" do
       before(:each) do
-        @contact = create(:contact, user: current_user)
+        @contact = create(:contact, user: current_fat_free_crm_user)
         @previous = create(:contact, user: create(:user))
       end
 
@@ -352,7 +352,7 @@ describe ContactsController do
       end
 
       it "should reload contacts to update pagination if called from contacts index" do
-        @contact = build(:contact, user: current_user)
+        @contact = build(:contact, user: current_fat_free_crm_user)
         allow(Contact).to receive(:new).and_return(@contact)
 
         request.env["HTTP_REFERER"] = "http://localhost/contacts"
@@ -361,7 +361,7 @@ describe ContactsController do
       end
 
       it "should add a new comment to the newly created contact when specified" do
-        @contact = build(:contact, user: current_user)
+        @contact = build(:contact, user: current_fat_free_crm_user)
         allow(Contact).to receive(:new).and_return(@contact)
 
         post :create, params: { contact: { first_name: "Testy", last_name: "McTest" }, account: { name: "Hello world" }, comment_body: "Awesome comment is awesome" }, xhr: true
@@ -371,16 +371,16 @@ describe ContactsController do
 
     describe "with invalid params" do
       before(:each) do
-        @contact = build(:contact, first_name: nil, user: current_user, lead: nil)
+        @contact = build(:contact, first_name: nil, user: current_fat_free_crm_user, lead: nil)
         allow(Contact).to receive(:new).and_return(@contact)
       end
 
       # Redraw [create] form with selected account.
       it "should redraw [Create Contact] form with selected account" do
-        @account = create(:account, id: 42, user: current_user)
+        @account = create(:account, id: 42, user: current_fat_free_crm_user)
 
         # This redraws [create] form with blank account.
-        post :create, params: { contact: {}, account: { id: 42, user_id: current_user.id } }, xhr: true
+        post :create, params: { contact: {}, account: { id: 42, user_id: current_fat_free_crm_user.id } }, xhr: true
         expect(assigns(:contact)).to eq(@contact)
         expect(assigns(:account)).to eq(@account)
         expect(assigns(:accounts)).to eq([@account])
@@ -389,10 +389,10 @@ describe ContactsController do
 
       # Redraw [create] form with related account.
       it "should redraw [Create Contact] form with related account" do
-        @account = create(:account, id: 123, user: current_user)
+        @account = create(:account, id: 123, user: current_fat_free_crm_user)
 
         request.env["HTTP_REFERER"] = "http://localhost/accounts/123"
-        post :create, params: { contact: { first_name: nil }, account: { name: nil, user_id: current_user.id } }, xhr: true
+        post :create, params: { contact: { first_name: nil }, account: { name: nil, user_id: current_fat_free_crm_user.id } }, xhr: true
         expect(assigns(:contact)).to eq(@contact)
         expect(assigns(:account)).to eq(@account)
         expect(assigns(:accounts)).to eq([@account])
@@ -400,10 +400,10 @@ describe ContactsController do
       end
 
       it "should redraw [Create Contact] form with blank account" do
-        @accounts = [create(:account, user: current_user)]
-        @account = Account.new(user: current_user)
+        @accounts = [create(:account, user: current_fat_free_crm_user)]
+        @account = Account.new(user: current_fat_free_crm_user)
 
-        post :create, params: { contact: { first_name: nil }, account: { name: nil, user_id: current_user.id } }, xhr: true
+        post :create, params: { contact: { first_name: nil }, account: { name: nil, user_id: current_fat_free_crm_user.id } }, xhr: true
         expect(assigns(:contact)).to eq(@contact)
         expect(assigns(:account).attributes).to eq(@account.attributes)
         expect(assigns(:accounts)).to eq(@accounts)
@@ -462,7 +462,7 @@ describe ContactsController do
 
       describe "contact got deleted or otherwise unavailable" do
         it "should reload current page is the contact got deleted" do
-          @contact = create(:contact, user: current_user)
+          @contact = create(:contact, user: current_fat_free_crm_user)
           @contact.destroy
 
           put :update, params: { id: @contact.id }, xhr: true
@@ -482,7 +482,7 @@ describe ContactsController do
 
     describe "with invalid params" do
       it "should not update the contact, but still expose it as @contact and render [update] template" do
-        @contact = create(:contact, id: 42, user: current_user, first_name: "Billy", lead: nil)
+        @contact = create(:contact, id: 42, user: current_fat_free_crm_user, first_name: "Billy", lead: nil)
 
         put :update, params: { id: 42, contact: { first_name: nil }, account: {} }, xhr: true
         expect(assigns[:contact].reload.first_name).to eq("Billy")
@@ -505,7 +505,7 @@ describe ContactsController do
   #----------------------------------------------------------------------------
   describe "responding to DELETE destroy" do
     before(:each) do
-      @contact = create(:contact, user: current_user)
+      @contact = create(:contact, user: current_fat_free_crm_user)
     end
 
     describe "AJAX request" do
@@ -550,7 +550,7 @@ describe ContactsController do
 
       describe "contact got deleted or otherwise unavailable" do
         it "should reload current page is the contact got deleted" do
-          @contact = create(:contact, user: current_user)
+          @contact = create(:contact, user: current_fat_free_crm_user)
           @contact.destroy
 
           delete :destroy, params: { id: @contact.id }, xhr: true
@@ -577,7 +577,7 @@ describe ContactsController do
       end
 
       it "should redirect to contact index with the flash message is the contact got deleted" do
-        @contact = create(:contact, user: current_user)
+        @contact = create(:contact, user: current_fat_free_crm_user)
         @contact.destroy
 
         delete :destroy, params: { id: @contact.id }
@@ -663,7 +663,7 @@ describe ContactsController do
   #----------------------------------------------------------------------------
   describe "responding to POST auto_complete" do
     before(:each) do
-      @auto_complete_matches = [create(:contact, first_name: "Hello", last_name: "World", user: current_user)]
+      @auto_complete_matches = [create(:contact, first_name: "Hello", last_name: "World", user: current_fat_free_crm_user)]
     end
 
     it_should_behave_like("auto complete")
@@ -674,16 +674,16 @@ describe ContactsController do
   describe "responding to POST redraw" do
     it "should save user selected contact preference" do
       get :redraw, params: { per_page: 42, view: "long", sort_by: "first_name", naming: "after" }, xhr: true
-      expect(current_user.preference[:contacts_per_page].to_i).to eq(42)
-      expect(current_user.preference[:contacts_index_view]).to eq("long")
-      expect(current_user.preference[:contacts_sort_by]).to eq("contacts.first_name ASC")
-      expect(current_user.preference[:contacts_naming]).to eq("after")
+      expect(current_fat_free_crm_user.preference[:contacts_per_page].to_i).to eq(42)
+      expect(current_fat_free_crm_user.preference[:contacts_index_view]).to eq("long")
+      expect(current_fat_free_crm_user.preference[:contacts_sort_by]).to eq("contacts.first_name ASC")
+      expect(current_fat_free_crm_user.preference[:contacts_naming]).to eq("after")
     end
 
     it "should set similar options for Leads" do
       get :redraw, params: { sort_by: "first_name", naming: "after" }, xhr: true
-      expect(current_user.pref[:leads_sort_by]).to eq("leads.first_name ASC")
-      expect(current_user.pref[:leads_naming]).to eq("after")
+      expect(current_fat_free_crm_user.pref[:leads_sort_by]).to eq("leads.first_name ASC")
+      expect(current_fat_free_crm_user.pref[:leads_naming]).to eq("after")
     end
 
     it "should reset current page to 1" do
@@ -693,8 +693,8 @@ describe ContactsController do
 
     it "should select @contacts and render [index] template" do
       @contacts = [
-        create(:contact, first_name: "Alice", user: current_user),
-        create(:contact, first_name: "Bobby", user: current_user)
+        create(:contact, first_name: "Alice", user: current_fat_free_crm_user),
+        create(:contact, first_name: "Bobby", user: current_fat_free_crm_user)
       ]
 
       get :redraw, params: { per_page: 1, sort_by: "first_name" }, xhr: true

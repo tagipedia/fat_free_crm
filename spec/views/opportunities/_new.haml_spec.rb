@@ -16,7 +16,7 @@ describe "/opportunities/_new" do
     @account = build_stubbed(:account)
     assign(:account, @account)
     assign(:accounts, [@account])
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
     assign(:stage, Setting.unroll(:opportunity_stage))
   end
 

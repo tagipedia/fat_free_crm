@@ -16,7 +16,7 @@ describe "/campaigns/show" do
                                          leads: [build_stubbed(:lead)],
                                          opportunities: [build_stubbed(:opportunity)])
     assign(:campaign, @campaign)
-    assign(:users, [current_user])
+    assign(:users, [current_fat_free_crm_user])
     assign(:comment, Comment.new)
     assign(:timeline, [build_stubbed(:comment, commentable: @campaign)])
     allow(view).to receive(:params) { { id: 123 } }

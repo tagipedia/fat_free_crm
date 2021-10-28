@@ -12,7 +12,7 @@ describe "/users/password" do
 
   before do
     login
-    assign(:user, current_user)
+    assign(:user, current_fat_free_crm_user)
   end
 
   it "cancel: should hide [Change Password] form and restore title" do

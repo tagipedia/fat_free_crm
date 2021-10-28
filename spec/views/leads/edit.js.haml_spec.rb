@@ -12,8 +12,8 @@ describe "/leads/edit" do
 
   before do
     login
-    assign(:lead, @lead = build_stubbed(:lead, status: "new", user: current_user))
-    assign(:users, [current_user])
+    assign(:lead, @lead = build_stubbed(:lead, status: "new", user: current_fat_free_crm_user))
+    assign(:users, [current_fat_free_crm_user])
     assign(:campaigns, [build_stubbed(:campaign)])
   end
 
@@ -34,7 +34,7 @@ describe "/leads/edit" do
 
   it "edit: should hide previously open [Edit Lead] and replace it with lead partial" do
     params[:cancel] = nil
-    assign(:previous, previous = build_stubbed(:lead, user: current_user))
+    assign(:previous, previous = build_stubbed(:lead, user: current_fat_free_crm_user))
 
     render
     expect(rendered).to include("$('#lead_#{previous.id}').replaceWith('<li class=\\'highlight lead\\' id=\\'lead_#{previous.id}\\'")
@@ -68,7 +68,7 @@ describe "/leads/edit" do
 
   it "edit from lead landing page: should not attempt to hide [Convert Lead] if the lead is already converted" do
     params[:cancel] = "false"
-    assign(:lead, build_stubbed(:lead, status: "converted", user: current_user))
+    assign(:lead, build_stubbed(:lead, status: "converted", user: current_fat_free_crm_user))
 
     render
     expect(rendered).not_to include("crm.hide_form('convert_lead'")
