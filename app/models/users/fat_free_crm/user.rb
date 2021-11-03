@@ -216,7 +216,7 @@ class User < ActiveRecord::Base
   end
 
   def register_teammate
-    sg = SendGrid::API.new(api_key: Rails.application.credentials[:SENDGRID_API_KEY])
+    sg = SendGrid::API.new(api_key: Rails.application.credentials[:SENDGRID_API_KEY] || ::Figaro.env.SENDGRID_API_KEY)
     data = JSON.parse(self.teammate.to_json)
     response = sg.client.teammates.post(request_body: data)
   end

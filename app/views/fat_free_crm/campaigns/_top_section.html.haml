@@ -17,14 +17,15 @@
         %td
           .label #{t :status}:
           = f.select :status, FatFreeCrm::Setting.unroll(:campaign_status), { selected: (@campaign.status || "planned").to_sym }, { style: "width:250px", class: 'select2' }
-          
+
     %table
       = fields_for(@promotion) do |a|
-        %tr
-          %td
-            != promotion_select_or_create(a) do |options|
-              - # Add [-- None --] promotion choice when editing existing campaign that has an promotion.
-              - options[:include_blank] = "" unless @campaign.new_record? || @campaign.promotion.blank?
+        - if @promotion.present?
+          %tr
+            %td
+              != promotion_select_or_create(a) do |options|
+                - # Add [-- None --] promotion choice when editing existing campaign that has an promotion.
+                - options[:include_blank] = "" unless @campaign.new_record? || @campaign.promotion.blank?
 
         - if FatFreeCrm::Setting.background_info && FatFreeCrm::Setting.background_info.include?(:campaign)
           %tr

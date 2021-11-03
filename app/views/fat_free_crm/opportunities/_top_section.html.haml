@@ -21,11 +21,11 @@
           = f.text_field :probability, style: "width:110px; text-align:right;"
         %td= spacer
         %td
-          .label #{t :amount} (#{Monetize.parse(Spree::Config[:currency]).symbol}):
+          .label #{t :amount} (#{(defined?(Spree) ? Monetize.parse(Spree::Config[:currency]).symbol : FatFreeCrm::Setting.currency)}):
           = f.text_field :amount, style: "width:110px; text-align:right;"
         %td= spacer
         %td
-          .label #{t :discount} (#{Monetize.parse(Spree::Config[:currency]).symbol}):
+          .label #{t :discount} (#{(defined?(Spree) ? Monetize.parse(Spree::Config[:currency]).symbol : FatFreeCrm::Setting.currency)}):
           = f.text_field :discount, style: "width:110px; text-align:right;"
 
     = fields_for(@account) do |a|

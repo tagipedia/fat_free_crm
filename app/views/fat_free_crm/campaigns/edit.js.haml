@@ -30,4 +30,5 @@
     crm.flip_form('edit_#{entity_name}');
     crm.set_title('edit_#{entity_name}', "#{t :edit} #{h @entity.name}");
 
-  crm.create_or_select_promotion(#{ request.referer =~ /\/promotions\// || @campaign&.promotion&.id.blank? });
+  - if @campaign&.respond_to?(:promotion)
+    crm.create_or_select_promotion(#{ request.referer =~ /\/promotions\// || @campaign&.promotion&.id.blank? });

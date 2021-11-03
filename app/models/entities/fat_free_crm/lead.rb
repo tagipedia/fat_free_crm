@@ -333,7 +333,7 @@ class Lead < ActiveRecord::Base
   end
 
   def self.register_recipients(leads)
-    sg = SendGrid::API.new(api_key: Rails.application.credentials[:SENDGRID_API_KEY])
+    sg = SendGrid::API.new(api_key: Rails.application.credentials[:SENDGRID_API_KEY] || ::Figaro.env.SENDGRID_API_KEY)
     data = JSON.parse({contacts: leads.map{|lead| lead.recipient}}.to_json)
     response = sg.client.marketing.contacts.put(request_body: data)
   end

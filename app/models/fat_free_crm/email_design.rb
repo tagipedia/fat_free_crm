@@ -13,7 +13,7 @@ module FatFreeCrm
     scope :my, ->(current_fat_free_crm_user) { self }
 
     scope :text_search, lambda { |query|
-      sg = SendGrid::API.new(api_key: Rails.application.credentials[:SENDGRID_API_KEY])
+      sg = SendGrid::API.new(api_key: Rails.application.credentials[:SENDGRID_API_KEY] || ::Figaro.env.SENDGRID_API_KEY)
       data = JSON.parse({name: query}.to_json)
       response = sg.client.marketing.singlesends.search.post(request_body: data)
       # TODO change get automations request to search automations request when sendgrid support search for automation
@@ -42,7 +42,7 @@ module FatFreeCrm
 
     def save_with_params(params)
       self.campaign = Campaign.find(params[:campaign]) unless params[:campaign].blank?
-      sg = SendGrid::API.new(api_key: Rails.application.credentials[:SENDGRID_API_KEY])
+      sg = SendGrid::API.new(api_key: Rails.application.credentials[:SENDGRID_API_KEY] || ::Figaro.env.SENDGRID_API_KEY)
       dataObj = {name: params[:source_info][:name]}
       if self.campaign.present?
         dataObj[:categories] = self.campaign.tag_list || []
@@ -97,7 +97,7 @@ module FatFreeCrm
     private
 
     def self.get_email_designs
-      sg = SendGrid::API.new(api_key: Rails.application.credentials[:SENDGRID_API_KEY])
+      sg = SendGrid::API.new(api_key: Rails.application.credentials[:SENDGRID_API_KEY] || ::Figaro.env.SENDGRID_API_KEY)
       response = sg.client.marketing.singlesends.get()
       response2 = sg.client.marketing.automations.get()
       JSON.parse(response.body)["result"].each { |d|

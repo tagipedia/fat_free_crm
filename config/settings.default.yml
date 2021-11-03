@@ -61,6 +61,8 @@
 #
 :locale: "en"
 
+:currency: "£"
+
 
 # Settings for outgoing email (SMTP)
 # Uncomment to set up for your specific mailer

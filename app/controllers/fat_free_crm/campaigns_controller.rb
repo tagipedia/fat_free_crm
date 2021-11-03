@@ -69,7 +69,7 @@ class CampaignsController < FatFreeCrm::EntitiesController
   #----------------------------------------------------------------------------
   def new
     @campaign.attributes = { user: current_fat_free_crm_user, access: Setting.default_access, assigned_to: nil }
-    @promotion = Spree::Promotion.new
+    @promotion = defined?(Spree) ? Spree::Promotion.new : nil
 
     if params[:related]
       model, id = params[:related].split('_')
@@ -86,7 +86,7 @@ class CampaignsController < FatFreeCrm::EntitiesController
   # GET /campaigns/1/edit                                                  AJAX
   #----------------------------------------------------------------------------
   def edit
-    @promotion = @campaign.promotion || Spree::Promotion.new
+    @promotion = @campaign.try(:promotion) || (defined?(Spree) ? Spree::Promotion.new : nil)
     @previous = Campaign.my(current_fat_free_crm_user).find_by_id(Regexp.last_match[1]) || Regexp.last_match[1].to_i if params[:previous].to_s =~ /(\d+)\z/
 
     respond_with(@campaign)

@@ -13,7 +13,8 @@
   crm.flick('empty', 'remove');
 - else
   $('##{create_id}').html('#{ j render(partial: "new") }');
-  crm.create_or_select_promotion(#{ request.referer =~ /\/promotions\// || @campaign&.promotion&.id.blank? });
+  - if @campaign&.respond_to?(:promotion)
+    crm.create_or_select_promotion(#{ request.referer =~ /\/promotions\// || @campaign&.promotion&.id.blank? });
   - if @entity.errors[:name].blank? and @entity.errors[:ends_on].present?
     $('#campaign_ends_on').focus();
   - else
